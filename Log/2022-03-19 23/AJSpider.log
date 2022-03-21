@@ -1,0 +1,58 @@
+[2022:03:19 23:56:03] INFO  AJSpider <_check_sql_available> 检查 SQL设置 可用性
+[2022:03:19 23:56:03] INFO  AJSpider <start_master> 开始爬取！
+[2022:03:19 23:56:03] INFO  AJSpider ensure_future 开始工作,内存Id 为:1624067076640
+[2022:03:19 23:56:03] INFO  AJSpider ensure_future 开始工作,内存Id 为:1624067076800
+[2022:03:19 23:56:03] INFO  AJSpider <fetch> 开始！
+[2022:03:19 23:56:03] INFO  AJSpider <_start_request> method:GET url:http://www.baidu.com status:200 timeCost:0.08474040031433105
+[2022:03:19 23:56:03] INFO  AJSpider <save_to_mysql> 存储表名称为:[test] 存储语句为:[INSERT INTO `test`(`test`) VALUES ('%s')]
+[2022:03:19 23:56:52] INFO  AJSpider <_check_sql_available> 检查 SQL设置 可用性
+[2022:03:19 23:56:52] INFO  AJSpider <start_master> 开始爬取！
+[2022:03:19 23:56:52] INFO  AJSpider ensure_future 开始工作,内存Id 为:2554785284320
+[2022:03:19 23:56:52] INFO  AJSpider ensure_future 开始工作,内存Id 为:2554785284480
+[2022:03:19 23:56:52] INFO  AJSpider <fetch> 开始！
+[2022:03:19 23:56:52] INFO  AJSpider <_start_request> method:GET url:http://www.baidu.com status:200 timeCost:0.04860877990722656
+[2022:03:19 23:56:52] INFO  AJSpider <save_to_mysql> 存储表名称为:[test] 存储语句为:[INSERT INTO `test`(`test`) VALUES ('%s')]
+[2022:03:19 23:56:57] INFO  AJSpider <save_to_mysql> 入库数据长度:1 
+	成功入库条数:1
+	成功更新条数:0
+	失败条数:0
+[2022:03:19 23:57:21] INFO  AJSpider <_check_sql_available> 检查 SQL设置 可用性
+[2022:03:19 23:57:21] INFO  AJSpider <start_master> 开始爬取！
+[2022:03:19 23:57:21] INFO  AJSpider ensure_future 开始工作,内存Id 为:2461711433792
+[2022:03:19 23:57:21] INFO  AJSpider ensure_future 开始工作,内存Id 为:2461711433952
+[2022:03:19 23:57:21] INFO  AJSpider <fetch> 开始！
+[2022:03:19 23:57:21] INFO  AJSpider <_start_request> method:GET url:http://www.baidu.com status:200 timeCost:0.09075736999511719
+[2022:03:19 23:57:21] INFO  AJSpider <save_to_mysql> 存储表名称为:[test] 存储语句为:[INSERT INTO `test`(`test`) VALUES ('%s')]
+[2022:03:19 23:57:21] INFO  AJSpider <save_to_mysql> 入库数据长度:1 
+	成功入库条数:1
+	成功更新条数:0
+	失败条数:0
+[2022:03:19 23:57:21] ERROR asyncio  Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000023D296C7CD0>
+[2022:03:19 23:57:21] ERROR asyncio  Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x0000023D29707040>, 7135.968)]']
+connector: <aiohttp.connector.TCPConnector object at 0x0000023D296C7D60>
+[2022:03:19 23:57:21] ERROR asyncio  Task was destroyed but it is pending!
+task: <Task pending name='Task-2' coro=<Spider.dispatch_slaver() running at F:\爬虫专用\framework_spider\Core\spider.py:204> wait_for=<Future cancelled>>
+[2022:03:19 23:57:21] ERROR asyncio  Task was destroyed but it is pending!
+task: <Task pending name='Task-3' coro=<Spider.dispatch_slaver() running at F:\爬虫专用\framework_spider\Core\spider.py:204> wait_for=<Future pending cb=[<TaskWakeupMethWrapper object at 0x0000023D296FA190>()]>>
+[2022:03:19 23:59:40] INFO  AJSpider <_check_sql_available> 检查 SQL设置 可用性
+[2022:03:19 23:59:40] INFO  AJSpider <start_master> 开始爬取！
+[2022:03:19 23:59:40] INFO  AJSpider ensure_future 开始工作,内存Id 为:1761017647488
+[2022:03:19 23:59:40] INFO  AJSpider ensure_future 开始工作,内存Id 为:1761017647648
+[2022:03:19 23:59:40] INFO  AJSpider <fetch> 开始！
+[2022:03:19 23:59:40] INFO  AJSpider <_start_request> method:GET url:http://www.baidu.com status:200 timeCost:0.07058286666870117
+[2022:03:19 23:59:40] INFO  AJSpider <save_to_mysql> 存储表名称为:[test] 存储语句为:[INSERT INTO `test`(`test`) VALUES ('%s')]
+[2022:03:19 23:59:40] INFO  AJSpider <save_to_mysql> 入库数据长度:1 
+	成功入库条数:0
+	成功更新条数:0
+	失败条数:1
+[2022:03:19 23:59:40] ERROR asyncio  Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000019A04D27BE0>
+[2022:03:19 23:59:40] ERROR asyncio  Task was destroyed but it is pending!
+task: <Task pending name='Task-2' coro=<Spider.dispatch_slaver() running at F:\爬虫专用\framework_spider\Core\spider.py:204> wait_for=<Future cancelled>>
+[2022:03:19 23:59:40] ERROR asyncio  Task was destroyed but it is pending!
+task: <Task pending name='Task-3' coro=<Spider.dispatch_slaver() running at F:\爬虫专用\framework_spider\Core\spider.py:204> wait_for=<Future pending cb=[<TaskWakeupMethWrapper object at 0x0000019A04D5A1C0>()]>>
+[2022:03:19 23:59:40] ERROR asyncio  Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x0000019A04D3FCA0>, 7275.468)]']
+connector: <aiohttp.connector.TCPConnector object at 0x0000019A04D27C40>
