@@ -2,6 +2,7 @@
 from Core.spider import Spider
 import AJSpiderSetting
 
+
 class AJSpider(Spider):
     spider_name = 'AJSpider'
     start_urls = ['http://www.baidu.com']

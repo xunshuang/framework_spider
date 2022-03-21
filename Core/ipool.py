@@ -5,6 +5,7 @@ from Config import GlobalSetting
 import aiohttp
 import asyncio
 
+
 class IPool(object):
     def __init__(self):
         pass

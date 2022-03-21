@@ -2,6 +2,7 @@ import aiohttp
 import asyncio
 import pymysql
 
+
 def create_new_mysql(CONFIG,db='machinedb'):
     if CONFIG:
         mysql = pymysql.Connection(

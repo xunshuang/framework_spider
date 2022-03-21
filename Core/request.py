@@ -12,6 +12,7 @@ import time
 class Request(object):
     name = 'Request'
     delayTime = 0
+
     def __init__(self,
                  url,
                  method= "GET",

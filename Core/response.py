@@ -10,6 +10,7 @@ class Response():
         self._status = resp.status == 0 or 200<=resp.status<=299
         self._meta = meta
 
+
     @property
     def request_ok(self):
         if self._status:

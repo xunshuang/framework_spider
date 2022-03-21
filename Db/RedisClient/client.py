@@ -5,6 +5,7 @@ import redis
 from hashlib import md5
 from datetime import datetime,timedelta
 
+
 def create_new_redis(CONFIG,db=0):
     if CONFIG:
         redis_pool = redis.ConnectionPool(

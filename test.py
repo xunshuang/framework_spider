@@ -16,3 +16,4 @@ c = 3
 x = list(map(lambda x:x[0]+x[1],f()))
 
 print(x)
+

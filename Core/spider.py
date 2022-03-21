@@ -248,6 +248,7 @@ class Spider(object):
             self.oaLog.error(
                 f"{traceback.format_exc()}"
             )
+
         return callback_result,response
 
     async def dispatch_slaver(self):

@@ -49,6 +49,7 @@ class PipeLine(object):
             for dat in data:
                 args = list(dat.values())
 
+
                 try:
                     self.cursor.execute(
                         query=sql_insert,args=args

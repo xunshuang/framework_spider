@@ -6,6 +6,7 @@ sys.path.append('/workspace/framework_spider/')
 from Core.spider import Spider
 import MachineClassSpiderSetting
 
+
 class AJSpider(Spider):
     spider_name = 'MachineClassSpider'
     setting = MachineClassSpiderSetting

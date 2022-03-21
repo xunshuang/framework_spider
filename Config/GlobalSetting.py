@@ -1,6 +1,7 @@
 # coding:utf-8
 import os
 import sys
+
 sys.path.append('/workspace/framework_spider/')
 
 # 全局参数 会被 订制端覆盖

@@ -11,6 +11,7 @@ MYSQL_CONFIG_CUSTOMER = {
 
 }
 
+
 # 存储目标表格
 MYSQL_SAVE_TABLE_CUSTOMER = ''
 

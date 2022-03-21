@@ -15,6 +15,7 @@ MYSQL_CONFIG_CUSTOMER = {
 MYSQL_SAVE_TABLE_CUSTOMER = 'test'
 
 
+
 # 插入SQL语句
 MYSQL_SAVE_SQL_CUSTOMER = "INSERT INTO `test`(`md5hash`,`data`) VALUES (%s,%s)"
 
