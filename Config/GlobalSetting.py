@@ -8,7 +8,7 @@ sys.path.append('/workspace/framework_spider/')
 
 # 任务读取Mysql
 MYSQL_CONFIG = {
-    "host" : '127.0.0.1',
+    "host" : '120.53.104.160',
     "port" : 3306,
     "user" :'machineDb',
     "password" : 'wSFNnx8THjyirHdG',
@@ -44,10 +44,16 @@ REDIS_FILTER_CONFIG = {
 
 
 # 并发脚本数
-MAX_RUN_SCRIPT = 2
+MAX_RUN_SCRIPT = 1
+
+# 并发协程数
+WORKER_NUMBERS = 1
 
 # 时延数
 DELAY = 0
+
+# 最大并发数
+MAX_TASK = 1
 
 # 允许等待数
 ALLOW_DELAY_TIME = 5

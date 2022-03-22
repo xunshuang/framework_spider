@@ -20,8 +20,7 @@ class Spider(object):
     spider_name = None # 爬虫名称
     start_urls: list = None # 起始url
     headers = {} # headers
-    worker_numbers:int = 2 # 并发数
-    max_task = 10 # 协程列表最大长度
+
     setting = None # 客服端设置
     setting_global = GlobalSetting # 全局参数
     meta = None # meta
@@ -150,8 +149,8 @@ class Spider(object):
                 self.mysql_config = self.setting.MYSQL_CONFIG_CUSTOMER or self.setting_global.MYSQL_CONFIG # 初始化 mysql config
                 self.redis_config = self.setting.REDIS_CONFIG_CUSTOMER or self.setting_global.REDIS_CONFIG # 初始化 redis config
                 self.redis_filter_config = self.setting.REDIS_FILTER_CONFIG_CUSTOMER or self.setting_global.REDIS_FILTER_CONFIG # 初始化过滤redis config
-                self.worker_numbers = self.worker_numbers or (self.setting.WORKER_NUMBERS or 1)
-                self.max_task = self.max_task or (self.setting.MAX_TASK or 1)
+                self.worker_numbers = self.setting.WORKER_NUMBERS_CUSTOMER or self.setting_global.WORKER_NUMBERS
+                self.max_task = self.setting.MAX_TASK_CUSTOMER or self.setting_global.MAX_TASK
                 self.log_path = self.log_path or (self.setting.LOG_FILE_PATH_CUSTOMER or self.setting_global.LOG_FILE_PATH)
 
             except:
