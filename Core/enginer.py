@@ -23,6 +23,7 @@ class Enginer(object):
             'SELECT * FROM `machineSite`'
         )
         task_list = self.order_task(self.cursor.fetchall())
+        print("待执行任务",task_list)
         for _ in task_list:
             yield _
 
