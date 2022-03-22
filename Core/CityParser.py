@@ -8,6 +8,7 @@ class CityParser():
         self.mysql,self.cursor = create_new_mysql(CONFIG=GlobalSetting.MYSQL_CONFIG,db='machinedb')
 
 
+
     async def parse_city_gen(self,city,cityCode=None,deep=0):
         self.mysql.ping()
         if not cityCode:
@@ -62,4 +63,4 @@ class CityParser():
 
 if __name__ == '__main__':
     x = CityParser()
-    print(asyncio.run(x.parse_city(city="大连")))
+    print(asyncio.run(x.parse_city(city="重庆")))
