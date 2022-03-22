@@ -8,7 +8,7 @@ sys.path.append('/workspace/framework_spider/')
 
 # 任务读取Mysql
 MYSQL_CONFIG = {
-    "host" : '120.53.104.160',
+    "host" : '127.0.0.1',
     "port" : 3306,
     "user" :'machineDb',
     "password" : 'wSFNnx8THjyirHdG',
@@ -46,9 +46,11 @@ REDIS_FILTER_CONFIG = {
 # 并发脚本数
 MAX_RUN_SCRIPT = 2
 
-
+# 时延数
 DELAY = 0
 
+# 允许等待数
+ALLOW_DELAY_TIME = 5
 
 # 日志记录位置
 LOG_FILE_PATH = 'F:/爬虫专用/framework_spider/Log'

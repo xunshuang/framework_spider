@@ -34,7 +34,7 @@ class Spider(object):
     def __init__(self,loop):
         self.headers = self.headers or {} # headers
         self.request_session = ClientSession() # 初始化session
-        self.aio_queue = asyncio.queues.Queue(0) # 初始化消息队列
+        self.aio_queue = asyncio.queues.LifoQueue(0) # 初始化消息队列
         self.meta = self.meta or {} # meta
         self.mysql_config = None # mysql_config
         self.redis_config = None # redis_config
@@ -70,10 +70,13 @@ class Spider(object):
 
             self.cursor.execute(SQL)
             self.mysql.commit()
-            task_info = self.cursor.fetchall()[0]
-            self.all = self.all or (task_info.get('machineAllDataSum') or 0)
+            task_info = self.cursor.fetchall()
+            if task_info:
+                self.all = self.all or (task_info[0].get('machineAllDataSum') or 0)
 
-            self._id = task_info.get('id')
+                self._id = task_info[0].get('id')
+            else:
+                self.oaLog.warning("<_get_task_status> 未获取到任务信息,请将其添加到任务表格中")
 
     def _change_task_status(self):
         if self.sql_insert:
@@ -209,6 +212,7 @@ class Spider(object):
             callback=callback,
             oaLog=self.oaLog,
             delayTime=self.setting.DELAY_CUSTOMER or self.setting_global.DELAY,
+            allow_wait=self.setting.ALLOW_DELAY_TIME_CUSTOMER or self.setting_global.ALLOW_DELAY_TIME,
             encoding=encoding,
             headers=headers,
             meta=meta,

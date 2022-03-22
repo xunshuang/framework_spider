@@ -57,10 +57,13 @@ class CityParser():
                 cityList.append(
                     city_msg
                 )
-
+        result = []
+        for _ in cityListAll:
+            if _:
+                result.append(_)
         return [ _ for _ in cityListAll if _]
 
 
 if __name__ == '__main__':
     x = CityParser()
-    print(asyncio.run(x.parse_city(city="重庆")))
+    print(asyncio.run(x.parse_city(city="铜陵市")))

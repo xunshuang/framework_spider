@@ -11,7 +11,6 @@ import time
 
 class Request(object):
     name = 'Request'
-    delayTime = 0
 
     def __init__(self,
                  url,
@@ -23,6 +22,7 @@ class Request(object):
                  verify=True,
                  oaLog = None,
                  delayTime = 0,
+                 allow_wait = 10,
                  request_session=None,**kwargs):
         self.url = url
         self.method = method.upper()
@@ -34,7 +34,9 @@ class Request(object):
         self.client = request_session
         self.verify = verify
         self.oaLog = oaLog
-        self.delayTime =  self.delayTime or delayTime
+        self.delayTime =  delayTime
+        self.allow_wait = allow_wait
+
         self.aio_kwargs = kwargs
 
     @property
@@ -88,7 +90,8 @@ class Request(object):
         if self.delayTime:
             await asyncio.sleep(int(self.delayTime))
 
-        async with async_timeout.timeout(delay=5):
+        async with async_timeout.timeout(delay=self.allow_wait):
+
             resp = await self._start_requests()
 
         try:
