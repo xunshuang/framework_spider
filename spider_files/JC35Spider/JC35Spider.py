@@ -1,6 +1,6 @@
 # coding:utf-8
 from Core.spider import Spider
-import JC35SpiderSetting
+from spider_files.JC35Spider import JC35SpiderSetting
 from Config.SpiderData import doc
 from copy import deepcopy
 import re
@@ -75,7 +75,6 @@ class JC35Spider(Spider):
             yield self.request(method='GET', url=url, callback=self.get_pages,meta=meta)
 
     async def get_pages(self, response):
-        print(123)
         doc_ = deepcopy(doc)
         doc_["machineSiteId"] = 'A001'
         doc_["md5hash"] = md5(str(response.resp.url).encode()).hexdigest()
@@ -154,6 +153,8 @@ class JC35Spider(Spider):
         doc_["machineInfo"] = "\n".join(response.xpath('//div[@class="infoBot"]/p//text() | //div[@class="infoBot"]//text()').getall()).strip()
         doc_["machineInsertTime"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # yield doc_
+        yield doc_
 
-JC35Spider.start()
+# 外部调用启动入口
+def start():
+    JC35Spider.start()

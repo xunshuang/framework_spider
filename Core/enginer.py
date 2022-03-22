@@ -31,8 +31,11 @@ class Enginer(object):
     def order_task(self,taskList):
         taskList = sorted(taskList,key=lambda x:x['machineLastTime']) # 按照后执行时间排序，优先执行离现在时间长的
         for task in taskList[:]:
-            if task["machineLastTime"] > datetime.now() - timedelta(days=task['machineT']):
-                taskList.remove(task)
+            try:
+                if task["machineLastTime"] > datetime.now() - timedelta(days=task['machineT']):
+                    taskList.remove(task)
+            except:
+                pass
         return taskList
 
     # 读取所有待命爬虫
@@ -55,4 +58,3 @@ class Enginer(object):
         f = cls()
         f.loop()
 
-Enginer.start()
