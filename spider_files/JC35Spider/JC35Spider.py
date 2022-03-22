@@ -1,4 +1,10 @@
 # coding:utf-8
+import os
+import sys
+
+sys.path.append('/workspace/framework_spider/')
+
+
 from Core.spider import Spider
 from spider_files.JC35Spider import JC35SpiderSetting
 from Config.SpiderData import doc
