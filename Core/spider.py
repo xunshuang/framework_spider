@@ -7,6 +7,7 @@ from types import AsyncGeneratorType,CoroutineType
 
 from Core.request import *
 from Core.pipeline import PipeLine
+from Core.CityParser import CityParser
 from Db.MySQLClient.client import create_new_mysql
 from Db.RedisClient.client import create_new_redis
 from Config import GlobalSetting
@@ -31,13 +32,13 @@ class Spider(object):
     data_type = 0 # 数据类别 0:机床数据 1:机床公司数据 2:机床公司舆情 3:行业热点新闻
 
     def __init__(self,loop):
-        self.headers = self.headers or {}
-        self.request_session = ClientSession()
-        self.aio_queue = asyncio.queues.Queue(0)
-        self.meta = self.meta or {}
-        self.mysql_config = None
-        self.redis_config = None
-        self.redis_filter_config = None
+        self.headers = self.headers or {} # headers
+        self.request_session = ClientSession() # 初始化session
+        self.aio_queue = asyncio.queues.Queue(0) # 初始化消息队列
+        self.meta = self.meta or {} # meta
+        self.mysql_config = None # mysql_config
+        self.redis_config = None # redis_config
+        self.redis_filter_config = None # redis_过滤
         self.spider_name = self.spider_name or None
         self.read_setting()
         self.pipeline = PipeLine
@@ -55,6 +56,8 @@ class Spider(object):
         self.update = 0 # 该爬虫单次更新量
         self._id = None # site id
         self._get_task_status()
+
+        self.CityParser = CityParser()
 
     def _get_task_status(self):
         if self.spider_name and self.sql_insert:
