@@ -163,4 +163,5 @@ class JC35Spider(Spider):
 
 # 外部调用启动入口
 def start():
+    print(123)
     JC35Spider.start()
