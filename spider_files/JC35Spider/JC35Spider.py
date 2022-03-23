@@ -37,26 +37,30 @@ class JC35Spider(Spider):
     async def start_requests(self):
         start_urls = ['https://used.jc35.com/chanpin-0.html']
         for url in start_urls:
-            print(url)
+            print(f"第一层 url:{url}")
             yield self.request(method='GET', url=url, callback=self.parse)
 
     async def parse(self, response):
         all_class = response.xpath('//div[@class="proLists"]//li//a')
         for _class in all_class:
             url = _class.xpath('.//@href').get()
+            print(f"第二层 url:{url}")
+
             yield self.request(method='GET', url=url, callback=self.parse2)
 
     async def parse2(self, response):
         all_class = response.xpath('//div[@class="proLists"]//li//a')
         for _class in all_class:
             url = _class.xpath('.//@href').get()
+            print(f"第三层 url:{url}")
+
             yield self.request(method='GET', url=url, callback=self.parse3)
 
     async def parse3(self, response):
         all_class = response.xpath('//div[@class="proLists"]//li//a')
         for _class in all_class:
             url = _class.xpath('.//@href').get()
-            # yield self.request(method='GET', url=url, callback=self.get_list)
+            yield self.request(method='GET', url=url, callback=self.get_list)
             yield self.request(method='GET', url=url, callback=self.fetch_page_one)
 
     async def fetch_page_one(self, response):
@@ -69,11 +73,13 @@ class JC35Spider(Spider):
         if max_page >= 2:
             for page in range(2, int(max_page) + 1):
                 url = re.sub('\.html', f'_p{page}.html', str(url_base))
-
+                print(f"翻页 url:{url}")
                 yield self.request(method='GET', url=url, callback=self.get_list)
 
     async def get_list(self, response):
         all_data = response.xpath('//div[@class="listMain"]//li')
+        print(f"列表页 url:{response.resp.url}")
+
         for _ in all_data:
             url = _.xpath('./p/a[@title]/@href').get()
             meta = {
@@ -82,6 +88,7 @@ class JC35Spider(Spider):
             yield self.request(method='GET', url=url, callback=self.get_pages,meta=meta)
 
     async def get_pages(self, response):
+        print(f"详情页 url:{response.resp.url}")
         doc_ = deepcopy(doc)
         doc_["machineSiteId"] = 'A001'
         doc_["md5hash"] = md5(str(response.resp.url).encode()).hexdigest()
