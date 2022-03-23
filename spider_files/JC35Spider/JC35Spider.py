@@ -36,7 +36,7 @@ class JC35Spider(Spider):
 
     async def start_requests(self):
         start_urls = ['https://used.jc35.com/chanpin-0.html']
-        # start_urls = ['https://used.jc35.com/chanpin-3851.html']
+        start_urls = ['https://used.jc35.com/chanpin-3851.html']
         for url in start_urls:
             yield self.request(method='GET', url=url, callback=self.parse)
 
@@ -82,6 +82,7 @@ class JC35Spider(Spider):
             meta = {
                 "machinePublishTime":_.xpath('./div[@class="yprice"]/text()').get().strip()
             }
+            url = "https://used.jc35.com/chanpin/3752.html"
             yield self.request(method='GET', url=url, callback=self.get_pages,meta=meta)
 
     async def get_pages(self, response):
@@ -98,7 +99,8 @@ class JC35Spider(Spider):
 
             doc_["machineModel"] = machineModel[0] if  machineModel else ""
 
-
+            machinePrice = response.xpath('//div[@class="price"]/b/text()').getall()
+            doc_["machinePrice"] = machinePrice[0].strip() if machinePrice else "面议"
             machineStatus = re.findall('状态：<span>(.*?)</span>', response.respText, flags=re.S)
             if machineStatus:
                 doc_["machineStatus"] = {
@@ -164,6 +166,9 @@ class JC35Spider(Spider):
             doc_["machinePublishTime"] = datetime.strptime(response.meta["machinePublishTime"],"%Y.%m.%d").strftime("%Y-%m-%d %H:%M:%S")
 
             doc_["machineInfo"] = "\n".join(response.xpath('//div[@class="infoBot"]/p//text() | //div[@class="infoBot"]//text()').getall()).strip()
+
+
+            doc_["machineInfo"] = doc_["machineInfo"].encode()
             doc_["machineInsertTime"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             print(doc_["machineTitle"])
             yield doc_

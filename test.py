@@ -3,17 +3,23 @@
 
 import inspect
 
+import pymysql
 
-def f():
-    return [1, 2, 3]
+mysql = pymysql.Connection(
+                    host="120.53.104.160",
+                    port=3306,
+                    user="machineDb",
+                    password="wSFNnx8THjyirHdG",
+                    db="machinedb"
+                )
+
+cursor = mysql.cursor(cursor=pymysql.cursors.DictCursor)
 
 
-a = 1
-b = 2
-c = 3
+cursor.execute('select `machineInfo` from `machineData`')
 
+mysql.commit()
 
-x = list(map(lambda x:x[0]+x[1],f()))
+x = cursor.fetchall()
 
-print(x)
-
+print(x[0]['machineInfo'].decode())

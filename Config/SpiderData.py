@@ -7,6 +7,7 @@ doc = {
     "machineTitleHash":"",
     "machineTitle":"",
     "machineModel":"",
+    "machinePrice":"",
     "machineStatus":None,
     "machineLevelOne":"",
     "machineLevelTwo":"",

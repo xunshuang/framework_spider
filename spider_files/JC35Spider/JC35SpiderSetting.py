@@ -22,6 +22,7 @@ MYSQL_SAVE_SQL_CUSTOMER = """INSERT INTO `machineData`(
 `machineTitleHash`,
 `machineTitle`,
 `machineModel`,
+`machinePrice`,
 `machineStatus`,
 `machineLevelOne`,
 `machineLevelTwo`,
@@ -40,7 +41,7 @@ MYSQL_SAVE_SQL_CUSTOMER = """INSERT INTO `machineData`(
 `machinePublishTime`,
 `machineInfo`,
 `machineInsertTime`
-) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 
 # 更新SQL语句
 MYSQL_UPDATE_SQL_CUSTOMER = """UPDATE `machineData`
@@ -48,6 +49,7 @@ SET `machineSource` = %s,
 `machineTitleHash` = %s,
 `machineTitle` = %s,
 `machineModel` = %s,
+`machinePrice` = %s,
 `machineStatus` = %s,
 `machineLevelOne` = %s,
 `machineLevelTwo` = %s,

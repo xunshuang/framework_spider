@@ -70,8 +70,8 @@ class PipeLine(object):
                         self.mysql.rollback()
                 except:
                     import traceback
-                    print(traceback.format_exc())
-                    raise Exception("存储错误")
+                    self.oaLog.error(traceback.format_exc())
+
 
             self.oaLog.info(f'<save_to_mysql> 入库数据长度:{len(data)} '
                             f'\n\t成功入库条数:{self.insert}'
