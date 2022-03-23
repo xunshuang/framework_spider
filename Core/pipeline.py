@@ -38,7 +38,6 @@ class PipeLine(object):
 
     def save_to_mysql(self,data,sql_insert,sql_update,tableName):
         if sql_insert:
-            self.oaLog.info(f'<save_to_mysql> 存储表名称为:[{tableName}] 存储语句为:[{sql_insert}]')
             _fail = 0
 
             # 默认十条一存储，降低网络 I/O 频率
@@ -70,6 +69,8 @@ class PipeLine(object):
                         _fail += 1
                         self.mysql.rollback()
                 except:
+                    import traceback
+                    print(traceback.format_exc())
                     raise Exception("存储错误")
 
             self.oaLog.info(f'<save_to_mysql> 入库数据长度:{len(data)} '
