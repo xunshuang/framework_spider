@@ -59,5 +59,5 @@ MAX_TASK = 1
 ALLOW_DELAY_TIME = 5
 
 # 日志记录位置
-LOG_FILE_PATH = 'F:/爬虫专用/framework_spider/Log'
-# LOG_FILE_PATH = '/workspace/framework_spider/Log'
+# LOG_FILE_PATH = 'F:/爬虫专用/framework_spider/Log'
+LOG_FILE_PATH = '/workspace/framework_spider/Log'

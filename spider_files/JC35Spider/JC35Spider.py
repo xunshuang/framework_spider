@@ -37,14 +37,12 @@ class JC35Spider(Spider):
     async def start_requests(self):
         start_urls = ['https://used.jc35.com/chanpin-0.html']
         for url in start_urls:
-            print(f"第一层 url:{url}")
             yield self.request(method='GET', url=url, callback=self.parse)
 
     async def parse(self, response):
         all_class = response.xpath('//div[@class="proLists"]//li//a')
         for _class in all_class:
             url = _class.xpath('.//@href').get()
-            print(f"第二层 url:{url}")
 
             yield self.request(method='GET', url=url, callback=self.parse2)
 
@@ -52,7 +50,6 @@ class JC35Spider(Spider):
         all_class = response.xpath('//div[@class="proLists"]//li//a')
         for _class in all_class:
             url = _class.xpath('.//@href').get()
-            print(f"第三层 url:{url}")
 
             yield self.request(method='GET', url=url, callback=self.parse3)
 
@@ -73,7 +70,6 @@ class JC35Spider(Spider):
         if max_page >= 2:
             for page in range(2, int(max_page) + 1):
                 url = re.sub('\.html', f'_p{page}.html', str(url_base))
-                print(f"翻页 url:{url}")
                 yield self.request(method='GET', url=url, callback=self.get_list)
 
     async def get_list(self, response):

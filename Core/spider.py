@@ -276,7 +276,6 @@ class Spider(object):
                             )
 
                 worker_task = []
-            print(self.aio_queue.qsize())
             self.aio_queue.task_done()
 
 
