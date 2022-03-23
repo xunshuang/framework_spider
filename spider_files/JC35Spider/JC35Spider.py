@@ -36,6 +36,7 @@ class JC35Spider(Spider):
 
     async def start_requests(self):
         start_urls = ['https://used.jc35.com/chanpin-0.html']
+        # start_urls = ['https://used.jc35.com/chanpin-3851.html']
         for url in start_urls:
             yield self.request(method='GET', url=url, callback=self.parse)
 
@@ -142,17 +143,17 @@ class JC35Spider(Spider):
             machineQuality = re.findall('产品成色：<span>(.*?)</span>', response.respText, flags=re.S)
             doc_["machineQuality"] = machineQuality[0] if machineQuality else ""
 
-            machineContact = re.findall('联系人：(.*?)<span>', response.xpath('//div[@class="contact"]/p//text()').get(), flags=re.S)
-            doc_["machineContact"] = machineContact[0] if machineContact else ""
+            machineContact = re.findall('联系人：(.*)', response.xpath('//div[@class="contact"]/p//text()').get(), flags=re.S)
+            doc_["machineContact"] = machineContact[0].strip() if machineContact else ""
 
             if doc_["machineContact"]:
                 doc_["machineContactType"] = 1 if len(doc_["machineContact"]) <=5 else 2
             else:
                 doc_["machineContactType"] = 3
 
-            machineContactInfo = re.findall('联系.*?：(.*)', "".join(response.xpath('//div[@class="contact"]/p//text()').getall()), flags=re.S)
+            machineContactInfo = re.findall('联系.*?：(.*)', "".join(response.xpath('//div[@class="contact"]/p/span/text()').getall()), flags=re.S)
 
-            doc_["machineContactInfo"] = machineContactInfo[0] if machineContactInfo else ""
+            doc_["machineContactInfo"] = machineContactInfo[0].strip() if machineContactInfo else ""
 
             doc_["machineContactWay"] = 5
             doc_["machineUrl"] = str(response.resp.url)

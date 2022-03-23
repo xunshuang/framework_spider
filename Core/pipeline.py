@@ -31,8 +31,8 @@ class PipeLine(object):
         self.update = 0 # 该爬虫单次更新量
 
 
-    def read_task_status(self,_all):
-        return _all+self.insert,self.insert,self.update
+    def read_task_status(self):
+        return self.update
 
 
 
@@ -56,12 +56,12 @@ class PipeLine(object):
                     self.mysql.commit()
                     self.insert += 1
                 except pymysql.err.IntegrityError as e:
-                    _id = int(re.findall("Duplicate entry '(\d+)' for key 'md5'",str(e))[0])
+                    _id = re.findall("Duplicate entry '(.*?)' for key", str(e.args[1]))[0]
 
                     self.mysql.rollback()
                     try:
                         self.cursor.execute(
-                            sql_update+ f" WHERE `md5hash` = '{_id}'", args[1:]
+                            sql_update, args[2:] + [_id]
                         )
                         self.mysql.commit()
                         self.update += 1

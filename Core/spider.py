@@ -51,17 +51,31 @@ class Spider(object):
         self.start_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S') # 程序开始时间
         self.end_time = None # 程序结束时间
         self.all = 0 # 该爬虫信源总量
-        self.insert = 0 # 该爬虫单次插入量
         self.update = 0 # 该爬虫单次更新量
-        self._id = None # site id
+        self.machineSiteId = None # site id
         self._get_task_status()
 
         self.CityParser = CityParser()
 
+    # 读取数据条数
+    def _read_data_sum(self):
+        # 读取最大条数
+        SQL_ALL = f'SELECT COUNT(`id`) FROM `machineData` WHERE `machineSiteId` = "{self.machineSiteId}";'
+        self.cursor.execute(SQL_ALL)
+        self.mysql.commit()
+        all_info = self.cursor.fetchone()
+        if all_info:
+            all_ = all_info["COUNT(`id`)"]
+
+            return all_
+        else:
+            return 0
+
+    # 获取 任务状态
     def _get_task_status(self):
         if self.spider_name and self.sql_insert:
             SQL = 'SELECT ' \
-                  '`id`,' \
+                  '`machineSiteId`,' \
                   '`machineAllDataSum`' \
                   f'FROM `machineSite` WHERE `machineSpiderName` = "{self.spider_name}"'
 
@@ -71,25 +85,31 @@ class Spider(object):
             self.mysql.commit()
             task_info = self.cursor.fetchall()
             if task_info:
-                self.all = self.all or (task_info[0].get('machineAllDataSum') or 0)
+                self.all = task_info[0].get('machineAllDataSum') or 0
+                self.machineSiteId = task_info[0].get('machineSiteId')
 
-                self._id = task_info[0].get('id')
+
+
+
             else:
                 self.oaLog.warning("<_get_task_status> 未获取到任务信息,请将其添加到任务表格中")
 
+    # 更改任务状态
     def _change_task_status(self):
         if self.sql_insert:
             costTime = (datetime.strptime(self.end_time,"%Y-%m-%d %H:%M:%S") -
                         datetime.strptime(self.start_time,"%Y-%m-%d %H:%M:%S")).total_seconds()
             self.oaLog.info("<_get_task_status> 读取任务状态成功")
+
+            all_ = self._read_data_sum()
             SQL_U = 'UPDATE `machineSite` SET `machineAllDataSum`= "%s",' \
                     '`machineInsertDataSum`= "%s",' \
                     '`machineUpdateDataSum`= "%s",' \
                     '`machineLastTime`= "%s",' \
                     '`machineCancelTime`= "%s",' \
                     '`machineCostTime`= "%s" ' \
-                    'WHERE `id` = "%s"' %(
-                self.all,self.insert,self.update,self.start_time,self.end_time,int(costTime),self._id
+                    'WHERE `machineSiteId` = "%s"' %(
+                all_,(self.all -all_),self.update,self.start_time,self.end_time,int(costTime),self.machineSiteId
             )
 
             try:
@@ -302,7 +322,7 @@ class Spider(object):
                     spiderName = self.spider_name
                 )
                 pipeline.save_to_mysql(data=callback_result,sql_insert=self.sql_insert,sql_update = self.sql_update,tableName=self.sql_table)
-                self.all, self.insert, self.update = pipeline.read_task_status(self.all)
+                self.update += pipeline.read_task_status()
 
             elif isinstance(callback_result,list):
                 pipeline = self.pipeline(
@@ -320,7 +340,7 @@ class Spider(object):
 
                 )
                 pipeline.save_to_mysql(data=callback_result,sql_insert=self.sql_insert,sql_update = self.sql_update,tableName=self.sql_table)
-                self.all, self.insert, self.update = pipeline.read_task_status(self.all)
+                self.update += pipeline.read_task_status()
             elif isinstance(callback_result,AsyncGeneratorType):
                 await self.process_results(callback_result,response)
 
