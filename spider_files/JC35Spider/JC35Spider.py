@@ -36,7 +36,6 @@ class JC35Spider(Spider):
 
     async def start_requests(self):
         start_urls = ['https://used.jc35.com/chanpin-0.html']
-        start_urls = ['https://used.jc35.com/chanpin-3851.html']
         for url in start_urls:
             yield self.request(method='GET', url=url, callback=self.parse)
 
@@ -82,7 +81,6 @@ class JC35Spider(Spider):
             meta = {
                 "machinePublishTime":_.xpath('./div[@class="yprice"]/text()').get().strip()
             }
-            url = "https://used.jc35.com/chanpin/3752.html"
             yield self.request(method='GET', url=url, callback=self.get_pages,meta=meta)
 
     async def get_pages(self, response):
