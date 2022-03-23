@@ -92,4 +92,5 @@ ALLOW_DELAY_TIME_CUSTOMER = 20
 MAX_TASK_CUSTOMER = 10
 
 # 日志记录位置
-LOG_FILE_PATH_CUSTOMER = 'F:/爬虫专用/framework_spider/Log'
+# LOG_FILE_PATH_CUSTOMER = 'F:/爬虫专用/framework_spider/Log'
+LOG_FILE_PATH_CUSTOMER = '/workspace/framework_spider/Log'

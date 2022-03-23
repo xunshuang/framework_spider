@@ -196,7 +196,7 @@ class Spider(object):
         request_session=None,
         **aiohttp_kwargs,
     ):
-        """Init a Request class for crawling html"""
+        """初始化一个Request类"""
         headers = headers or (self.headers or {})
         meta = meta or {}
         custom_settings = custom_settings or {}
