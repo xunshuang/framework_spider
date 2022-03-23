@@ -159,7 +159,7 @@ class JC35Spider(Spider):
 
         doc_["machineInfo"] = "\n".join(response.xpath('//div[@class="infoBot"]/p//text() | //div[@class="infoBot"]//text()').getall()).strip()
         doc_["machineInsertTime"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
+        print(doc_["machineTitle"])
         yield doc_
 
 # 外部调用启动入口
