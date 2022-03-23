@@ -37,6 +37,7 @@ class JC35Spider(Spider):
     async def start_requests(self):
         start_urls = ['https://used.jc35.com/chanpin-0.html']
         for url in start_urls:
+            print(url)
             yield self.request(method='GET', url=url, callback=self.parse)
 
     async def parse(self, response):
@@ -163,5 +164,8 @@ class JC35Spider(Spider):
 
 # 外部调用启动入口
 def start():
-    print(123)
     JC35Spider.start()
+
+
+if __name__ == '__main__':
+    start()
