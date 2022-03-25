@@ -3,5 +3,6 @@
 
 from Core.enginer import Enginer
 
-# 所有爬虫按设置启动
-Enginer.start()
+while True:
+    # 所有爬虫按设置启动
+    Enginer.start()

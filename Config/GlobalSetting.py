@@ -29,7 +29,7 @@ MYSQL_UPDATE_SQL = ""
 
 # 存储 Redis
 REDIS_CONFIG = {
-    "host": '127.0.0.1',
+    "host": '120.53.104.160',
     "port": 6379,
     "password": 'XunShu4ng'
 }
@@ -37,7 +37,7 @@ REDIS_CONFIG = {
 
 # 过滤 Redis
 REDIS_FILTER_CONFIG = {
-    "host": '127.0.0.1',
+    "host": '120.53.104.160',
     "port": 6379,
     "password": 'XunShu4ng'
 }

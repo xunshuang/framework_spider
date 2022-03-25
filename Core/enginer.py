@@ -2,11 +2,12 @@
 import asyncio
 import aiohttp
 import redis
-
+import time
 from datetime import datetime,timedelta
 
 from Db.RedisClient.client import create_new_redis
 from Db.MySQLClient.client import create_new_mysql
+from Core.DingTalkRobot import DingTalk
 from Config import GlobalSetting
 
 from concurrent.futures import ThreadPoolExecutor
@@ -15,6 +16,8 @@ class Enginer(object):
     def __init__(self):
         self.redis_cli = create_new_redis(CONFIG=GlobalSetting.REDIS_CONFIG,db=0) # 0_DB
         self.mysql,self.cursor = create_new_mysql(CONFIG=GlobalSetting.MYSQL_CONFIG,db='machinedb') # mysql db
+        self.DingTalk = DingTalk()
+        self.task_list = None
 
     # 获取起始任务
     def read_task(self):
@@ -22,11 +25,21 @@ class Enginer(object):
         self.cursor.execute(
             'SELECT * FROM `machineSite`'
         )
-        task_list = self.order_task(self.cursor.fetchall())
-        print("待执行任务",task_list)
-        for _ in task_list:
-            yield _
+        task_list_raw = self.cursor.fetchall()
+        task_list = self.order_task(task_list_raw)
+        self.task_list = task_list
+        if task_list:
+            crawlerText = ""
+            crawlerText += f"⭐爬虫框架总任务数为:{len(task_list_raw)}个⭐\n"
+            crawlerText += f"⭐待执行总任务数为:{len(task_list)}个⭐\n"
+            crawlerText += "\n\n".join([ f"\t\t\t--> 爬虫名称:【{_['machineSpiderName']}】\n\t\t\t--> 目标网站名称:【{_['machineSiteName']}】" for _ in task_list])
+            self.DingTalk.send("15566528051", f"\n{crawlerText}")
 
+            for _ in task_list:
+                yield _
+        else:
+            # time.sleep(60)
+            yield
 
     # 给任务执行时间排序
     def order_task(self,taskList):
@@ -38,6 +51,30 @@ class Enginer(object):
             except:
                 pass
         return taskList
+
+    # 单轮任务结束后，发送钉钉预警单
+    def send_ding_msg(self):
+        msg = "👻本轮任务爬取结果统计👻\n"
+
+        sql = 'SELECT * FROM `machineSite` WHERE `machineSiteId` = "%s";'
+        args = [ (_["machineSiteId"],) for _ in self.task_list]
+        results = []
+        for arg in args:
+            s = sql %(arg[0])
+            self.cursor.execute(s)
+
+            self.mysql.commit()
+            results.append(self.cursor.fetchall()[0])
+
+        for res in results:
+            msg += f"总量:{res['machineAllDataSum'] or 0}\n" \
+                   f"新增:{res['machineInsertDataSum'] or 0}\n" \
+                   f"更新:{res['machineUpdateDataSum'] or 0}\n" \
+                   f"爬虫名称:【{res['machineSpiderName']}】\n" \
+                   f"目标网站:【{res['machineSiteName']}】\n" \
+                   f"耗时:【{res['machineCostTime'] or 0}】\n\n"
+
+        self.DingTalk.send("15566528051", f"\n{msg}")
 
     # 读取所有待命爬虫
     def get_all_spider(self,taskMsg):
@@ -53,9 +90,12 @@ class Enginer(object):
             exe.map(
                 self.send_work,[ _ for _ in self.read_task()]
             )
+        self.send_ding_msg()
 
     @classmethod
     def start(cls):
         f = cls()
         f.loop()
 
+if __name__ == '__main__':
+    Enginer.start()

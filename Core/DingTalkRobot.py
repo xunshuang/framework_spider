@@ -29,11 +29,11 @@ class DingTalk():
             },
             "text": {
                 "content": """
-[ **SureFly机床信息爬虫平台** ]
+[ ⭐⭐⭐⭐⭐  SureFly机床信息爬虫平台  ⭐⭐⭐⭐⭐ ]
 %s
 
-(自动消息，无需回复，有问题，请@管理员)
--- By MachineRobot
+(自动消息，无需回复，有问题请📞管理员)
+                            🖊-- By MachineRobot ♥
                 """
             },
             "msgtype": "text"

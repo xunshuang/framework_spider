@@ -109,7 +109,7 @@ class Spider(object):
                     '`machineCancelTime`= "%s",' \
                     '`machineCostTime`= "%s" ' \
                     'WHERE `machineSiteId` = "%s"' %(
-                all_,(self.all -all_),self.update,self.start_time,self.end_time,int(costTime),self.machineSiteId
+                all_,(all_-self.all),self.update,self.start_time,self.end_time,int(costTime),self.machineSiteId
             )
 
             try:
