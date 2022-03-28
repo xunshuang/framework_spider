@@ -7,8 +7,9 @@ sys.path.append('/workspace/framework_spider/')
 # 全局参数 会被 订制端覆盖
 
 # 任务读取Mysql
+#     "host" : '120.53.104.160',
 MYSQL_CONFIG = {
-    "host" : '120.53.104.160',
+    "host" : '127.0.0.1',
     "port" : 3306,
     "user" :'machineDb',
     "password" : 'wSFNnx8THjyirHdG',
@@ -59,5 +60,5 @@ MAX_TASK = 1
 ALLOW_DELAY_TIME = 5
 
 # 日志记录位置
-LOG_FILE_PATH = 'F:/爬虫专用/framework_spider/Log'
-# LOG_FILE_PATH = '/workspace/framework_spider/Log'
+# LOG_FILE_PATH = 'F:/爬虫专用/framework_spider/Log'
+LOG_FILE_PATH = '/workspace/framework_spider/Log'
