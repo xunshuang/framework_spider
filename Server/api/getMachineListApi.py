@@ -6,7 +6,8 @@ from Config.GlobalSetting import MYSQL_CONFIG
 from datetime import datetime
 import random
 
-def get_day_recommend(mysql,cursor):
+# 随机推荐10个
+def get_random_recommend(mysql,cursor):
     sql_max_count = 'SELECT MAX(`id`) FROM `machineData`;'
     cursor.execute(sql_max_count)
     mysql.commit()
@@ -15,7 +16,7 @@ def get_day_recommend(mysql,cursor):
     resultList = []
     while True:
         random_args = random.randint(1, max_count)
-        sql_random_choice = 'SELECT * FROM `machineData` LIMIT %s,10'
+        sql_random_choice = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime` FROM `machineData` LIMIT %s,10'
 
         cursor.execute(sql_random_choice,random_args)
         mysql.commit()
@@ -31,6 +32,39 @@ def get_day_recommend(mysql,cursor):
     return random.choices(resultList,k=10)
 
 
+# 获取最大条数
+def get_list_page(mysql,cursor,machineSiteId=None):
+    if machineSiteId:
+        sql_max_count = 'SELECT COUNT(`id`) FROM `machineData` WHERE `machineSiteId` =%s;'
+        cursor.execute(sql_max_count,machineSiteId)
+    else:
+        sql_max_count = 'SELECT COUNT(`id`) FROM `machineData`;'
+        cursor.execute(sql_max_count)
+
+    mysql.commit()
+    max_count = cursor.fetchone()['COUNT(`id`)']
+    return max_count
+
+
+# 翻页
+def roll_page(mysql,cursor,page,pagesize,machineSiteId=None):
+    if machineSiteId:
+        sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime` ' \
+                        'FROM `machineData` WHERE `machineSiteId` = "%s" LIMIT %s,%s' %(machineSiteId,str(page*pagesize),str(pagesize))
+
+        cursor.execute(sql_roll_page)
+        mysql.commit()
+
+        return cursor.fetchall()
+    else:
+        sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime` ' \
+                        'FROM `machineData` LIMIT %s,%s' %(str(page * pagesize), str(pagesize))
+
+        cursor.execute(sql_roll_page)
+        mysql.commit()
+
+        return cursor.fetchall()
+
 if __name__ == '__main__':
     mysql, cursor = create_new_mysql(CONFIG=MYSQL_CONFIG)
-    print(get_day_recommend(mysql,cursor))
+    print(roll_page(mysql,cursor,1,20,machineSiteId='A002'))
