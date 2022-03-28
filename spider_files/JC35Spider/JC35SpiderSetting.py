@@ -37,6 +37,8 @@ MYSQL_SAVE_SQL_CUSTOMER = """INSERT INTO `machineData`(
 `machineInsertTime`
 ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 
+
+
 # 更新SQL语句
 MYSQL_UPDATE_SQL_CUSTOMER = """UPDATE `machineData`
 SET `machineSource` = %s,

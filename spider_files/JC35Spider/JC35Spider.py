@@ -25,7 +25,7 @@ class JC35Spider(Spider):
         'sec-ch-ua-platform': '"Windows"',
         'Upgrade-Insecure-Requests': '1',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'Accept': 'text/templates,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
         'Sec-Fetch-Site': 'same-origin',
         'Sec-Fetch-Mode': 'navigate',
         'Sec-Fetch-User': '?1',
@@ -69,7 +69,7 @@ class JC35Spider(Spider):
 
         if max_page >= 2:
             for page in range(2, int(max_page) + 1):
-                url = re.sub('\.html', f'_p{page}.html', str(url_base))
+                url = re.sub('\.templates', f'_p{page}.templates', str(url_base))
                 yield self.request(method='GET', url=url, callback=self.get_list)
 
     async def get_list(self, response):

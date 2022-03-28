@@ -90,12 +90,12 @@ class Enginer(object):
             exe.map(
                 self.send_work,[ _ for _ in self.read_task()]
             )
-        self.send_ding_msg()
 
     @classmethod
     def start(cls):
         f = cls()
         f.loop()
+        f.send_ding_msg()
 
 if __name__ == '__main__':
     Enginer.start()

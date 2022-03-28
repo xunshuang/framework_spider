@@ -35,6 +35,11 @@ class PipeLine(object):
         return self.update
 
 
+    def auto_increment(self,tableName):
+        sql_auto = f"alter table {tableName} auto_increment=2;"
+        self.cursor.execute(sql_auto)
+        self.mysql.commit()
+
 
     def save_to_mysql(self,data,sql_insert,sql_update,tableName):
         if sql_insert:
@@ -56,9 +61,9 @@ class PipeLine(object):
                     self.mysql.commit()
                     self.insert += 1
                 except pymysql.err.IntegrityError as e:
+                    self.auto_increment(tableName)
                     _id = re.findall("Duplicate entry '(.*?)' for key", str(e.args[1]))[0]
 
-                    self.mysql.rollback()
                     try:
                         self.cursor.execute(
                             sql_update, args[2:] + [_id]
