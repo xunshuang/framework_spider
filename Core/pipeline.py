@@ -41,6 +41,18 @@ class PipeLine(object):
         self.mysql.commit()
 
 
+    def search_id(self,tableName,md5hash):
+        sql_search = 'SELECT `id` FROM `%s` WHERE `md5hash` = "%s";' %(tableName,md5hash)
+        self.cursor.execute(sql_search)
+        self.mysql.commit()
+        _ = self.cursor.fetchall()
+        if _:
+            return False
+        else:
+            return True
+
+
+
     def save_to_mysql(self,data,sql_insert,sql_update,tableName):
         if sql_insert:
             _fail = 0
@@ -52,28 +64,26 @@ class PipeLine(object):
             self.mysql.ping()
             for dat in data:
                 args = list(dat.values())
-
-
                 try:
-                    self.cursor.execute(
-                        query=sql_insert,args=args
-                    )
-                    self.mysql.commit()
-                    self.insert += 1
-                except pymysql.err.IntegrityError as e:
-                    self.auto_increment(tableName)
-                    _id = re.findall("Duplicate entry '(.*?)' for key", str(e.args[1]))[0]
-
-                    try:
+                    if self.search_id(tableName,dat["md5hash"]):
                         self.cursor.execute(
-                            sql_update, args[2:] + [_id]
+                            query=sql_insert, args=args
                         )
                         self.mysql.commit()
-                        self.update += 1
-                    except:
-                        _fail += 1
-                        self.mysql.rollback()
+                        self.insert += 1
+                    else:
+                        try:
+                            self.cursor.execute(
+                                sql_update, args[2:] + [dat["md5hash"]]
+                            )
+                            self.mysql.commit()
+                            self.update += 1
+                        except:
+                            self.mysql.rollback()
+
+
                 except:
+                    _fail += 1
                     import traceback
                     self.oaLog.error(traceback.format_exc())
 

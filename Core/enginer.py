@@ -38,7 +38,7 @@ class Enginer(object):
             for _ in task_list:
                 yield _
         else:
-            # time.sleep(60)
+            time.sleep(60)
             yield
 
     # 给任务执行时间排序
