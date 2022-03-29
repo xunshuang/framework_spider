@@ -45,7 +45,7 @@ REDIS_FILTER_CONFIG = {
 
 
 # 并发脚本数
-MAX_RUN_SCRIPT = 1
+MAX_RUN_SCRIPT = 3
 
 # 并发协程数
 WORKER_NUMBERS = 1
