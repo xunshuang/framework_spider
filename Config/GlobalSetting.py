@@ -45,7 +45,7 @@ REDIS_FILTER_CONFIG = {
 
 
 # 并发脚本数
-MAX_RUN_SCRIPT = 2
+MAX_RUN_SCRIPT = 1
 
 # 并发协程数
 WORKER_NUMBERS = 1
@@ -57,8 +57,8 @@ DELAY = 0
 MAX_TASK = 1
 
 # 允许等待数
-ALLOW_DELAY_TIME = 5
+ALLOW_DELAY_TIME = 1
 
 # 日志记录位置
-# LOG_FILE_PATH = 'F:/爬虫专用/framework_spider/Log'
-LOG_FILE_PATH = '/workspace/framework_spider/Log'
+LOG_FILE_PATH = 'F:/爬虫专用/framework_spider/Log'
+# LOG_FILE_PATH = '/workspace/framework_spider/Log'

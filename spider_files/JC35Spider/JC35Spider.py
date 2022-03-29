@@ -40,27 +40,15 @@ class JC35Spider(Spider):
             yield self.request(method='GET', url=url, callback=self.parse)
 
     async def parse(self, response):
-        all_class = response.xpath('//div[@class="proLists"]//li//a')
+        all_class = response.xpath('//ul[@class="otherexi"]//li//a')
         for _class in all_class:
             url = _class.xpath('.//@href').get()
 
-            yield self.request(method='GET', url=url, callback=self.parse2)
-
-    async def parse2(self, response):
-        all_class = response.xpath('//div[@class="proLists"]//li//a')
-        for _class in all_class:
-            url = _class.xpath('.//@href').get()
-
-            yield self.request(method='GET', url=url, callback=self.parse3)
-
-    async def parse3(self, response):
-        all_class = response.xpath('//div[@class="proLists"]//li//a')
-        for _class in all_class:
-            url = _class.xpath('.//@href').get()
             yield self.request(method='GET', url=url, callback=self.get_list)
-            yield self.request(method='GET', url=url, callback=self.fetch_page_one)
+            yield self.request(method='GET', url=url, callback=self.fetch_pages)
 
-    async def fetch_page_one(self, response):
+
+    async def fetch_pages(self, response):
         url_base = response.resp.url
         try:
             max_page = int(response.re('共(\d+)页\d+条记录')[0])
