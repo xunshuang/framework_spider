@@ -40,11 +40,11 @@ class ChuLi51Spider(Spider):
     verify = True
 
     async def start_requests(self):
-        url = "https://jichuang.51chuli.com/shukongchongchuang/3cp25ml1xh1vq54hrhz.html"
-        yield self.request(method='GET',url=url,callback=self.get_page)
+        # url = "https://jichuang.51chuli.com/shukongchongchuang/3cp25ml1xh1vq54hrhz.html"
+        # yield self.request(method='GET',url=url,callback=self.get_page)
 
-        # url_base = "https://jichuang.51chuli.com/"
-        # yield self.request(method='GET', url=url_base, callback=self.parse)
+        url_base = "https://jichuang.51chuli.com/"
+        yield self.request(method='GET', url=url_base, callback=self.parse)
 
 
     async def parse(self,response):
