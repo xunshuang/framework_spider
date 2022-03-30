@@ -32,8 +32,8 @@ class Enginer(object):
         self.task_list = task_list
         if task_list:
             crawlerText = ""
-            crawlerText += f"⭐爬虫框架总任务数为:{len(task_list_raw)}个⭐\n"
-            crawlerText += f"⭐待执行总任务数为:{len(task_list)}个⭐\n"
+            crawlerText += f"**爬虫框架总任务数为:{len(task_list_raw)}个**\n"
+            crawlerText += f"**待执行总任务数为:{len(task_list)}个**\n"
             crawlerText += "\n\n".join([ f"--> 爬虫名称:【{_['machineSpiderName']}】\n--> 目标网站名称:【{_['machineSiteName']}】" for _ in task_list])
             self.DingTalk.send("15566528051", f"\n{crawlerText}")
             self.status = True

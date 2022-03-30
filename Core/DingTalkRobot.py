@@ -29,7 +29,7 @@ class DingTalk():
             },
             "text": {
                 "content": """
-[ ⭐⭐SureFly机床信息爬虫平台  ⭐⭐ ]
+[ **SureFly机床信息爬虫平台** ]
 %s
 
 

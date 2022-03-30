@@ -111,7 +111,7 @@ class ChuLi51Spider(Spider):
 
 
         try:
-            doc_["machineLevelOne"] = response.xpath('//div[@class="l-mainone-box bluea"]//a[-1]/text()').get() or ""
+            doc_["machineLevelOne"] = response.xpath('//div[@class="l-mainone-box bluea"]//a[-1]/text()')[-1].get() or ""
         except:
             doc_["machineLevelOne"] = ""
 

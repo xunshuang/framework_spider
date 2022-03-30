@@ -83,7 +83,7 @@ DELAY_CUSTOMER = 0
 ALLOW_DELAY_TIME_CUSTOMER = 20
 
 # 任务列表长度
-MAX_TASK_CUSTOMER = 3
+MAX_TASK_CUSTOMER = 5
 
 # 日志记录位置
 # LOG_FILE_PATH_CUSTOMER = 'F:/爬虫专用/framework_spider/Log'
