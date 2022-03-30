@@ -14,7 +14,6 @@ from hashlib import md5
 from datetime import datetime
 from urllib.parse import urljoin
 from PIL import Image
-import cv2
 import pytesseract
 import aiohttp
 import io
