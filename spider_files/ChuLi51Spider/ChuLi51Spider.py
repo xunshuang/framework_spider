@@ -199,7 +199,7 @@ class ChuLi51Spider(Spider):
 
         machineInfo = "\n".join(response.xpath('//div[@class="containbox3"]/p//text()').getall()).strip()
 
-        machineInfo = machineInfo.replace('，联系我时，请说明是从处理网看到的。','。').strip()
+        machineInfo = machineInfo.replace('\n此贴长期有效，联系我时，请说明是从处理网看到的。','。').strip()
         doc_["machineInfo"] = machineInfo.encode() if machineInfo else "暂无详细信息".encode()
         doc_["machineInsertTime"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
