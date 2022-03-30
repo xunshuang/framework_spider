@@ -40,8 +40,11 @@ class ChuLi51Spider(Spider):
     verify = True
 
     async def start_requests(self):
-        url_base = "https://jichuang.51chuli.com/"
-        yield self.request(method='GET', url=url_base, callback=self.parse)
+        url = "https://jichuang.51chuli.com/shukongchongchuang/3cp25ml1xh1vq54hrhz.html"
+        yield self.request(method='GET',url=url,callback=self.get_page)
+
+        # url_base = "https://jichuang.51chuli.com/"
+        # yield self.request(method='GET', url=url_base, callback=self.parse)
 
 
     async def parse(self,response):
@@ -150,6 +153,7 @@ class ChuLi51Spider(Spider):
         doc_["machineContactType"] = 1 if len(doc_["machineContact"]) <=5 else 2
 
         try:
+
             telephoneImg = response.xpath('//p[@class="phonetab"]/img/@src').get()
             if telephoneImg:
                 async with aiohttp.request(method='GET',url=telephoneImg) as resp:
@@ -163,12 +167,12 @@ class ChuLi51Spider(Spider):
                     if not telephone.startswith('1'):
                         raise Exception("号码识别错误")
             else:
-                telephone = ""
+                telephone = response.xpath('//p[@class="phonetab"]/b/text()').get() or ""
         except:
             telephone = ""
 
         try:
-            qq =  response.xpath('//p[@class="qqnum"]/img/@src').get() or ""
+            qq =  response.xpath('//p[@class="qqnum"]/a/text()').get() or ""
         except:
             qq = ""
 
