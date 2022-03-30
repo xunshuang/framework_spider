@@ -100,7 +100,7 @@ class ChuLi51Spider(Spider):
         title = response.xpath('//div[@class="d-ltop"]/h1/text()').get() or ""
         doc_["machineTitleHash"] =  md5(title.encode()).hexdigest()
         doc_["machineTitle"] = title
-
+        print(title)
         doc_["machineModel"] = ""
 
         doc_["machinePrice"] = response.xpath('//p[@class="pricep"]/span/b/text()').get() or "面议"
