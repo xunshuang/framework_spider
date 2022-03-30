@@ -18,6 +18,8 @@ class Enginer(object):
         self.mysql,self.cursor = create_new_mysql(CONFIG=GlobalSetting.MYSQL_CONFIG,db='machinedb') # mysql db
         self.DingTalk = DingTalk()
         self.task_list = None
+        self.status = False # 是否启动钉钉机器人发送爬取结束任务
+
 
     # 获取起始任务
     def read_task(self):
@@ -32,13 +34,14 @@ class Enginer(object):
             crawlerText = ""
             crawlerText += f"⭐爬虫框架总任务数为:{len(task_list_raw)}个⭐\n"
             crawlerText += f"⭐待执行总任务数为:{len(task_list)}个⭐\n"
-            crawlerText += "\n\n".join([ f"\t\t\t--> 爬虫名称:【{_['machineSpiderName']}】\n\t\t\t--> 目标网站名称:【{_['machineSiteName']}】" for _ in task_list])
+            crawlerText += "\n\n".join([ f"--> 爬虫名称:【{_['machineSpiderName']}】\n--> 目标网站名称:【{_['machineSiteName']}】" for _ in task_list])
             self.DingTalk.send("15566528051", f"\n{crawlerText}")
+            self.status = True
 
             for _ in task_list:
                 yield _
         else:
-            time.sleep(60)
+            time.sleep(60) # 默认60秒扫描一次任务表
             yield
 
     # 给任务执行时间排序
@@ -95,7 +98,8 @@ class Enginer(object):
     def start(cls):
         f = cls()
         f.loop()
-        f.send_ding_msg()
+        if f.status:
+            f.send_ding_msg()
 
 if __name__ == '__main__':
     Enginer.start()

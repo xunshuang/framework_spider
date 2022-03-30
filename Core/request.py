@@ -19,7 +19,6 @@ class Request(object):
                  callback=None, encoding=None,
                  headers: dict = None,
                  meta: dict = None,
-                 verify=True,
                  oaLog = None,
                  delayTime = 0,
                  allow_wait = 10,
@@ -32,22 +31,13 @@ class Request(object):
         self.headers = headers or {}
         self.meta = meta
         self.client = request_session
-        self.verify = verify
         self.oaLog = oaLog
         self.delayTime =  delayTime
         self.allow_wait = allow_wait
 
         self.aio_kwargs = kwargs
 
-    @property
-    def __create_new_session__(self):
-        if not self.client:
-            if not self.verify:
-                conn = aiohttp.TCPConnector(verify_ssl=False)
-                self.client = aiohttp.client.ClientSession(headers=self.headers,connector=conn)
-            else:
-                self.client = aiohttp.client.ClientSession(headers=self.headers)
-        return self.client
+
 
 
     async def _start_requests(self):

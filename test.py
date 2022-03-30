@@ -2,7 +2,7 @@
 import pymysql
 import traceback
 mysql = pymysql.Connection(
-                    host="120.53.104.160",
+                    host="127.0.0.1",
                     port=3306,
                     user="machineDb",
                     password="wSFNnx8THjyirHdG",
@@ -12,17 +12,18 @@ mysql = pymysql.Connection(
 cursor = mysql.cursor(cursor=pymysql.cursors.DictCursor)
 
 
-sql = 'INSERT INTO `machineTest`(`hash1`,`data`) VALUES (%s,%s)'
+sql = 'INSERT INTO `machineTest`(`letter`,`data`) VALUES (%s,%s)'
 
 
-for i in range(10):
-    try:
-        cursor.execute(sql,args=('c','asd'))
-        mysql.commit()
-    except:
-        print(traceback.format_exc())
-        mysql.rollback()
-        sql2 = 'alter table machineTest auto_increment=2;'
-        cursor.execute(sql2)
-        mysql.commit()
+
+for _ in ['a','b','c','d','e','f','g','h']:
+        args = [(_,i) for i in range(10000)]
+        try:
+            cursor.executemany(sql,args=(_,i))
+            mysql.commit()
+            print("存储成功")
+        except:
+            print(traceback.format_exc())
+            mysql.rollback()
+
 

@@ -20,7 +20,7 @@ class Spider(object):
     spider_name = None # 爬虫名称
     start_urls: list = None # 起始url
     headers = {} # headers
-
+    verify=True
     setting = None # 客服端设置
     setting_global = GlobalSetting # 全局参数
     meta = None # meta
@@ -32,7 +32,8 @@ class Spider(object):
 
     def __init__(self,loop):
         self.headers = self.headers or {} # headers
-        self.request_session = ClientSession() # 初始化session
+        self.request_session = self.__create_new_session__ # 初始化session
+
         self.aio_queue = asyncio.queues.LifoQueue(0) # 初始化消息队列
         self.meta = self.meta or {} # meta
         self.mysql_config = None # mysql_config
@@ -56,6 +57,16 @@ class Spider(object):
         self._get_task_status()
 
         self.CityParser = CityParser()
+
+    @property
+    def __create_new_session__(self): # 初始化一个session对象
+        if not self.verify: # 根据 verify 来判断用不用 取消认证ssl
+            conn = aiohttp.TCPConnector(verify_ssl=False)
+            client = aiohttp.client.ClientSession(headers=self.headers,connector=conn)
+        else:
+            client = aiohttp.client.ClientSession(headers=self.headers)
+
+        return client
 
     # 读取数据条数
     def _read_data_sum(self):
@@ -203,11 +214,13 @@ class Spider(object):
         else: # 未指定存储位置的 控制台输出
             return self.get_logger(name=self.spider_name or "FrameSpider")
 
+
+
     def request(
         self,
-        url: str,
         method: str = "GET",
         *,
+        url: str,
         callback=None,
         encoding: typing.Optional[str] = None,
         headers: dict = None,
@@ -217,12 +230,12 @@ class Spider(object):
         **aiohttp_kwargs,
     ):
         """初始化一个Request类"""
-        headers = headers or (self.headers or {})
         meta = meta or {}
         custom_settings = custom_settings or {}
         request_session = request_session or self.request_session
 
-        headers.update(self.headers.copy())
+        if headers:
+            request_session.headers.update(headers)
 
         return Request(
             url=url,
