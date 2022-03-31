@@ -92,12 +92,10 @@
 							<li class="active"><a href="index.html"><i> </i>首页</a></li>
 							<li><a href="#">信源种类</a>
 								<ul class="drop">
-									<li><a href="products.html">JC35</a></li>
-									<li><a href="products.html">Machine35(4)</a></li>
-									<li><a href="products.html">Apple(7)</a></li>
-									<li><a href="products.html">Acer(53)</a></li>
-									<li><a href="products.html">HP(78)</a></li>
-									<li><a href="products.html">Intel(5)</a></li>
+                                    {% for media in media_list %}
+									    <li><a href="products.html">{{ media.machineSiteName }}</a></li>
+                                    {% endfor %}
+
 								</ul>
 							</li>
 							<li><a href="products.html"> 行业新闻</a></li>
@@ -164,18 +162,19 @@
 					<h3 class="future">今日推荐</h3>
 					<div>
 						<div class="content-top-in">
-							<div class="col-md-3 md-col" style="width:20%">
+                            {% for data in random_data1 %}
+							    <div class="col-md-3 md-col" style="width:20%">
 								<div class="col-md" style="text-align: center;">
-									<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
+									<a href="single.html"><img src="{{ data.machineImg }}" style="height:150px;width: auto;max-width: 11.875rem;"
 										 alt="" /></a>
 									<div class="top-content" style="margin-top: 1.875rem;">
 										<p style="height:100px;text-align: left;top:6.25rem">
-											供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
+                                            {{ data.machineTitle }}
 										</p>
 										<div class="white">
 											<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
 											<p style="text-align: center;">
-												2021-05-09
+                                                {{ data.machinePublishTime }}
 											</p>
 											<div class="clearfix"></div>
 										</div>
@@ -183,187 +182,41 @@
 									</div>
 								</div>
 							</div>
-
-							<div class="col-md-3 md-col" style="width:20%">
-								<div class="col-md" style="text-align: center;">
-									<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
-										 alt="" /></a>
-									<div class="top-content" style="margin-top: 1.875rem;">
-										<p style="height:100px;text-align: left;top:6.25rem">
-											供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
-										</p>
-										<div class="white">
-											<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-											<p style="text-align: center;">
-												2021-05-09
-											</p>
-											<div class="clearfix"></div>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 md-col" style="width:20%">
-								<div class="col-md" style="text-align: center;">
-									<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
-										 alt="" /></a>
-									<div class="top-content" style="margin-top: 1.875rem;">
-										<p style="height:100px;text-align: left;top:6.25rem">
-											供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
-										</p>
-										<div class="white">
-											<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-											<p style="text-align: center;">
-												2021-05-09
-											</p>
-											<div class="clearfix"></div>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 md-col" style="width:20%">
-								<div class="col-md" style="text-align: center;">
-									<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
-										 alt="" /></a>
-									<div class="top-content" style="margin-top: 1.875rem;">
-										<p style="height:100px;text-align: left;top:6.25rem">
-											供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
-										</p>
-										<div class="white">
-											<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-											<p style="text-align: center;">
-												2021-05-09
-											</p>
-											<div class="clearfix"></div>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3 md-col" style="width:20%">
-								<div class="col-md" style="text-align: center;">
-									<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
-										 alt="" /></a>
-									<div class="top-content" style="margin-top: 1.875rem;">
-										<p style="height:100px;text-align: left;top:6.25rem">
-											供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
-										</p>
-										<div class="white">
-											<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-											<p style="text-align: center;">
-												2021-05-09
-											</p>
-											<div class="clearfix"></div>
-										</div>
-
-									</div>
-								</div>
-							</div>
+                            {% endfor %}
 							<div class="clearfix"></div>
 						</div>
 
 					</div>
-					<div class="content-top-in">
-						<div class="col-md-3 md-col" style="width:20%">
-							<div class="col-md" style="text-align: center;">
-								<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
-									 alt="" /></a>
-								<div class="top-content" style="margin-top: 1.875rem;">
-									<p style="height:100px;text-align: left;top:6.25rem">
-										供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
-									</p>
-									<div class="white">
-										<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-										<p style="text-align: center;">
-											2021-05-09
+                    <div>
+                        <div class="content-top-in">
+                            {% for data in random_data2 %}
+							    <div class="col-md-3 md-col" style="width:20%">
+								<div class="col-md" style="text-align: center;">
+									<a href="single.html"><img src="{{ data.machineImg }}" style="height:150px;width: auto;max-width: 11.875rem;"
+										 alt="" /></a>
+									<div class="top-content" style="margin-top: 1.875rem;">
+										<p style="height:100px;text-align: left;top:6.25rem">
+                                            {{ data.machineTitle }}
 										</p>
-										<div class="clearfix"></div>
-									</div>
+										<div class="white">
+											<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
+											<p style="text-align: center;">
+                                                {{ data.machinePublishTime }}
+											</p>
+											<div class="clearfix"></div>
+										</div>
 
+									</div>
 								</div>
 							</div>
-						</div>
-
-						<div class="col-md-3 md-col" style="width:20%">
-							<div class="col-md" style="text-align: center;">
-								<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
-									 alt="" /></a>
-								<div class="top-content" style="margin-top: 1.875rem;">
-									<p style="height:100px;text-align: left;top:6.25rem">
-										供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
-									</p>
-									<div class="white">
-										<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-										<p style="text-align: center;">
-											2021-05-09
-										</p>
-										<div class="clearfix"></div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 md-col" style="width:20%">
-							<div class="col-md" style="text-align: center;">
-								<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
-									 alt="" /></a>
-								<div class="top-content" style="margin-top: 1.875rem;">
-									<p style="height:100px;text-align: left;top:6.25rem">
-										供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
-									</p>
-									<div class="white">
-										<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-										<p style="text-align: center;">
-											2021-05-09
-										</p>
-										<div class="clearfix"></div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 md-col" style="width:20%">
-							<div class="col-md" style="text-align: center;">
-								<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
-									 alt="" /></a>
-								<div class="top-content" style="margin-top: 1.875rem;">
-									<p style="height:100px;text-align: left;top:6.25rem">
-										供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
-									</p>
-									<div class="white">
-										<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-										<p style="text-align: center;">
-											2021-05-09
-										</p>
-										<div class="clearfix"></div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3 md-col" style="width:20%">
-							<div class="col-md" style="text-align: center;">
-								<a href="single.html"><img src="https://img72.jc35.com/2/20220324/637837138054811773161.jpg" style="height:150px;width: auto;max-width: 11.875rem;"
-									 alt="" /></a>
-								<div class="top-content" style="margin-top: 1.875rem;">
-									<p style="height:100px;text-align: left;top:6.25rem">
-										供应二手进口数控车铣复合加工中心 东芝数控双工位车铣复合加工中心TMD-20
-									</p>
-									<div class="white">
-										<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-										<p style="text-align: center;">
-											2021-05-09
-										</p>
-										<div class="clearfix"></div>
-									</div>
-
-								</div>
-							</div>
+                            {% endfor %}
+							<div class="clearfix"></div>
 						</div>
 						<a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 " style="margin-top: 0.625rem;float: right;margin-right: 1.875rem;">更多</a>
 						<div class="clearfix"></div>
 					</div>
+
+                    </div>
 				</div>
 				<!---->
 

@@ -16,7 +16,7 @@ def get_random_recommend(mysql,cursor):
     resultList = []
     while True:
         random_args = random.randint(1, max_count)
-        sql_random_choice = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime` FROM `machineData` LIMIT %s,10'
+        sql_random_choice = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime` FROM `machineData` WHERE `machineImg` != "" LIMIT %s,10'
 
         cursor.execute(sql_random_choice,random_args)
         mysql.commit()
@@ -28,6 +28,9 @@ def get_random_recommend(mysql,cursor):
                 break
         else:
             print(random_args)
+    for res in resultList:
+        res['machineImg'] = res['machineImg'].split('$$$')[0]
+        res["machinePublishTime"] = res["machinePublishTime"].strftime("%Y-%m-%d")
 
     return random.choices(resultList,k=10)
 
