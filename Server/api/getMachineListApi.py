@@ -8,26 +8,28 @@ import random
 
 # 随机推荐10个
 def get_random_recommend(mysql,cursor):
-    sql_max_count = 'SELECT MAX(`id`) FROM `machineData`;'
-    cursor.execute(sql_max_count)
+    SQL_RANDOM = """SELECT
+ DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash`
+FROM
+`machineData` AS MD
+JOIN (
+SELECT
+		ROUND(
+				RAND() * (
+						(SELECT MAX(id) FROM `machineData`) - (SELECT MIN(id) FROM `machineData`)
+				) + (SELECT MIN(id) FROM `machineData`)
+		) AS id
+) AS XX
+WHERE
+MD.id >= XX.id AND `machineImg` != "" AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) < date(machinePublishTime)
+
+ORDER BY `machinePublishTime` DESC
+
+LIMIT 10;"""
+
+    cursor.execute(SQL_RANDOM)
     mysql.commit()
-    max_count = cursor.fetchone()['MAX(`id`)']
-
-    resultList = []
-    while True:
-        random_args = random.randint(1, max_count)
-        sql_random_choice = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime` FROM `machineData` WHERE `machineImg` != "" LIMIT %s,10'
-
-        cursor.execute(sql_random_choice,random_args)
-        mysql.commit()
-        random_result = cursor.fetchall()
-        if random_result:
-            resultList += list(random_result)
-
-            if len(resultList) >= 10:
-                break
-        else:
-            print(random_args)
+    resultList = cursor.fetchall()
     for res in resultList:
         res['machineImg'] = res['machineImg'].split('$$$')[0]
         res["machinePublishTime"] = res["machinePublishTime"].strftime("%Y-%m-%d")

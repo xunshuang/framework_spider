@@ -40,16 +40,11 @@ class ChuLi51Spider(Spider):
     verify = True
 
     async def start_requests(self):
-        # url = "https://jichuang.51chuli.com/yeyaji/3cp25be1xt9jlpb3jak.html"
-        # yield self.request(method='GET',url=url,callback=self.get_page)
-
         url_base = "https://jichuang.51chuli.com/"
         yield self.request(method='GET', url=url_base, callback=self.parse)
 
     async def parse(self, response):
         urlList = response.xpath('//div[contains(@class,"ulspre")]//li/a/@href').getall()
-        # _ = "https://jichuang.51chuli.com/jichuangfupeijian/3cf2cn7105qfcbwctk.html"
-        # yield self.request(method='GET', url=_, callback=self.get_page)
         for url in urlList:
             meta = {
                 "page": 1,
@@ -109,7 +104,7 @@ class ChuLi51Spider(Spider):
             doc_["machineStatus"] = 99
 
             try:
-                doc_["machineLevelOne"] = response.xpath('//div[@class="l-mainone-box bluea"]//a[-1]/text()')[
+                doc_["machineLevelOne"] = response.xpath('//div[@class="l-mainone-box bluea"]//a/text()')[
                                               -1].get() or ""
             except:
                 doc_["machineLevelOne"] = ""

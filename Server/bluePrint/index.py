@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, request,jsonify,render_template
+from flask import Flask, Blueprint, request,jsonify,render_template,url_for,redirect
 
 from Db.MySQLClient.client import create_new_mysql
 from Config.GlobalSetting import MYSQL_CONFIG
@@ -12,9 +12,15 @@ mysql, cursor = create_new_mysql(CONFIG=MYSQL_CONFIG) # 该视图的专用mysql�
 index_bp = Blueprint('index', __name__)
 
 
-# 首页
 @index_bp.route('/')
+def pre_index():
+    return redirect('/index')
+
+# 首页
+@index_bp.route('/index')
 def index():
+    mysql.ping()
+
     random_data = get_random_recommend(mysql,cursor) # 随机 10条数据
     media_list = get_media(mysql,cursor)
 
