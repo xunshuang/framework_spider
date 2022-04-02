@@ -3,7 +3,7 @@ import sys
 import os
 
 
-sys.path.append('/workspace/')
+sys.path.append('/workspace/framework_spider/')
 from flask import Flask
 
 from Server.bluePrint.index import index_bp
