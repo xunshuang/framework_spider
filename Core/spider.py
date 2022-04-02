@@ -8,7 +8,7 @@ from types import AsyncGeneratorType,CoroutineType
 from Core.request import *
 from Core.pipeline import PipeLine
 from Core.CityParser import CityParser
-from Db.MySQLClient.client import create_new_mysql
+from Db.MySQLClient.client import MYSQL
 from Db.RedisClient.client import create_new_redis
 from Config import GlobalSetting
 from datetime import datetime
@@ -42,8 +42,9 @@ class Spider(object):
         self.spider_name = self.spider_name or None
         self.read_setting()
         self.pipeline = PipeLine
-        self.mysql,self.cursor = self._create_mysql_()
-        self.redis_cli = self._create_mysql_()
+        self.mysqlObject = MYSQL(CONFIG=GlobalSetting.MYSQL_CONFIG,db='machinedb')
+        self.mysql,self.cursor = self.mysqlObject.get_mysql()
+        self.redis_cli = self._create_redis_()
         self.oaLog = self.init_logger
         self.loop = loop
         self.worker_tasks = []
@@ -72,6 +73,7 @@ class Spider(object):
     def _read_data_sum(self):
         # 读取最大条数
         SQL_ALL = f'SELECT COUNT(`id`) FROM `machineData` WHERE `machineSiteId` = "{self.machineSiteId}";'
+        self.mysql, self.cursor = self.mysqlObject.get_mysql()
         self.cursor.execute(SQL_ALL)
         self.mysql.commit()
         all_info = self.cursor.fetchone()
@@ -91,6 +93,7 @@ class Spider(object):
                   f'FROM `machineSite` WHERE `machineSpiderName` = "{self.spider_name}"'
 
             self.oaLog.info("<_get_task_status> 读取任务状态")
+            self.mysql, self.cursor = self.mysqlObject.get_mysql()
 
             self.cursor.execute(SQL)
             self.mysql.commit()
@@ -122,6 +125,7 @@ class Spider(object):
                     'WHERE `machineSiteId` = "%s"' %(
                 all_,(all_-self.all),self.update,self.start_time,self.end_time,int(costTime),self.machineSiteId
             )
+            self.mysql, self.cursor = self.mysqlObject.get_mysql()
 
             try:
                 self.cursor.execute(SQL_U)
@@ -165,9 +169,7 @@ class Spider(object):
             if not self.sql_table:
                 self.oaLog.error('<_check_sql_available> SQL 表名 全局 Setting读取异常!')
 
-    def _create_mysql_(self):
-        if self.setting and self.mysql_config:
-            return create_new_mysql(CONFIG=self.mysql_config)
+
 
     def _create_redis_(self):
         if self.setting and self.redis_config:
@@ -323,8 +325,7 @@ class Spider(object):
             if isinstance(callback_result,dict):
                 pipeline = self.pipeline(
                     mysqlConfig={
-                        "mysql":self.mysql,
-                        "cursor":self.cursor
+                        "mysqlObject":self.mysqlObject
                     },redisConfig={
 
                     },csvConfig={
@@ -340,8 +341,7 @@ class Spider(object):
             elif isinstance(callback_result,list):
                 pipeline = self.pipeline(
                     mysqlConfig={
-                        "mysql": self.mysql,
-                        "cursor": self.cursor
+                        "mysqlObject":self.mysqlObject
                     }, redisConfig={
 
                     }, csvConfig={

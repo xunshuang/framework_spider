@@ -6,7 +6,7 @@ import time
 from datetime import datetime,timedelta
 
 from Db.RedisClient.client import create_new_redis
-from Db.MySQLClient.client import create_new_mysql
+from Db.MySQLClient.client import MYSQL
 from Core.DingTalkRobot import DingTalk
 from Config import GlobalSetting
 
@@ -15,7 +15,8 @@ from concurrent.futures import ThreadPoolExecutor
 class Enginer(object):
     def __init__(self):
         self.redis_cli = create_new_redis(CONFIG=GlobalSetting.REDIS_CONFIG,db=0) # 0_DB
-        self.mysql,self.cursor = create_new_mysql(CONFIG=GlobalSetting.MYSQL_CONFIG,db='machinedb') # mysql db
+        self.mysqlObject = MYSQL(CONFIG=GlobalSetting.MYSQL_CONFIG,db='machinedb')
+        self.mysql,self.cursor = self.mysqlObject.get_mysql() # mysql db
         self.DingTalk = DingTalk()
         self.task_list = None
         self.status = False # 是否启动钉钉机器人发送爬取结束任务
@@ -23,7 +24,7 @@ class Enginer(object):
 
     # 获取起始任务
     def read_task(self):
-        self.mysql.ping() # 先ping 一下证明存活
+        self.mysql,self.cursor = self.mysqlObject.get_mysql()
         self.cursor.execute(
             'SELECT * FROM `machineSite`'
         )

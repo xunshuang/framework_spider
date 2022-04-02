@@ -1,11 +1,13 @@
 # coding:utf-8
 # 获取所有机床信源种类
-from Db.MySQLClient.client import create_new_mysql
+from Db.MySQLClient.client import MYSQL
 from Config.GlobalSetting import MYSQL_CONFIG
 from datetime import datetime
 
 # 获取信源种类、信源详情
-def get_media(mysql,cursor):
+def get_media(mysqlOBJ):
+    mysql, cursor = mysqlOBJ.get_mysql()
+
     sql = 'SELECT * FROM `machineSite`;'
 
     cursor.execute(sql)
@@ -22,9 +24,17 @@ def get_media(mysql,cursor):
         } for _ in result
     ]
 
+# 获取媒体字典
+def get_media_dict(mysqlOBJ,machineSiteId):
+    mysql, cursor = mysqlOBJ.get_mysql()
+
+    sql = 'SELECT `machineJson` FROM `machineMap` WHERE `machineSiteId` = %s;'
+
+    cursor.execute(sql,machineSiteId)
+    mysql.commit()
+
+    result = cursor.fetchone()
+    return result['machineJson']
 
 
-if __name__ == '__main__':
-    mysql,cursor = create_new_mysql(CONFIG=MYSQL_CONFIG)
 
-    print(get_media(mysql,cursor))

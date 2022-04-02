@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Sure Fly机床,烁飞机床,二手机床信息,机床信息</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js"></script>
@@ -94,7 +94,7 @@
                     <li><a href="#">信源种类</a>
                         <ul class="drop">
                             {% for media in media_list %}
-                            <li><a href="products.html">{{ media.machineSiteName }}</a></li>
+                            <li><a href="/list/{{ media.machineSiteId }}/p1">{{ media.machineSiteName }}</a></li>
                             {% endfor %}
 
                         </ul>
@@ -148,7 +148,7 @@
             <div class="banner-bottom">
                 <div class="banner-matter">
                     <p>每日最新，最热机床列表</p>
-                    <a href="single.html" class="hvr-shutter-in-vertical ">查看详情</a>
+
                 </div>
 
                 <div class="clearfix"></div>
@@ -218,8 +218,7 @@
                     {% endfor %}
                     <div class="clearfix"></div>
                 </div>
-                <a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 "
-                   style="margin-top: 0.625rem;float: right;margin-right: 1.875rem;">更多</a>
+
                 <div class="clearfix"></div>
             </div>
 

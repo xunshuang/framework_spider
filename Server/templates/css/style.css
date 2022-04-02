@@ -806,10 +806,11 @@ ul.callbacks_tabs.callbacks1_tabs {
 	vertical-align: middle;
 }
 .col-md{
-	background:#d9d9d9;
+	background:white;
 	padding:0.5em;
 	border:1px solid #BBBBBB;
 	border-radius:5px;
+    margin-bottom: 20px;
 }
 .col-md img{
 	width:100%;

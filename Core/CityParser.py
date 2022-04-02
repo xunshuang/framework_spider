@@ -1,16 +1,17 @@
 # coding:utf-8
-from Db.MySQLClient.client import create_new_mysql
+from Db.MySQLClient.client import MYSQL
 from Config import GlobalSetting
 import asyncio
 
 class CityParser():
     def __init__(self):
-        self.mysql,self.cursor = create_new_mysql(CONFIG=GlobalSetting.MYSQL_CONFIG,db='machinedb')
+        self.mysqlObject = MYSQL(CONFIG=GlobalSetting.MYSQL_CONFIG,db='machinedb')
+        self.mysql,self.cursor = self.mysqlObject.get_mysql()
 
 
 
     async def parse_city_gen(self,city,cityCode=None,deep=0):
-        self.mysql.ping()
+        self.mysql,self.cursor = self.mysqlObject.get_mysql()
         if not cityCode:
             SQL_SEARCH = 'SELECT `cityParentName`,`cityParentCode`,`cityName` FROM `machineCity` WHERE `cityName` LIKE "%s"' %("%" + city + "%")
         else:

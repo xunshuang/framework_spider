@@ -1,13 +1,13 @@
 from flask import Flask, Blueprint, request, jsonify, render_template
 
-from Db.MySQLClient.client import create_new_mysql
+from Config.GlobalSetting import MYSQL_CONFIG
 from Config.GlobalSetting import MYSQL_CONFIG
 
 from Server.api.getMachineListApi import *  # 获取随机推荐
 from Server.api.getMediaListApi import *  # 获取信源
 from Server.api.getMachinePage import get_page,get_relation_page
 
-mysql, cursor = create_new_mysql(CONFIG=MYSQL_CONFIG)  # 该视图的专用mysql对象
+mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG,db='machinedb')  # 该视图的专用mysql对象
 
 single_bp = Blueprint('single', __name__)
 
@@ -16,11 +16,12 @@ single_bp = Blueprint('single', __name__)
 
 @single_bp.route('/single/<md5hash>')
 def single(md5hash):
-    mysql.ping()
-    machine_data = get_page(mysql, cursor, md5hash)
+
+    machine_data = get_page(mysqlOBJ, md5hash)
 
     imgList = [_ for _ in machine_data['machineImg'].split('$$$')]
-
+    if not imgList or imgList == [""]:
+        imgList = ['/images/imageLost.png']
     machineLocation = "-".join([_ for _ in [machine_data["machineLocalClassOne"], machine_data["machineLocalClassTwo"],
                                 machine_data["machineLocalClassThree"]] if _])
     dataDict = {
@@ -40,9 +41,12 @@ def single(md5hash):
             dataDict.pop(k)
 
     # 获取关联信息
-    relation_data = get_relation_page(mysql,cursor,contact=str(machine_data["machineContactInfo"]))
+    relation_data = get_relation_page(mysqlOBJ,contact=str(machine_data["machineContactInfo"]))
 
     machineInfo = machine_data['machineInfo'].decode()
+
+    media_list = get_media(mysqlOBJ)
+
     prefix = "/"
     return render_template("single.html",
                            prefix=prefix,
@@ -50,5 +54,6 @@ def single(md5hash):
                            imgList=imgList,
                            dataDict=dataDict,
                            machineInfo=machineInfo,
-                           relation_data =relation_data
+                           relation_data =relation_data,
+                           media_list = media_list
                            )

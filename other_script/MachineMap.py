@@ -40,6 +40,7 @@ class MachineMap():
             except:
                 self.mysql.rollback()
     def split_machine_map_list(self, machineMapListRaw):
+        yield {"levelName": "全部", "child": []}
         for _1 in list(set([_['machineLevelOne'] for _ in machineMapListRaw])):
             one = _1 or "其他"
             doc1 = {
@@ -61,8 +62,18 @@ class MachineMap():
                                     "levelName": three,
                                     "child": []
                                 }
-                                doc2['child'].append(doc3)
-                    doc1['child'].append(doc2)
+                                doc2['child'].append(json.dumps(doc3,ensure_ascii=False))
+
+                    doc2['child'] = list(set(doc2['child']))
+                    doc2['child'] = [ json.loads(_) for _ in doc2['child']]
+                    doc2['child'] = [{'levelName': "全部", "child": []}] +  doc2['child']
+
+                    doc1['child'].append(json.dumps(doc2,ensure_ascii=False))
+
+            doc1['child'] = list(set(doc1['child']))
+            doc1['child'] = [ json.loads(_) for _ in doc1['child']]
+            doc1['child'] = [{'levelName': "全部", "child": []}] + doc1['child']
+
             yield doc1
 
 
@@ -70,5 +81,5 @@ class MachineMap():
 
 if __name__ == '__main__':
     a = MachineMap()
-    a.init_spider_name('A003')
+    a.init_spider_name('A001')
     a.make_machine_map()

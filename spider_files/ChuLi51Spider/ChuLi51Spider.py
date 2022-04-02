@@ -53,7 +53,7 @@ class ChuLi51Spider(Spider):
             yield self.request(method='GET', url=url, callback=self.get_list, meta=meta)
 
     async def get_list(self, response):
-        if response.meta["page"] > 1 and response.meta["page"] <= 100:
+        if response.meta["page"] > 1 and response.meta["page"] <= 40:
             page = response.meta['page']
             urlList = response.xpath('//div[@class="projects-dls"]/dl//h5//span/a/@href').getall()
 

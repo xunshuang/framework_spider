@@ -6,13 +6,14 @@ import csv
 import re
 
 from Db.RedisClient.client import create_new_redis,save_url_hash,update_url_hash
+from Decorator.retry import RetryNoAsync
 
 class PipeLine(object):
     def __init__(self,mysqlConfig,redisConfig,csvConfig,callback_result,response,oaLog,spiderName):
         # 默认支持三种存储方式
         if mysqlConfig:
-            self.mysql = mysqlConfig.get('mysql')
-            self.cursor = mysqlConfig.get('cursor')
+            self.mysqlObject = mysqlConfig.get('mysqlObject')
+            self.mysql, self.cursor = self.mysqlObject.get_mysql()
             self.mysqlConfig = mysqlConfig
 
         if redisConfig:
@@ -37,12 +38,14 @@ class PipeLine(object):
 
     def auto_increment(self,tableName):
         sql_auto = f"alter table {tableName} auto_increment=2;"
+        self.mysql, self.cursor = self.mysqlObject.get_mysql()
         self.cursor.execute(sql_auto)
         self.mysql.commit()
 
 
     def search_id(self,tableName,md5hash):
         sql_search = 'SELECT `id` FROM `%s` WHERE `md5hash` = "%s";' %(tableName,md5hash)
+        self.mysql, self.cursor = self.mysqlObject.get_mysql()
         self.cursor.execute(sql_search)
         self.mysql.commit()
         _ = self.cursor.fetchall()
@@ -52,7 +55,7 @@ class PipeLine(object):
             return True
 
 
-
+    @RetryNoAsync
     def save_to_mysql(self,data,sql_insert,sql_update,tableName):
         if sql_insert:
             _fail = 0
@@ -61,7 +64,7 @@ class PipeLine(object):
             if not isinstance(data,list):
                 data = [data]
 
-            self.mysql.ping()
+            self.mysql, self.cursor = self.mysqlObject.get_mysql()
             for dat in data:
                 args = list(dat.values())
                 try:

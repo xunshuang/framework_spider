@@ -1,13 +1,15 @@
 # coding:utf-8
 # 获取机床信息列表页api 和 每日推荐 api
 
-from Db.MySQLClient.client import create_new_mysql
+from Db.MySQLClient.client import MYSQL
 from Config.GlobalSetting import MYSQL_CONFIG
 from datetime import datetime
 import random
 
 # 随机推荐10个
-def get_random_recommend(mysql,cursor):
+def get_random_recommend(mysqlOBJ):
+    mysql, cursor = mysqlOBJ.get_mysql()
+
     SQL_RANDOM = """SELECT
  DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash`
 FROM
@@ -38,7 +40,8 @@ LIMIT 10;"""
 
 
 # 获取最大条数
-def get_list_page(mysql,cursor,machineSiteId=None):
+def get_list_page(mysqlOBJ,machineSiteId=None):
+    mysql, cursor = mysqlOBJ.get_mysql()
     if machineSiteId:
         sql_max_count = 'SELECT COUNT(`id`) FROM `machineData` WHERE `machineSiteId` =%s;'
         cursor.execute(sql_max_count,machineSiteId)
@@ -52,17 +55,65 @@ def get_list_page(mysql,cursor,machineSiteId=None):
 
 
 # 翻页
-def roll_page(mysql,cursor,page,pagesize,machineSiteId=None):
+def roll_page(mysqlOBJ,page,pagesize,levelClassOne,levelClassTwo,levelClassThree,machineSiteId=None):
+    mysql, cursor = mysqlOBJ.get_mysql()
+    levelClassOne = levelClassOne.replace("全部",'').replace("其他",'').replace("其它",'').strip() if levelClassOne else ""
+    levelClassTwo = levelClassTwo.replace("全部",'').replace("其他",'').replace("其它",'').strip() if levelClassTwo else ""
+    levelClassThree = levelClassThree.replace("全部",'').replace("其他",'').replace("其它",'').strip() if levelClassThree else ""
+
+
     if machineSiteId:
-        sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime` ' \
-                        'FROM `machineData` WHERE `machineSiteId` = "%s" LIMIT %s,%s' %(machineSiteId,str(page*pagesize),str(pagesize))
+        if levelClassOne and levelClassTwo and levelClassThree:
+            sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
+                            'FROM `machineData` ' \
+                            'WHERE `machineSiteId` = %s AND ' \
+                            '`machineLevelOne` = %s AND ' \
+                            '`machineLevelTwo` = %s AND ' \
+                            '`machineLevelThree` = %s ' \
+                            'LIMIT %s,%s'
 
-        cursor.execute(sql_roll_page)
-        mysql.commit()
+            cursor.execute(sql_roll_page,(machineSiteId,levelClassOne,levelClassTwo,levelClassThree,page * pagesize,pagesize))
+            mysql.commit()
 
-        return cursor.fetchall()
+            return cursor.fetchall()
+        elif levelClassOne and levelClassTwo and not levelClassThree:
+            sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
+                            'FROM `machineData` ' \
+                            'WHERE `machineSiteId` = %s AND ' \
+                            '`machineLevelOne` = %s AND ' \
+                            '`machineLevelTwo` = %s ' \
+                            'LIMIT %s,%s'
+
+            cursor.execute(sql_roll_page,
+                           (machineSiteId, levelClassOne, levelClassTwo, page * pagesize, pagesize))
+            mysql.commit()
+
+            return cursor.fetchall()
+        elif levelClassOne and not levelClassTwo and not levelClassThree:
+            sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
+                            'FROM `machineData` ' \
+                            'WHERE `machineSiteId` = %s AND ' \
+                            '`machineLevelOne` = %s ' \
+                            'LIMIT %s,%s'
+
+            cursor.execute(sql_roll_page,
+                           (machineSiteId, levelClassOne, page * pagesize, pagesize))
+            mysql.commit()
+
+            return cursor.fetchall()
+        else:
+            sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
+                            'FROM `machineData` ' \
+                            'WHERE `machineSiteId` = %s ' \
+                            'LIMIT %s,%s'
+
+            cursor.execute(sql_roll_page,
+                           (machineSiteId, page * pagesize, pagesize))
+            mysql.commit()
+
+            return cursor.fetchall()
     else:
-        sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime` ' \
+        sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
                         'FROM `machineData` LIMIT %s,%s' %(str(page * pagesize), str(pagesize))
 
         cursor.execute(sql_roll_page)
@@ -70,6 +121,3 @@ def roll_page(mysql,cursor,page,pagesize,machineSiteId=None):
 
         return cursor.fetchall()
 
-if __name__ == '__main__':
-    mysql, cursor = create_new_mysql(CONFIG=MYSQL_CONFIG)
-    print(roll_page(mysql,cursor,1,20,machineSiteId='A002'))

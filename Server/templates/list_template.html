@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<div>
+    <div class="content-top-in">
+        {% for data in random_data1 %}
+        <div class="col-md-3 md-col" style="width:20%">
+            <div class="col-md" style="text-align: center;">
+                <a href="/single/{{ data.md5hash }}.html"><img src="{{ data.machineImg }}"
+                                                               style="height:150px;width: auto;max-width: 11.875rem;"
+                                                               alt=""/></a>
+                <div class="top-content" style="margin-top: 1.875rem;">
+                    <p style="height:100px;text-align: left;top:6.25rem">
+                        {{ data.machineTitle }}
+                    </p>
+                    <div class="white">
+                        <a href="/single/{{ data.md5hash }}.html"
+                           class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
+                        <p style="text-align: center;">
+                            {{ data.machinePublishTime }}
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="clearfix"></div>
+    </div>
+
+</div>

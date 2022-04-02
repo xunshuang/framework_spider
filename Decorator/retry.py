@@ -22,3 +22,20 @@ def Retry(func):
         raise Exception("请求失败")
 
     return wrapper
+
+
+
+# 非异步装饰器
+def RetryNoAsync(func):
+    def wrapper(*args, **kwargs):
+        for i in range(3):
+            try:
+                result = func(args[0], **kwargs)
+                return result
+
+            except:
+                import traceback
+                print(traceback.format_exc())
+        raise Exception("FUCK THEM ALL")
+
+    return wrapper

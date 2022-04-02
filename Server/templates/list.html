@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <title>Sure Fly机床,烁飞机床,二手机床信息,机床信息</title>
+    <link href="{{ prefix }}css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.min.js"></script>
+    <script src="{{ prefix }}js/jquery.min.js"></script>
     <!-- Custom Theme files -->
     <!--theme-style-->
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{ prefix }}css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!--//theme-style-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -22,11 +22,10 @@
         }
     </script>
     <!--fonts-->
-    <link href='http://fonts.useso.com/css?family=Exo:100,200,300,400,500,600,700,800,900' rel='stylesheet'
-          type='text/css'>
+
     <!--//fonts-->
-    <script type="text/javascript" src="js/move-top.js"></script>
-    <script type="text/javascript" src="js/easing.js"></script>
+    <script type="text/javascript" src="{{ prefix }}js/move-top.js"></script>
+    <script type="text/javascript" src="{{ prefix }}js/easing.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -38,7 +37,7 @@
         });
     </script>
     <!--slider-script-->
-    <script src="js/responsiveslides.min.js"></script>
+    <script src="{{ prefix }}js/responsiveslides.min.js"></script>
     <script>
         $(function () {
             $("#slider1").responsiveSlides({
@@ -68,6 +67,216 @@
             });
         });
     </script>
+    <link href="{{ prefix }}css/machineList.css" rel="stylesheet" type="text/css" media="all"/>
+
+    <script>
+
+        machineSiteId = '{{ machineSiteId }}'
+        $.post(
+            "/list/mediaMap", {
+                "machineSiteId": machineSiteId
+            }, function (res) {
+                machineDict = JSON.parse(res)
+                initClassOne();
+            }
+        )
+        levelOne = ""
+        levelTwo = ""
+        levelThree = ""
+
+
+    </script>
+    <script>
+        // 创建三级目录
+        function showDetails(t1, t2, t3) {
+            var machineType1 = t1
+            var machineType2 = t2
+            var machineType3 = t3
+            if (machineType1 && !machineType2) {
+                levelOne = machineType1
+                levelTwo = ""
+                levelThree = ""
+                // var level1 = document.getElementById('level1') //目录第一级
+                var level2 = document.getElementById('level2') //目录第二级
+                var level3 = document.getElementById('level3') //目录第三级
+                machineDict.forEach(function (item, index) {
+                    if (item["levelName"] === levelOne) {
+                        while (1) {
+                            try {
+                                level2.removeChild(level2.childNodes[0])
+                            } catch (e) {
+                                break
+                            }
+                        }
+                        while (1) {
+                            try {
+                                level3.removeChild(level3.childNodes[0])
+                            } catch (e) {
+                                break
+                            }
+                        }
+                        if (item.child != false) {
+                            item['child'].forEach(function (item, index) {
+                                var newNode = document.createElement("button")
+                                newNode.innerHTML = item["levelName"]
+                                var _ = item["levelName"]
+                                newNode.onclick = function () {
+                                    showDetails(t1 = t1, t2 = _)
+                                    var nodes = document.getElementById('level2').childNodes
+                                    nodes.forEach(function (item, index) {
+                                        try {
+                                            item.style.backgroundColor = "white"
+                                            item.style.color = "grey"
+                                        } catch (e) {
+                                            //TODO handle the exception
+                                        }
+
+                                    })
+                                    newNode.style.backgroundColor = "#fb5e33"
+                                    newNode.style.color = "white"
+                                }
+                                newNode.setAttribute("class", "machineClass")
+
+                                level2.appendChild(newNode)
+                            })
+                        } else {
+                            sendMsg(t1 = levelOne)
+                        }
+
+                    }
+                })
+
+                document.getElementById('level2').removeAttribute("hidden")
+
+            }
+            if (machineType1 && machineType2 && !machineType3) {
+                levelTwo = machineType2
+                levelThree = ""
+                var level3 = document.getElementById('level3')
+                machineDict.forEach(function (item, index) {
+                    if (item.levelName === levelOne) {
+                        item.child.forEach(function (item, index) {
+
+                            if (item["levelName"] === levelTwo) {
+                                while (1) {
+                                    try {
+                                        level3.removeChild(level3.childNodes[0])
+                                    } catch (e) {
+                                        break
+                                    }
+                                }
+                                ;
+                                if (item.child != false) {
+                                    item['child'].forEach(function (item, index) {
+                                        var newNode = document.createElement("button")
+                                        newNode.innerText = item["levelName"]
+                                        newNode.setAttribute("class", "machineClass")
+                                        newNode.onclick = function () {
+                                            showDetails(t1 = levelOne, t2 = levelTwo, t3 = item["levelName"])
+                                            var nodes = document.getElementById('level3').childNodes
+                                            nodes.forEach(function (item, index) {
+                                                try {
+                                                    item.style.backgroundColor = "white"
+                                                    item.style.color = "grey"
+                                                } catch (e) {
+                                                    //TODO handle the exception
+                                                }
+
+                                            })
+                                            newNode.style.backgroundColor = "#fb5e33"
+                                            newNode.style.color = "white"
+                                        }
+                                        level3.appendChild(newNode)
+                                    })
+                                } else {
+                                    sendMsg(t1 = levelOne, t2 = levelTwo)
+                                }
+
+                            }
+                        })
+                    }
+                })
+
+                document.getElementById('level3').removeAttribute("hidden")
+
+
+            }
+
+            if (machineType1 && machineType2 && machineType3) {
+                levelThree = machineType3
+                var level3 = document.getElementById('level3')
+                level3.childNodes.forEach(function (item, index) {
+                    if (item.innerText === levelThree) {
+                        try {
+                            item.style.backgroundColor = "#fb5e33"
+                            item.style.color = "white"
+                        } catch (e) {
+                            //TODO handle the exception
+                        }
+                    } else {
+                        try {
+
+                            item.style.backgroundColor = "white"
+                            item.style.color = "grey"
+
+                        } catch (e) {
+                            //TODO handle the exception
+                        }
+                    }
+                })
+                sendMsg(t1 = levelOne, t2 = levelTwo, t3 = machineType3)
+            }
+
+
+        }
+
+        // 获取翻页
+        function sendMsg(t1, t2, t3) {
+            $.post("/select_list", {
+                    "levelClassOne": t1,
+                    "levelClassTwo": t2,
+                    "levelClassThree": t3,
+                    "machineSiteId": machineSiteId
+                }, function (result) {
+                    var resultNode = document.getElementById(
+                        "resultList"
+                    )
+                    resultNode.innerHTML = result
+                }
+            )
+        }
+
+        // 初始化一级目录
+        function initClassOne() {
+
+            var level1 = document.getElementById("level1")
+            machineDict.forEach(function (item, index) {
+                let newNode = document.createElement("button")
+                newNode.innerText = item.levelName
+                newNode.setAttribute("onclick", "showDetails(t1=" + "'" + item.levelName + "'" + ")")
+                newNode.onclick = function () {
+                    showDetails(t1 = item.levelName)
+                    var nodes = document.getElementById('level1').childNodes
+                    nodes.forEach(function (item, index) {
+                        try {
+                            item.style.backgroundColor = "white"
+                            item.style.color = "grey"
+                        } catch (e) {
+                            //TODO handle the exception
+                        }
+
+                    })
+                    newNode.style.backgroundColor = "#fb5e33"
+                    newNode.style.color = "white"
+
+                }
+                newNode.setAttribute("class", "machineClass")
+                level1.appendChild(newNode)
+            })
+
+        }
+
+    </script>
 </head>
 <body>
 <!--header-->
@@ -76,7 +285,7 @@
         <div class="container">
             <div class="header-top-in">
                 <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" alt=" " style="height: 100px;top: 10px;"></a>
+                    <a href="index.html"><img src="{{prefix}}images/logo.png" alt=" " style="height: 100px;top: 10px;"></a>
                 </div>
                 <div class="header-in">
                     <h1>烁飞机床</h1>
@@ -90,11 +299,11 @@
             <div class="h_menu4">
                 <a class="toggleMenu" href="#">Menu</a>
                 <ul class="nav">
-                    <li class="active"><a href="index.html"><i> </i>首页</a></li>
+                    <li class="active"><a href="{{prefix}}index"><i> </i>首页</a></li>
                     <li><a href="#">信源种类</a>
                         <ul class="drop">
                             {% for media in media_list %}
-                            <li><a href="products.html">{{ media.machineSiteName }}</a></li>
+                            <li><a href="/list/{{ media.machineSiteId }}/p1">{{ media.machineSiteName }}</a></li>
                             {% endfor %}
 
                         </ul>
@@ -104,7 +313,7 @@
                     <li><a href="products.html">联系我们</a></li>
 
                 </ul>
-                <script type="text/javascript" src="js/nav.js"></script>
+                <script type="text/javascript" src="{{ prefix }}js/nav.js"></script>
             </div>
         </div>
     </div>
@@ -129,99 +338,38 @@
         </div>
     </div>
 </div>
-<div class="banner-mat">
-    <div class="container">
-        <div class="banner">
+<div>
+    <div class="leveldiv">
+    </div>
 
-            <!-- Slideshow 4 -->
-            <div class="slider">
-                <ul class="rslides" id="slider1">
-                    <li><img src="images/banner1.png" alt="">
-                    </li>
-                    <li><img src="images/banner2.png" alt="">
-                    </li>
-                    <li><img src="images/banner3.png" alt="">
-                    </li>
-                </ul>
-            </div>
+    <div class="leveldiv">
+        <span class="span-classfiy">一级分类</span>
+        <div id="level1" class="level">
 
-            <div class="banner-bottom">
-                <div class="banner-matter">
-                    <p>每日最新，最热机床列表</p>
-                    <a href="single.html" class="hvr-shutter-in-vertical ">查看详情</a>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
         </div>
-        <!-- //slider-->
+    </div>
+
+    <div class="leveldiv">
+        <span class="span-classfiy">二级分类</span>
+        <div id="level2" class="level" hidden="hidden">
+
+
+        </div>
+    </div>
+
+    <div class="leveldiv">
+        <span class="span-classfiy">三级分类</span>
+        <div id="level3" class="level" hidden="hidden">
+
+
+        </div>
+
     </div>
 </div>
-<!---->
 <div class="container">
     <div class="content">
-        <div class="content-top" style="height: auto;">
-            <h3 class="future">今日推荐</h3>
-            <div>
-                <div class="content-top-in">
-                    {% for data in random_data1 %}
-                    <div class="col-md-3 md-col" style="width:20%">
-                        <div class="col-md" style="text-align: center;">
-                            <a href="/single/{{ data.md5hash }}.html"><img src="{{ data.machineImg }}"
-                                                                          style="height:150px;width: auto;max-width: 11.875rem;"
-                                                                          alt=""/></a>
-                            <div class="top-content" style="margin-top: 1.875rem;">
-                                <p style="height:100px;text-align: left;top:6.25rem">
-                                    {{ data.machineTitle }}
-                                </p>
-                                <div class="white">
-                                    <a href="/single/{{ data.md5hash }}.html"
-                                       class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-                                    <p style="text-align: center;">
-                                        {{ data.machinePublishTime }}
-                                    </p>
-                                    <div class="clearfix"></div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    <div class="clearfix"></div>
-                </div>
-
-            </div>
-            <div>
-                <div class="content-top-in">
-                    {% for data in random_data2 %}
-                    <div class="col-md-3 md-col" style="width:20%">
-                        <div class="col-md" style="text-align: center;">
-                            <a href="/single/{{ data.md5hash }}.html"><img src="{{ data.machineImg }}"
-                                                                          style="height:150px;width: auto;max-width: 11.875rem;"
-                                                                          alt=""/></a>
-                            <div class="top-content" style="margin-top: 1.875rem;">
-                                <p style="height:100px;text-align: left;top:6.25rem">
-                                    {{ data.machineTitle }}
-                                </p>
-                                <div class="white">
-                                    <a href="/single/{{ data.md5hash }}.html"
-                                       class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 ">查看详情</a>
-                                    <p style="text-align: center;">
-                                        {{ data.machinePublishTime }}
-                                    </p>
-                                    <div class="clearfix"></div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    <div class="clearfix"></div>
-                </div>
-                <a href="single.html" class="hvr-shutter-in-vertical hvr-shutter-in-vertical2 "
-                   style="margin-top: 0.625rem;float: right;margin-right: 1.875rem;">更多</a>
-                <div class="clearfix"></div>
-            </div>
+        <div class="content-top" id="resultList" style="height: auto;">
+            <h3 class="future">搜索结果</h3>
 
         </div>
     </div>

@@ -91,15 +91,13 @@
             <div class="h_menu4">
                 <a class="toggleMenu" href="#">Menu</a>
                 <ul class="nav">
-                    <li class="active"><a href="index.html"><i> </i>首页</a></li>
+                    <li class="active"><a href="{{ prefix }}index"><i> </i>首页</a></li>
                     <li><a href="#">信源种类</a>
                         <ul class="drop">
-                            <li><a href="products.html">JC35</a></li>
-                            <li><a href="products.html">Machine35(4)</a></li>
-                            <li><a href="products.html">Apple(7)</a></li>
-                            <li><a href="products.html">Acer(53)</a></li>
-                            <li><a href="products.html">HP(78)</a></li>
-                            <li><a href="products.html">Intel(5)</a></li>
+                            {% for media in media_list %}
+                            <li><a href="/list/{{ media.machineSiteId }}/p1">{{ media.machineSiteName }}</a></li>
+                            {% endfor %}
+
                         </ul>
                     </li>
                     <li><a href="products.html"> 行业新闻</a></li>
