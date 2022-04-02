@@ -9,7 +9,7 @@ sys.path.append('/workspace/framework_spider/')
 # 任务读取Mysql
 #     "host" : '120.53.104.160',
 MYSQL_CONFIG = {
-    "host" : '120.53.104.160',
+    "host" : '127.0.0.1',
     "port" : 3306,
     "user" :'machineDb',
     "password" : 'wSFNnx8THjyirHdG',
