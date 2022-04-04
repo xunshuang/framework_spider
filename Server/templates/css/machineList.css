@@ -34,3 +34,16 @@
 	margin-left: 20%;
 
 }
+
+/*翻页*/
+.page{
+	color:black;
+	border: 2px solid grey;
+	background: white;
+}
+
+.page-select{
+	color:white;
+	border: 2px solid white;
+	background: orange;
+}

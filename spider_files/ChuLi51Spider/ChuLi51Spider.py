@@ -40,17 +40,29 @@ class ChuLi51Spider(Spider):
     verify = True
 
     async def start_requests(self):
-        url_base = "https://jichuang.51chuli.com/"
+        url_base = "https://www.51chuli.com/category/"
         yield self.request(method='GET', url=url_base, callback=self.parse)
 
     async def parse(self, response):
-        urlList = response.xpath('//div[contains(@class,"ulspre")]//li/a/@href').getall()
-        for url in urlList:
-            meta = {
-                "page": 1,
-                "url": url
-            }
-            yield self.request(method='GET', url=url, callback=self.get_list, meta=meta)
+        sections = response.xpath('//div[@class="catemain"]')
+        for section in sections:
+            if section.xpath('./div[@class="bigt"]/h3/text()').get() == '机床':
+                tableList = section.xpath('./table')
+                tableNameList = section.xpath('./div[@class="groupt"]/p/text()').getall()
+                for table in tableList:
+                    tableName = tableNameList[tableList.index(table)]
+                    tableUrl = table.xpath('.//a')
+                    for _ in tableUrl:
+                        url = _.xpath('./@href').get()
+                        urlName = _.xpath('./text()').get()
+                        meta = {
+                            "page":1,
+                            "url":url,
+                            "levelOne":tableName,
+                            "levelTwo":urlName
+                        }
+                        yield self.request(method='GET', url=url, callback=self.get_list, meta=meta)
+
 
     async def get_list(self, response):
         if response.meta["page"] > 1 and response.meta["page"] <= 40:
@@ -58,7 +70,7 @@ class ChuLi51Spider(Spider):
             urlList = response.xpath('//div[@class="projects-dls"]/dl//h5//span/a/@href').getall()
 
             for url in urlList:
-                yield self.request(method='GET', url=url, callback=self.get_page)
+                yield self.request(method='GET', url=url, callback=self.get_page,meta=response.meta)
 
             next_page = response.xpath('//a[@class="next"]/@href').get()
 
@@ -66,14 +78,16 @@ class ChuLi51Spider(Spider):
                 next_page = urljoin(str(response.resp.url), next_page)
                 yield self.request(method='GET', url=next_page, callback=self.get_list, meta={
                     "page": page + 1,
-                    "url": next_page
+                    "url": next_page,
+                    "levelOne": response.meta["levelOne"],
+                    "levelTwo": response.meta["levelTwo"]
                 })
 
         else:
             urlList = response.xpath('//div[@class="projects-dls"]/dl//h5//span/a/@href').getall()
 
             for url in urlList:
-                yield self.request(method='GET', url=url, callback=self.get_page)
+                yield self.request(method='GET', url=url, callback=self.get_page,meta=response.meta)
 
             next_page = response.xpath('//a[@class="next"]/@href').get()
 
@@ -81,8 +95,12 @@ class ChuLi51Spider(Spider):
                 next_page = urljoin(str(response.resp.url), next_page)
                 yield self.request(method='GET', url=next_page, callback=self.get_list, meta={
                     "page": 2,
-                    "url": next_page
+                    "url": next_page,
+                    "levelOne": response.meta["levelOne"],
+                    "levelTwo": response.meta["levelTwo"]
                 })
+
+
 
     async def get_page(self, response):
         doc_ = deepcopy(doc)
@@ -96,20 +114,17 @@ class ChuLi51Spider(Spider):
         if "该信息已过期" not in title:
             doc_["machineTitleHash"] = md5(title.encode()).hexdigest()
             doc_["machineTitle"] = title
-            print(title)
+            print(response.meta,title)
             doc_["machineModel"] = ""
 
             doc_["machinePrice"] = response.xpath('//p[@class="pricep"]/span/b/text()').get() or "面议"
 
             doc_["machineStatus"] = 99
 
-            try:
-                doc_["machineLevelOne"] = response.xpath('//div[@class="l-mainone-box bluea"]//a/text()')[
-                                              -1].get() or ""
-            except:
-                doc_["machineLevelOne"] = ""
 
-            doc_["machineLevelTwo"] = ""
+            doc_["machineLevelOne"] = response.meta["levelOne"]
+
+            doc_["machineLevelTwo"] = response.meta["levelTwo"]
             doc_["machineLevelThree"] = ""
 
             try:

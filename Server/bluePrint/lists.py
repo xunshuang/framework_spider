@@ -43,7 +43,7 @@ def select_list():
 
 
     page = form.get('page') or 0
-    pageSize = form.get('pagesize') or 20
+    pageSize = form.get('pagesize') or 10
     siteId = form.get('machineSiteId')
 
     list_result = roll_page(

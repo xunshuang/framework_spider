@@ -90,7 +90,7 @@ def roll_page(mysqlOBJ,page,pagesize,levelClassOne,levelClassTwo,levelClassThree
 
             return cursor.fetchall()
         elif levelClassOne and not levelClassTwo and not levelClassThree:
-            sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
+            sql_roll_page = 'SELECT `machineTitle`,`machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
                             'FROM `machineData` ' \
                             'WHERE `machineSiteId` = %s AND ' \
                             '`machineLevelOne` = %s ' \

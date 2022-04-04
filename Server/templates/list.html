@@ -275,6 +275,11 @@
             })
 
         }
+        setInterval(function () {
+            if(navigator.platform !== 'Win32'){
+                $("div.content-top-in").css("display","")
+                $("div.col-md-3.md-col").css("width","80%")            }
+        },1000)
 
     </script>
 </head>
