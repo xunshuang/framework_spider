@@ -246,6 +246,21 @@
             )
         }
 
+
+        function rollPage(page) {
+            $.post("/rollPage", {
+                    "page": page
+                }, function (result) {
+                    var resultNode = document.getElementById(
+                        "resultList"
+                    )
+                    resultNode.innerHTML = result
+                    $(document).scrollTop(200);
+                }
+            )
+        }
+
+
         // 初始化一级目录
         function initClassOne() {
 
@@ -275,11 +290,14 @@
             })
 
         }
+
         setInterval(function () {
-            if(navigator.platform !== 'Win32'){
-                $("div.content-top-in").css("display","")
-                $("div.col-md-3.md-col").css("width","80%")            }
-        },1000)
+            if (navigator.platform !== 'Win32') {
+                $("div.content-top-in").css("display", "")
+                $("div.col-md-3.md-col").css("width", "80%")
+            }
+        }, 1000)
+
 
     </script>
 </head>
@@ -308,7 +326,7 @@
                     <li><a href="#">信源种类</a>
                         <ul class="drop">
                             {% for media in media_list %}
-                            <li><a href="/list/{{ media.machineSiteId }}/p1">{{ media.machineSiteName }}</a></li>
+                            <li><a href="/list/{{ media.machineSiteId }}">{{ media.machineSiteName }}</a></li>
                             {% endfor %}
 
                         </ul>
@@ -374,15 +392,20 @@
 <div class="container">
     <div class="content">
         <div class="content-top" id="resultList" style="height: auto;">
-            <h3 class="future">搜索结果</h3>
+            <h3 style="text-align: center;color: orangered">
+                数据来自互联网,烁飞网仅进行数据展示,不对数据进行真实性校验,请擦亮双眼。
+
+
+            </h3>
 
         </div>
+
     </div>
     <!---->
 
 
 </div>
-</div>
+
 <!---->
 
 

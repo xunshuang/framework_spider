@@ -1,11 +1,12 @@
 # coding:utf-8
 from Config.GlobalSetting import MYSQL_CONFIG
-from Db.MySQLClient.client import create_new_mysql
+from Db.MySQLClient.client import MYSQL
 import json
 
 class MachineMap():
     def __init__(self):
-        self.mysql, self.cursor = create_new_mysql(CONFIG=MYSQL_CONFIG)
+        self.mysqlObj = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')
+        self.mysql, self.cursor = self.mysqlObj.get_mysql()
 
     def init_spider_name(self, spiderSiteId):
         self.spiderSiteId = spiderSiteId
@@ -81,5 +82,5 @@ class MachineMap():
 
 if __name__ == '__main__':
     a = MachineMap()
-    a.init_spider_name('A001')
+    a.init_spider_name('A003')
     a.make_machine_map()

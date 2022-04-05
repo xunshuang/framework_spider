@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<h3 class="future">搜索结果</h3>
+<h3 class="future">搜索结果:<b style="color: orange">{{ data_count }}</b>条</h3>
+
 <div>
     <div class="content-top-in">
 
@@ -27,6 +28,26 @@
         </div>
         {% endfor %}
         <div class="clearfix"></div>
+        <div style="text-align: center;margin-top: 50px;margin-bottom: 50px;">
+            <a onclick="rollPage(1)" class='machineClass page'>回到第一页</a>
+
+            {% if now_page != 1 %}
+                <a class='machineClass page' onclick="rollPage({{ now_page -1 }})">上一页</a>
+            {% endif %}
+
+            {% for page in page_list %}
+            {% if page == now_page %}
+            <a onclick="rollPage({{ page }})" class='machineClass page page-select'>{{ page }}</a>
+            {% else %}
+            <a onclick="rollPage({{ page }})" class='machineClass page'>{{ page }}</a>
+            {% endif %}
+
+            {% endfor %}
+
+            {% if now_page != page_list.last %}
+                <a class='machineClass page' onclick="rollPage({{ now_page +1 }})">下一页</a>
+            {% endif %}
+        </div>
     </div>
 
 </div>
