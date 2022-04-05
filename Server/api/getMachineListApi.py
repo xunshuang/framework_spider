@@ -11,33 +11,18 @@ import random
 def get_random_recommend(mysqlOBJ):
     mysql, cursor = mysqlOBJ.get_mysql()
 
-    SQL_RANDOM = """SELECT
- DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash`
-FROM
-`machineData` AS MD
-JOIN (
-SELECT
-		ROUND(
-				RAND() * (
-						(SELECT MAX(id) FROM `machineData`) - (SELECT MIN(id) FROM `machineData`)
-				) + (SELECT MIN(id) FROM `machineData`)
-		) AS id
-) AS XX
-WHERE
-MD.id >= XX.id AND `machineImg` != "" AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) < date(machinePublishTime)
-
-ORDER BY `machinePublishTime` DESC
-
-LIMIT 10;"""
+    SQL_RANDOM = "SELECT DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` " \
+                 "FROM `machineDay`"
 
     cursor.execute(SQL_RANDOM)
     mysql.commit()
     resultList = cursor.fetchall()
     for res in resultList:
-        res['machineImg'] = res['machineImg'].split('$$$')[0]
+        if not res['machineImg'] :
+            res['machineImg'] = '/images/imageLost.png'
         res["machinePublishTime"] = res["machinePublishTime"].strftime("%Y-%m-%d")
 
-    return random.choices(resultList, k=10)
+    return resultList
 
 
 # 获取最大条数
