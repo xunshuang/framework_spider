@@ -4,6 +4,7 @@ doc = {
     "machineSiteId": "",
     "md5hash": "",
     "machineSource": "",
+    "machineRealSource":"",
     "machineTitleHash": "",
     "machineTitle": "",
     "machineAuthor": "",

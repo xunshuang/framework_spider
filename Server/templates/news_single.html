@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="cn">
 <head>
-    <title>Sure Fly机床,烁飞机床,二手机床信息,机床信息</title>
+    <title>【 SureFly-烁飞机床网 】{{ news_page.machineTitle }}</title>
     <link href="{{ prefix }}css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{ prefix }}js/jquery.min.js"></script>
     <!-- Custom Theme files -->
     <!--theme-style-->
     <link href="{{ prefix }}css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{ prefix }}css/news_page.css" rel="stylesheet" type="text/css" media="all"/>
     <!--//theme-style-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -22,7 +23,8 @@
         }
     </script>
     <!--fonts-->
-
+    <link href='http://fonts.useso.com/css?family=Exo:100,200,300,400,500,600,700,800,900' rel='stylesheet'
+          type='text/css'>
     <!--//fonts-->
     <script type="text/javascript" src="{{ prefix }}js/move-top.js"></script>
     <script type="text/javascript" src="{{ prefix }}js/easing.js"></script>
@@ -67,36 +69,13 @@
             });
         });
     </script>
-    <link href="{{ prefix }}css/machineList.css" rel="stylesheet" type="text/css" media="all"/>
-
     <script>
-
-        machineSiteId = '{{ machineSiteId }}'
-        $.post(
-            "/list/mediaMap", {
-                "machineSiteId": machineSiteId
-            }, function (res) {
-                machineDict = JSON.parse(res)
-                initClassOne();
-            }
-        )
-        levelOne = ""
-        levelTwo = ""
-        levelThree = ""
-
-
-    </script>
-    <script src="{{ prefix }}js/some.js"></script>
-    <script>
-
         setInterval(function () {
             if (navigator.platform !== 'Win32') {
-                $("div.content-top-in").css("display", "")
-                $("div.col-md-3.md-col").css("width", "80%")
+                $('div.col-md-4.md-col').css("width", "80%")
+
             }
-        }, 1000)
-
-
+        })
     </script>
 </head>
 <body>
@@ -106,7 +85,8 @@
         <div class="container">
             <div class="header-top-in">
                 <div class="logo">
-                    <a href="index.html"><img src="{{prefix}}images/logo.png" alt=" " style="height: 100px;top: 10px;"></a>
+                    <a href="{{prefix}}index"><img src="{{prefix}}images/logo.png" alt=" "
+                                                   style="height: 100px;top: 10px;"></a>
                 </div>
                 <div class="header-in">
                     <h1>烁飞机床</h1>
@@ -120,7 +100,7 @@
             <div class="h_menu4">
                 <a class="toggleMenu" href="#">Menu</a>
                 <ul class="nav">
-                    <li class="active"><a href="{{prefix}}index"><i> </i>首页</a></li>
+                    <li class="active"><a href="/index"><i> </i>首页</a></li>
                     <li><a href="#">信源种类</a>
                         <ul class="drop">
                             {% for media in media_list %}
@@ -159,118 +139,110 @@
         </div>
     </div>
 </div>
-<div>
-    <div class="leveldiv">
-    </div>
+<div class="banner-mat">
+    <div class="container">
+        <div class="banner">
 
-    <div class="leveldiv">
-        <span class="span-classfiy">一级分类</span>
-        <div id="level1" class="level">
+            <!-- Slideshow 4 -->
+            <div class="slider">
+                <ul class="rslides" id="slider1">
+                    <li><img src="{{prefix}}images/Banner1.png" alt="">
+                    </li>
+                    <li><img src="{{prefix}}images/Banner2.png" alt="">
+                    </li>
+                    <li><img src="{{prefix}}images/Banner3.png" alt="">
+                    </li>
+                </ul>
+            </div>
 
+            <div class="banner-bottom">
+                <div class="banner-matter">
+                    <p>每日最新，最热机床列表</p>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
         </div>
-    </div>
-
-    <div class="leveldiv">
-        <span class="span-classfiy">二级分类</span>
-        <div id="level2" class="level" hidden="hidden">
-
-
-        </div>
-    </div>
-
-    <div class="leveldiv">
-        <span class="span-classfiy">三级分类</span>
-        <div id="level3" class="level" hidden="hidden">
-
-
-        </div>
-
+        <!-- //slider-->
     </div>
 </div>
 <div class="container">
-    <div class="content">
-        <div class="content-top" id="resultList" style="height: auto;">
-            <h3 style="text-align: center;color: orangered">
-                数据来自互联网,烁飞网仅进行数据展示,不对数据进行真实性校验,请擦亮双眼。
+    <div class="single">
+        <div class="col-md-9 top-in-single">
+            <div class="new-head">
+
+                <div class="new-head header">
+                    <div style="margin-bottom: 60px;">
+                        <p style="font-size: 50px;">“</p>
+                        <h1>{{ news_page.machineTitle }}</h1>
+                        <p style="font-size: 50px;float: right;">”</p>
+                    </div>
 
 
-            </h3>
+                    <span style="font-size: 14px;color:grey;margin-left: 20px;display: flex;">
+								<p>作者：</p>
+								<p style="color:red">{{ news_page.machineAuthor }}</p>
+							</span>
+
+                    <span style="font-size: 14px;color:grey;margin-left: 20px;display: flex;">
+								<p>来源：</p>
+								<p style="color:red">{{ news_page.machineRealSource }}</p>
+							</span>
+
+                    <span style="font-size: 14px;color:grey;margin-left: 20px;display: flex;">
+								<p>发布时间：</p>
+								<p style="color:red">{{ news_page.machinePublishTime }}</p>
+							</span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="available" style="width: 80%;margin-top: 10%">
+                <div style="text-align: center">
+                                    <img style="text-align: center" src="{{ news_page.machineImg }}">
+
+                </div>
+                {% for content in news_page.machineContent %}
+                <p style="text-indent:28px;font-size: 14px;color: #333;padding: 0rem;margin: 30px">
+                    {{ content }}
+                </p>
+                {% endfor %}
+            </div>
+
+            <div class="clearfix"></div>
+
 
         </div>
-
     </div>
-    <!---->
+    <div class="col-md-3">
 
-
+        <div class="single-bottom">
+            <h4>行业快讯</h4>
+            {% for news in news_list %}
+            <div class="product">
+                <img class="img-responsive fashion" src="{{ news.machineImg }}" alt="">
+                <div>
+                    <a href="{{prefix}}news_single/{{ news.md5hash }}" class="elit"><b>{{ news.machineTitle }}</b></a>
+                    <span class="price price-in"
+                          style="font-size: 14px;float: right">{{ news.machinePublishTime }}</span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="clearfix"></div>
 </div>
 
 <!---->
-
-
 <div class="footer">
-    <div class="footer-top">
-        <div class="container">
-            <div class="col-md-4 footer-in">
-                <h4><i> </i>查机床</h4>
-                <p>全网二手机床信息一网打尽</p>
-            </div>
-            <div class="col-md-4 footer-in">
-                <h4><i class="cross"> </i>查公司</h4>
-                <p>网罗全网二手机床出售公司</p>
-            </div>
-            <div class="col-md-4 footer-in">
-                <h4><i class="down"> </i>查新闻</h4>
-                <p>行业新闻，最新最全</p>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-    <!---->
-    <div class="footer-middle">
-        <div class="container">
-            <div class="footer-middle-in">
-                <h6>关于我们</h6>
-                <p>本站立足于中国最大的二手机床交易市场河北文安县，</p>
-            </div>
-            <div class="footer-middle-in">
-                <h6>Information</h6>
-                <ul>
-                    <li><a href="#">联系我们</a></li>
-                    <li><a href="#">Delivery Information</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                </ul>
-            </div>
-            <div class="footer-middle-in">
-                <h6>Customer Service</h6>
-                <ul>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="#">Returns</a></li>
-                    <li><a href="#">Site Map</a></li>
-                </ul>
-            </div>
-            <div class="footer-middle-in">
-                <h6>My Account</h6>
-                <ul>
-                    <li><a href="account.html">My Account</a></li>
-                    <li><a href="#">Order History</a></li>
-                    <li><a href="wishlist.html">Wish List</a></li>
-                    <li><a href="#">Newsletter</a></li>
-                </ul>
-            </div>
-            <div class="footer-middle-in">
-                <h6>Extras</h6>
-                <ul>
-                    <li><a href="#">Brands</a></li>
-                    <li><a href="#">Gift Vouchers</a></li>
-                    <li><a href="#">Affiliates</a></li>
-                    <li><a href="#">Specials</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-    <p class="footer-class">Copyright &copy; 2022.SureFly All rights reserved.</p>
+
+    <p class="footer-class">Copyright &copy; 2015.Company name All rights reserved.<a target="_blank"
+                                                                                      href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+    </p>
     <script type="text/javascript">
         $(document).ready(function () {
             /*

@@ -13,6 +13,7 @@ MYSQL_SAVE_SQL_CUSTOMER = """INSERT INTO `machineNews`(
 `machineSiteId`,
 `md5hash`,
 `machineSource`,
+`machineRealSource`,
 `machineTitleHash`,
 `machineTitle`,
 `machineAuthor`,
@@ -22,13 +23,14 @@ MYSQL_SAVE_SQL_CUSTOMER = """INSERT INTO `machineNews`(
 `machineContent`,
 `machinePublishTime`,
 `machineInsertTime`
-) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 
 
 
 # 更新SQL语句
 MYSQL_UPDATE_SQL_CUSTOMER = """UPDATE `machineNews`
 SET `machineSource` = %s,
+`machineRealSource` = %s,
 `machineTitleHash` = %s,
 `machineTitle` = %s,
 `machineAuthor` = %s,

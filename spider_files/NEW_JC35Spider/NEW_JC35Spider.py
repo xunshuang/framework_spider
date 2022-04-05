@@ -62,6 +62,9 @@ class NEW_JC35Spider(Spider):
             doc_["machineSiteId"] = 'A004'
             doc_["md5hash"] = md5(str(response.resp.url).encode()).hexdigest()
             doc_["machineSource"] = "JC35二手机床网"
+
+            machineRealSource = response.xpath('//div[@class="newsTime"]/span[1]//text()').getall()[1]
+            doc_['machineRealSource'] = machineRealSource.replace("来源：",'') if "来源" in machineRealSource else "未知来源"
             doc_["machineTitle"] = response.xpath('//div[@class="newsShow"]/h1/text()').get()
             doc_["machineTitleHash"] = md5(doc_["machineTitle"].encode()).hexdigest()
             print(f"详情页 {doc_['machineTitle'] },url:{response.resp.url}")

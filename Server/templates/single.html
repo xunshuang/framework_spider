@@ -104,7 +104,7 @@
                     <li><a href="#">信源种类</a>
                         <ul class="drop">
                             {% for media in media_list %}
-                            <li><a href="/list/{{ media.machineSiteId }}/p1">{{ media.machineSiteName }}</a></li>
+                            <li><a href="/list/{{ media.machineSiteId }}">{{ media.machineSiteName }}</a></li>
                             {% endfor %}
 
                         </ul>
@@ -158,7 +158,6 @@
             <div class="banner-bottom">
                 <div class="banner-matter">
                     <p>每日最新，最热机床列表</p>
-                    <a href="single.html" class="hvr-shutter-in-vertical ">查看详情</a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -223,7 +222,7 @@
                         {% endif %}
                         {% endfor %}
                     </div>
-                    <p>{{ machineInfo }}</p>
+                    <p style="font-size: 1.2em">{{ machineInfo }}</p>
 
 
                 </div>
@@ -263,52 +262,19 @@
             </div>
         </div>
         <div class="col-md-3">
+
             <div class="single-bottom">
-                <h4>Categories</h4>
-                <ul>
-                    <li><a href="#"><i> </i>Fusce feugiat</a></li>
-                    <li><a href="#"><i> </i>Mascot Kitty</a></li>
-                    <li><a href="#"><i> </i>Fusce feugiat</a></li>
-                    <li><a href="#"><i> </i>Mascot Kitty</a></li>
-                    <li><a href="#"><i> </i>Fusce feugiat</a></li>
-                </ul>
-            </div>
-            <div class="single-bottom">
-                <h4>Product Categories</h4>
-                <ul>
-                    <li><a href="#"><i> </i>feugiat(5)</a></li>
-                    <li><a href="#"><i> </i>Fusce (4)</a></li>
-                    <li><a href="#"><i> </i> feugiat (4)</a></li>
-                    <li><a href="#"><i> </i>Fusce (4)</a></li>
-                    <li><a href="#"><i> </i> feugiat(2)</a></li>
-                </ul>
-            </div>
-            <div class="single-bottom">
-                <h4>Product Categories</h4>
+                <h4>行业快讯</h4>
+                {% for news in news_list %}
                 <div class="product">
-                    <img class="img-responsive fashion" src="{{ prefix }}images/st1.jpg" alt="">
-                    <div class="grid-product">
-                        <a href="#" class="elit">Consectetuer adipiscing elit</a>
-                        <span class="price price-in"><small>$500.00</small> $400.00</span>
+                    <img class="img-responsive fashion" src="{{ news.machineImg }}" alt="">
+                    <div>
+                        <a href="{{prefix}}news_single/{{ news.md5hash }}" class="elit"><b>{{ news.machineTitle }}</b></a>
+                        <span class="price price-in" style="font-size: 14px;float: right">{{ news.machinePublishTime }}</span>
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="product">
-                    <img class="img-responsive fashion" src="{{ prefix }}images/st2.jpg" alt="">
-                    <div class="grid-product">
-                        <a href="#" class="elit">Consectetuer adipiscing elit</a>
-                        <span class="price price-in"><small>$500.00</small> $400.00</span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="product">
-                    <img class="img-responsive fashion" src="{{ prefix }}images/st3.jpg" alt="">
-                    <div class="grid-product">
-                        <a href="#" class="elit">Consectetuer adipiscing elit</a>
-                        <span class="price price-in"><small>$500.00</small> $400.00</span>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="clearfix"></div>

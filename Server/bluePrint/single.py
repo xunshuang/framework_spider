@@ -6,13 +6,14 @@ from Config.GlobalSetting import MYSQL_CONFIG
 from Server.api.getMachineListApi import *  # 获取随机推荐
 from Server.api.getMediaListApi import *  # 获取信源
 from Server.api.getMachinePage import get_page,get_relation_page
+from Server.api.getNewestNews import * # 获取新闻
 
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG,db='machinedb')  # 该视图的专用mysql对象
 
 single_bp = Blueprint('single', __name__)
 
 
-# 首页
+
 
 @single_bp.route('/single/<md5hash>')
 def single(md5hash):
@@ -47,6 +48,12 @@ def single(md5hash):
 
     media_list = get_media(mysqlOBJ)
 
+    # 获取新闻列表
+    news_list = get_newest(mysqlOBJ)
+    for _ in news_list:
+        if not _['machineImg']:
+            _['machineImg'] = '/images/imageLost.png'
+
     prefix = "/"
     return render_template("single.html",
                            prefix=prefix,
@@ -55,5 +62,6 @@ def single(md5hash):
                            dataDict=dataDict,
                            machineInfo=machineInfo,
                            relation_data =relation_data,
-                           media_list = media_list
+                           media_list = media_list,
+                           news_list = news_list
                            )

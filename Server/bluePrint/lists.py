@@ -8,6 +8,7 @@ import json
 from Server.api.getMachineListApi import *  # 获取随机推荐
 from Server.api.getMediaListApi import *  # 获取信源
 
+
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql对象
 list_bp = Blueprint('list', __name__)
 

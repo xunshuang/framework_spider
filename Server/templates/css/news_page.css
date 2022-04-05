@@ -1,0 +1,17 @@
+.new-head h1{
+	font-weight: 300;
+	width: 80%;
+	margin-left: 10%;
+	text-align: center;
+}
+.new-head {
+	float: left;
+	width: 100%;
+}
+
+.new-head .header{
+	/*background: linear-gradient(to right,#FFFFFF,#DDDDDD);*/
+    margin-bottom: 30px;
+	padding-bottom: 30px;
+    border-radius: 20px;
+}

@@ -8,7 +8,7 @@ from datetime import datetime
 def get_media(mysqlOBJ):
     mysql, cursor = mysqlOBJ.get_mysql()
 
-    sql = 'SELECT * FROM `machineSite`;'
+    sql = 'SELECT * FROM `machineSite` WHERE `machineSiteType` = 1;'
 
     cursor.execute(sql)
     mysql.commit()
