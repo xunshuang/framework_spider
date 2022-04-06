@@ -34,6 +34,8 @@ def get_media_map():
 # 选择分栏并获取第一页数据
 @list_bp.route('/select_list', methods=['POST'])
 def select_list():
+    import time
+    bt = time.time()
     form = request.form
     levelClassOne = form.get('levelClassOne') or ""
     levelClassTwo = form.get('levelClassTwo') or ""
@@ -54,7 +56,7 @@ def select_list():
         res["machinePublishTime"] = res["machinePublishTime"].strftime("%Y-%m-%d")
         if not res['machineImg']:
             res['machineImg'] = '/images/imageLost.png'
-
+    print(time.time() - bt)
     data_count = get_list_page(mysqlOBJ, levelClassOne=levelClassOne, levelClassTwo=levelClassTwo,
                                levelClassThree=levelClassThree, machineSiteId=siteId)
     max_page = int(data_count / 10) + 1 if data_count % 10 else int(data_count / 10)
@@ -68,10 +70,12 @@ def select_list():
             now_page = page
         )
     )
+    print(time.time() - bt)
 
     cookie_args = enc(levelClassOne) + '$$' + enc(levelClassTwo) + '$$' + enc(levelClassThree) + '$$' + enc(siteId)
     Response.set_cookie('args', cookie_args)  # 更新一下 cookie
     Response.set_cookie('max_count', str(data_count))  # 更新一下 最大条数 cookie
+    print(time.time() - bt)
 
     return Response
 

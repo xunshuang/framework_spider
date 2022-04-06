@@ -3,7 +3,8 @@ import random
 from Db.MySQLClient.client import MYSQL
 from Config.GlobalSetting import MYSQL_CONFIG
 from datetime import datetime
-
+import os
+import sys
 # SQL_RANDOM = """SELECT
 #  DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash`
 # FROM
@@ -50,5 +51,6 @@ def data_updating(mysqlOBJ):
 
 
 if __name__ == '__main__':
+    sys.path.append('/workspace/framework_spider/')
     mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')
     data_updating(mysqlOBJ)
