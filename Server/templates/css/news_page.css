@@ -15,3 +15,60 @@
 	padding-bottom: 30px;
     border-radius: 20px;
 }
+
+
+.new-list h5{
+    font-size: 30px;
+	font-weight: 500;
+	width: 80%;
+	margin-left: 10%;
+	text-align: center;
+
+}
+.new-list-list{
+	display: flex;
+	border-bottom: 0.0625rem solid #888888;
+	border-right: 0.0625rem solid #888888;
+	padding: 1.25rem;
+	border-radius: 0.625rem;
+}
+
+.new-list-ok1{
+	padding: 1rem;
+    width: 25%;
+}
+
+.new-list-ok2{
+	padding: 1rem;
+    width: 75%;
+}
+
+.new-list p{
+	font-size: 1.25rem;
+    text-indent:2.5em;
+    margin-bottom: 10px;
+}
+
+.new-list li {
+	margin: 20px;
+	list-style: none; 
+}
+
+.new-list img {
+	height: 12.5rem;
+	padding: 20px;
+	width: 20.5rem;
+	border-right: 0.0625rem solid #269ABC;
+	
+}
+
+.new-list time {
+	float: right;
+	color:#31B0D5
+}
+
+.new-list a {
+	font-weight: 500;
+
+
+}

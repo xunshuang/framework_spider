@@ -81,6 +81,7 @@ def roll_page(mysqlOBJ, page, pagesize, levelClassOne, levelClassTwo, levelClass
                             '`machineLevelOne` = %s AND ' \
                             '`machineLevelTwo` = %s AND ' \
                             '`machineLevelThree` = %s ' \
+                            'ORDER BY `machinePublishTime` DESC ' \
                             'LIMIT %s,%s'
 
             cursor.execute(sql_roll_page,
@@ -94,6 +95,7 @@ def roll_page(mysqlOBJ, page, pagesize, levelClassOne, levelClassTwo, levelClass
                             'WHERE `machineSiteId` = %s AND ' \
                             '`machineLevelOne` = %s AND ' \
                             '`machineLevelTwo` = %s ' \
+                            'ORDER BY `machinePublishTime` DESC ' \
                             'LIMIT %s,%s'
 
             cursor.execute(sql_roll_page,
@@ -106,6 +108,7 @@ def roll_page(mysqlOBJ, page, pagesize, levelClassOne, levelClassTwo, levelClass
                             'FROM `machineData` ' \
                             'WHERE `machineSiteId` = %s AND ' \
                             '`machineLevelOne` = %s ' \
+                            'ORDER BY `machinePublishTime` DESC ' \
                             'LIMIT %s,%s'
 
             cursor.execute(sql_roll_page,
@@ -117,6 +120,7 @@ def roll_page(mysqlOBJ, page, pagesize, levelClassOne, levelClassTwo, levelClass
             sql_roll_page = 'SELECT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
                             'FROM `machineData` ' \
                             'WHERE `machineSiteId` = %s ' \
+                            'ORDER BY `machinePublishTime` DESC ' \
                             'LIMIT %s,%s'
 
             cursor.execute(sql_roll_page,

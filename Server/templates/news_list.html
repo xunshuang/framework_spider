@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="cn">
+<html lang="ch">
 <head>
-    <title>【{{ news_page.machineTitle }}】 Sure Fly机床,烁飞机床,二手机床信息,机床信息</title>
-    <link href="{{ prefix }}css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <title>【行业新闻】Sure Fly机床,烁飞机床,二手机床信息,机床信息</title>
+    <link href="{{prefix}}css/bootstrap.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{prefix}}css/news_page.css" rel="stylesheet" type="text/css" media="all"/>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{{ prefix }}js/jquery.min.js"></script>
+    <script src="{{prefix}}js/jquery.min.js"></script>
     <!-- Custom Theme files -->
     <!--theme-style-->
-    <link href="{{ prefix }}css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <link href="{{ prefix }}css/news_page.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{prefix}}css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{prefix}}css/machineList.css" rel="stylesheet" type="text/css" media="all"/>
     <!--//theme-style-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -26,8 +28,8 @@
     <link href='http://fonts.useso.com/css?family=Exo:100,200,300,400,500,600,700,800,900' rel='stylesheet'
           type='text/css'>
     <!--//fonts-->
-    <script type="text/javascript" src="{{ prefix }}js/move-top.js"></script>
-    <script type="text/javascript" src="{{ prefix }}js/easing.js"></script>
+    <script type="text/javascript" src="{{prefix}}js/move-top.js"></script>
+    <script type="text/javascript" src="{{prefix}}js/easing.js"></script>
     <script type="text/javascript">
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -39,7 +41,7 @@
         });
     </script>
     <!--slider-script-->
-    <script src="{{ prefix }}js/responsiveslides.min.js"></script>
+    <script src="{{prefix}}js/responsiveslides.min.js"></script>
     <script>
         $(function () {
             $("#slider1").responsiveSlides({
@@ -85,8 +87,8 @@
         <div class="container">
             <div class="header-top-in">
                 <div class="logo">
-                    <a href="{{prefix}}index"><img src="{{prefix}}images/logo.png" alt=" "
-                                                   style="height: 100px;top: 10px;"></a>
+                    <a href="index.html"><img src="{{prefix}}images/logo.png" alt=" 图片丢了啊"
+                                              style="height: 100px;top: 10px;"></a>
                 </div>
                 <div class="header-in">
                     <h1>烁飞机床</h1>
@@ -100,7 +102,7 @@
             <div class="h_menu4">
                 <a class="toggleMenu" href="#">Menu</a>
                 <ul class="nav">
-                    <li class="active"><a href="/index"><i> </i>首页</a></li>
+                    <li class="active"><a href="{{prefix}}index"><i> </i>首页</a></li>
                     <li><a href="#">信源种类</a>
                         <ul class="drop">
                             {% for media in media_list %}
@@ -109,12 +111,12 @@
 
                         </ul>
                     </li>
-                    <li><a href="products.html"> 行业新闻</a></li>
-                    <li><a href="products.html">机床公司</a></li>
-                    <li><a href="products.html">联系我们</a></li>
+                    <li><a href="{{prefix}}select_news_list"> 行业新闻</a></li>
+                    <li><a href="#">机床公司</a></li>
+                    <li><a href="#">联系我们</a></li>
 
                 </ul>
-                <script type="text/javascript" src="{{ prefix }}js/nav.js"></script>
+                <script type="text/javascript" src="{{prefix}}js/nav.js"></script>
             </div>
         </div>
     </div>
@@ -139,109 +141,80 @@
         </div>
     </div>
 </div>
-<div class="banner-mat">
-    <div class="container">
-        <div class="banner">
-
-            <!-- Slideshow 4 -->
-            <div class="slider">
-                <ul class="rslides" id="slider1">
-                    <li><img src="{{prefix}}images/Banner1.png" alt="">
-                    </li>
-                    <li><img src="{{prefix}}images/Banner2.png" alt="">
-                    </li>
-                    <li><img src="{{prefix}}images/Banner3.png" alt="">
-                    </li>
-                </ul>
-            </div>
-
-            <div class="banner-bottom">
-                <div class="banner-matter">
-                    <p>每日最新，最热机床列表</p>
-                </div>
-
-                <div class="clearfix"></div>
-            </div>
-        </div>
-        <!-- //slider-->
-    </div>
-</div>
 <div class="container">
-    <div class="single">
-        <div class="col-md-9 top-in-single">
-            <div class="new-head">
-
-                <div class="new-head header">
-                    <div style="margin-bottom: 60px;">
-                        <p style="font-size: 50px;">“</p>
-                        <h1>{{ news_page.machineTitle }}</h1>
-                        <p style="font-size: 50px;float: right;">”</p>
-                    </div>
-
-
-                    <span style="font-size: 14px;color:grey;margin-left: 20px;display: flex;">
-								<p>作者：</p>
-								<p style="color:red">{{ news_page.machineAuthor }}</p>
-							</span>
-
-                    <span style="font-size: 14px;color:grey;margin-left: 20px;display: flex;">
-								<p>来源：</p>
-								<p style="color:red">{{ news_page.machineRealSource }}</p>
-							</span>
-
-                    <span style="font-size: 14px;color:grey;margin-left: 20px;display: flex;">
-								<p>发布时间：</p>
-								<p style="color:red">{{ news_page.machinePublishTime }}</p>
-							</span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="available" style="width: 80%;margin-top: 10%">
-                <div style="text-align: center">
-                                    <img style="text-align: center" src="{{ news_page.machineImg }}">
-
-                </div>
-                {% for content in news_page.machineContent %}
-                <p style="text-indent:28px;font-size: 14px;color: #333;padding: 0rem;margin: 30px">
-                    {{ content }}
-                </p>
-                {% endfor %}
-            </div>
-
-            <div class="clearfix"></div>
-
-
-        </div>
-    </div>
-    <div class="col-md-3">
-
-        <div class="single-bottom">
-            <h4>行业快讯</h4>
-            {% for news in news_list %}
-            <div class="product">
-                <img class="img-responsive fashion" src="{{ news.machineImg }}" alt="">
+    <div class="new-list">
+        <ul>
+            {% for news in news_one_page_list %}
+            <li>
                 <div>
-                    <a href="{{prefix}}news_single/{{ news.md5hash }}" class="elit"><b>{{ news.machineTitle }}</b></a>
-                    <span class="price price-in"
-                          style="font-size: 14px;float: right">{{ news.machinePublishTime }}</span>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="clearfix"></div>
-</div>
+                    <span class="new-list-list">
+							<span class="new-list-ok1">
+								<img src="{{ news.machineImg }}" alt="图片丢了啊"/>
+							</span>
+							<span class="new-list-ok2">
+								<a href="/news_single/{{news.md5hash}}"><h5>“{{ news.machineTitle }}”</h5></a>
+								<br>
+								<p>{{ news.machineDescription }}</p>
+								<time>{{ news.machinePublishTime }}</time>
+							</span>
 
+                    </span>
+                </div>
+
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div style="text-align: center;margin-top: 50px;margin-bottom: 50px;">
+        <a href="/select_news_list/1" class='machineClass page'>回到第一页</a>
+
+        {% if now_page != 1 %}
+        <a class='machineClass page' href="/select_news_list/{{ now_page -1 }}">上一页</a>
+
+        {% endif %}
+
+        {% for page in page_list %}
+        {% if page == now_page %}
+        <a href="/select_news_list/{{page}}" class='machineClass page page-select'>{{page}}</a>
+        {% else %}
+        <a href="/select_news_list/{{page}}" class='machineClass page'>{{page}}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if now_page != page_list.last %}
+
+        <a class='machineClass page' href="/select_news_list/{{ now_page + 1 }}">下一页</a>
+        {% endif %}
+    </div>
+</div>
 <!---->
 <div class="footer">
-
+    <div class="footer-top">
+        <div class="container">
+            <div class="col-md-4 footer-in">
+                <h4><i> </i>Suspendisse sed</h4>
+                <p>Aliquam dignissim porttitor tortor non fermentum. Curabitur in magna lectus. Duis sed eros diam.
+                    Lorem ipsum
+                    dolor sit amet, consectetur.</p>
+            </div>
+            <div class="col-md-4 footer-in">
+                <h4><i class="cross"> </i>Suspendisse sed</h4>
+                <p>Aliquam dignissim porttitor tortor non fermentum. Curabitur in magna lectus. Duis sed eros diam.
+                    Lorem ipsum
+                    dolor sit amet, consectetur.</p>
+            </div>
+            <div class="col-md-4 footer-in">
+                <h4><i class="down"> </i>Suspendisse sed</h4>
+                <p>Aliquam dignissim porttitor tortor non fermentum. Curabitur in magna lectus. Duis sed eros diam.
+                    Lorem ipsum
+                    dolor sit amet, consectetur.</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!---->
     <p class="footer-class">Copyright &copy; 2015.Company name All rights reserved.<a target="_blank"
-                                                                                      href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a>
+                                                                                      href="http://sc.chinaz.com/moban/">SureFly</a>
     </p>
     <script type="text/javascript">
         $(document).ready(function () {

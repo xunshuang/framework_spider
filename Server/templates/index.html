@@ -101,7 +101,7 @@
             <div class="h_menu4">
                 <a class="toggleMenu" href="#">Menu</a>
                 <ul class="nav">
-                    <li class="active"><a href="/index"><i> </i>首页</a></li>
+                    <li class="active"><a href="{{prefix}}index"><i> </i>首页</a></li>
                     <li><a href="#">信源种类</a>
                         <ul class="drop">
                             {% for media in media_list %}
@@ -110,9 +110,9 @@
 
                         </ul>
                     </li>
-                    <li><a href="products.html"> 行业新闻</a></li>
-                    <li><a href="products.html">机床公司</a></li>
-                    <li><a href="products.html">联系我们</a></li>
+                    <li><a href="{{prefix}}select_news_list"> 行业新闻</a></li>
+                    <li><a href="#">机床公司</a></li>
+                    <li><a href="#">联系我们</a></li>
 
                 </ul>
                 <script type="text/javascript" src="js/nav.js"></script>

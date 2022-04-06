@@ -31,7 +31,7 @@ from datetime import datetime
 def data_updating(mysqlOBJ):
     mysql, cursor = mysqlOBJ.get_mysql()
     SQL_NEWEST = 'SELECT DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
-                 'FROM `machineData` ORDER BY `machinePublishTime` DESC LIMIT 10 '
+                 'FROM `machineData` WHERE `machineSiteId` =  "A001" ORDER BY `machinePublishTime` DESC LIMIT 10 '
     cursor.execute(SQL_NEWEST)
     mysql.commit()
     resultList = cursor.fetchall()
