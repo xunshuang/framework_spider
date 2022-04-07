@@ -91,13 +91,14 @@ class Enginer(object):
         except:
             pass
         finally:
-            x = MachineMap()
-            x.init_spider_name(spiderSiteId=taskMsg["machineSiteId"]) # 更新 类别字典
-            x.make_machine_map()
+            if str(taskMsg['machineSiteType']) == '1':
+                x = MachineMap()
+                x.init_spider_name(spiderSiteId=taskMsg["machineSiteId"]) # 更新 类别字典
+                x.make_machine_map()
 
-            o = MachineMapCount()
-            o.init_spider_name(spiderSiteId=taskMsg["machineSiteId"]) # 更新 类别统计数
-            o.read_machine_map()
+                o = MachineMapCount()
+                o.init_spider_name(spiderSiteId=taskMsg["machineSiteId"]) # 更新 类别统计数
+                o.read_machine_map()
 
     # 派发任务
     def send_work(self,taskMsg):
