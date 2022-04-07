@@ -35,33 +35,33 @@ def get_list_page(mysqlOBJ, levelClassOne=None, levelClassTwo=None, levelClassTh
 
     if machineSiteId:
         if levelClassOne and levelClassTwo and levelClassThree:
-            sql_max_count = 'SELECT COUNT(`id`) ' \
-                            'FROM `machineData` ' \
+            sql_max_count = 'SELECT `machineCount` ' \
+                            'FROM `machineMapCount` ' \
                             'WHERE `machineSiteId` = %s AND ' \
                             '`machineLevelOne` = %s AND ' \
                             '`machineLevelTwo` = %s AND ' \
                             '`machineLevelThree` = %s;'
         elif levelClassOne and levelClassTwo and not levelClassThree:
-            sql_max_count = 'SELECT COUNT(`id`) ' \
-                            'FROM `machineData` ' \
+            sql_max_count = 'SELECT `machineCount` ' \
+                            'FROM `machineMapCount` ' \
                             'WHERE `machineSiteId` = %s AND ' \
                             '`machineLevelOne` = %s AND ' \
                             '`machineLevelTwo` = %s;'
 
         elif levelClassOne and not levelClassTwo and not levelClassThree:
-            sql_max_count = 'SELECT COUNT(`id`) ' \
-                            'FROM `machineData` ' \
+            sql_max_count = 'SELECT `machineCount` ' \
+                            'FROM `machineMapCount` ' \
                             'WHERE `machineSiteId` = %s AND ' \
                             '`machineLevelOne` = %s;'
 
         else:
-            sql_max_count = 'SELECT COUNT(`id`) FROM `machineData` WHERE `machineSiteId` =%s;'
+            sql_max_count = 'SELECT `machineCount` FROM `machineMapCount` WHERE `machineSiteId` =%s;'
     else:
-        sql_max_count = 'SELECT COUNT(`id`) FROM `machineData`;'
+        sql_max_count = 'SELECT `machineCount` FROM `machineMapCount`;'
     args = [ _ for _ in [machineSiteId,levelClassOne,levelClassTwo,levelClassThree] if _]
     cursor.execute(sql_max_count, args)
     mysql.commit()
-    max_count = cursor.fetchone()['COUNT(`id`)']
+    max_count = cursor.fetchone()['machineCount']
     return max_count
 
 

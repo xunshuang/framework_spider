@@ -1,29 +1,21 @@
 # coding:utf-8
-import pymysql
-import traceback
-mysql = pymysql.Connection(
-                    host="127.0.0.1",
-                    port=3306,
-                    user="machineDb",
-                    password="wSFNnx8THjyirHdG",
-                    db="machinedb"
-                )
+from Db.MySQLClient.client import MYSQL
+from Config.GlobalSetting import MYSQL_CONFIG
 
-cursor = mysql.cursor(cursor=pymysql.cursors.DictCursor)
+mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql对象
 
+mysql,cursor = mysqlOBJ.get_mysql()
+count = 0
 
-sql = 'INSERT INTO `machineTest`(`letter`,`data`) VALUES (%s,%s)'
+while True:
+    sql = 'SELECT `machineTitle`,`machineLevelOne`,`machineLevelTwo`,`machineLevelThree` FROM `machineData` LIMIT %s,10000'
 
+    cursor.execute(sql,count)
+    mysql.commit()
 
-
-for _ in ['a','b','c','d','e','f','g','h']:
-        args = [(_,i) for i in range(10000)]
-        try:
-            cursor.executemany(sql,args=(_,i))
-            mysql.commit()
-            print("存储成功")
-        except:
-            print(traceback.format_exc())
-            mysql.rollback()
-
-
+    result = cursor.fetchall()
+    print(result[0]['machineLevelOne'],result[0]['machineTitle'])
+    if result:
+        count += 10000
+    else:
+        break
