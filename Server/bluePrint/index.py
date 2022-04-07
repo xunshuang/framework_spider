@@ -16,7 +16,11 @@ index_bp = Blueprint('index', __name__)
 
 @index_bp.route('/')
 def pre_index():
-    return redirect('/index')
+    random_data = get_random_recommend(mysqlOBJ) # 随机 10条数据
+    media_list = get_media(mysqlOBJ)
+
+    return render_template("index.html",media_list=media_list,random_data1=random_data[0:5],random_data2=random_data[5::])
+
 
 # 首页
 @index_bp.route('/index')
