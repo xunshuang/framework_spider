@@ -9,8 +9,11 @@ from Db.RedisClient.client import create_new_redis
 from Db.MySQLClient.client import MYSQL
 from Core.DingTalkRobot import DingTalk
 from Config import GlobalSetting
+from Core.MachineMap import MachineMap
+from Core.MachineMapCount import MachineMapCount
 
 from concurrent.futures import ThreadPoolExecutor
+
 
 class Enginer(object):
     def __init__(self):
@@ -83,7 +86,18 @@ class Enginer(object):
     # 读取所有待命爬虫
     def get_all_spider(self,taskMsg):
         spider_files = __import__(f'spider_files.{taskMsg["machineSpiderName"]}.{taskMsg["machineSpiderName"]}',fromlist=["start"])
-        spider_files.start()
+        try:
+            spider_files.start()
+        except:
+            pass
+        finally:
+            x = MachineMap()
+            x.init_spider_name(spiderSiteId=taskMsg["machineSiteId"]) # 更新 类别字典
+            x.make_machine_map()
+
+            o = MachineMapCount()
+            o.init_spider_name(spiderSiteId=taskMsg["machineSiteId"]) # 更新 类别统计数
+            o.read_machine_map()
 
     # 派发任务
     def send_work(self,taskMsg):
