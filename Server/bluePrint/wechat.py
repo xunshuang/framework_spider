@@ -34,7 +34,12 @@ def weChat():
     ]
     args_list.sort()
     shaObj = sha1()
-    map(shaObj.update,args_list)
+
+
+    shaObj.update(args_list[0].encode('utf-8'))
+    shaObj.update(args_list[1].encode('utf-8'))
+    shaObj.update(args_list[2].encode('utf-8'))
+
     hashcode = shaObj.hexdigest()
 
 
