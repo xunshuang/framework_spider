@@ -2,6 +2,8 @@
 # 对一些事件及自定义消息的回应
 from Server.api.weixin.event.Event_follow import *
 from Server.api.weixin.message.Message_repeat import *
+from Server.api.weixin.message.Message_help import *
+
 
 Map = {
     "event": {
@@ -9,6 +11,8 @@ Map = {
         "unsubscribe": unsubscribe
     },
     "message":{
-        "repeat":repeat
+        "repeat":repeat,
+        "!help":helps,
+        "！help":helps
     }
 }

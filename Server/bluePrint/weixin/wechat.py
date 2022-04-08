@@ -51,7 +51,7 @@ def weChat():
         FMsgId = xmlDict.get('MsgId')
 
         if 'event' in FMsgType:
-            TContent = Map['message'][FMsgType]()
+            TContent = Map['event'][FMsgType]()
             returnJson = {
                 "ToUserName": FFromUserName,
                 "FromUserName": FToUserName,
