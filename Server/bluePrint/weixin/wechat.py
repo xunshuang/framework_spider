@@ -48,7 +48,7 @@ def weChat():
         FCreateTime = xmlDict['CreateTime']
         FMsgType = xmlDict['MsgType']
 
-        FMsgId = xmlDict['MsgId']
+        FMsgId = xmlDict.get('MsgId')
 
         if 'event' in FMsgType:
             TContent = Map['message'][FMsgType]()
@@ -58,25 +58,38 @@ def weChat():
                 "CreateTime": FCreateTime,
                 "MsgType": "text",
                 "Content": TContent,
-                "MsgId": FMsgId
             }
             return xmltodict.unparse({"xml":returnJson}) # 事件监听
 
         elif "text" in FMsgType:
-            FContent = xmlDict['Content']
-            TContent = Map['message']['repeat'](FContent)
+            try:
+                FContent = xmlDict['Content']
+                TContent = Map['message']['repeat'](FContent)
 
-            returnJson = {
-                "ToUserName": FFromUserName,
-                "FromUserName": FToUserName,
-                "CreateTime": FCreateTime,
-                "MsgType": "text",
-                "Content": TContent,
-                "MsgId": FMsgId
-            }
-            returnXML = xmltodict.unparse({"xml":returnJson})
+                returnJson = {
+                    "ToUserName": FFromUserName,
+                    "FromUserName": FToUserName,
+                    "CreateTime": FCreateTime,
+                    "MsgType": "text",
+                    "Content": TContent,
+                }
+                returnXML = xmltodict.unparse({"xml":returnJson})
 
-            return  returnXML # 复读机模式
+                return  returnXML # 复读机模式
+            except:
+                FContent = xmlDict['Content'] # 不清楚指令就复读呗
+                TContent = Map['message']['repeat'](FContent)
+
+                returnJson = {
+                    "ToUserName": FFromUserName,
+                    "FromUserName": FToUserName,
+                    "CreateTime": FCreateTime,
+                    "MsgType": "text",
+                    "Content": TContent,
+                }
+                returnXML = xmltodict.unparse({"xml": returnJson})
+
+                return returnXML  # 复读机模式
         else:
             FContent = xmlDict['Content']
             TContent = Map['message']['repeat'](FContent)
