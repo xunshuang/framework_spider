@@ -16,6 +16,10 @@ weChat_bp = Blueprint('weChat', __name__)
 
 @weChat_bp.route('/wx')
 def weChat():
+    print('##########', request.args)
+    print('##########', request.data)
+    print('##########', request.form)
+
     args = request.args
 
     signature = args.get('signature')
@@ -39,9 +43,7 @@ def weChat():
 
     if hashcode == signature:
 
-        print('##########',request.args)
-        print('##########',request.data)
-        print('##########',request.form)
+
 
         return echoStr
     else:
