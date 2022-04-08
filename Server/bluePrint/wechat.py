@@ -1,3 +1,4 @@
+# coding:utf-8
 from flask import Flask, Blueprint, request, jsonify, render_template
 from hashlib import sha1
 from Config.GlobalSetting import MYSQL_CONFIG
@@ -22,7 +23,7 @@ def weChat():
     timestamp = args.get('timestamp')
     nonce = args.get('nonce')
     echoStr = args.get('echostr')
-    token = 'xunshu4ng202204081618'
+    token = 'xun123'
 
     args_list = [
         token,timestamp,nonce
