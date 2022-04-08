@@ -84,7 +84,6 @@ def weChat():
                 <CreateTime>![CDATA[{FCreateTime}]]</CreateTime>
                 <MsgType>![CDATA[text]]</MsgType>
                 <Content>![CDATA[后]]</Content>
-                <MsgId>![CDATA[{FMsgId}]]</MsgId>
             </xml>""" # 复读机模式
         else:
             FContent = xmlDict['Content']
