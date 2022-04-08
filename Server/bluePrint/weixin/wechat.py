@@ -64,7 +64,7 @@ def weChat():
         elif "text" in FMsgType:
             try:
                 FContent = xmlDict['Content']
-                TContent = Map['message']['repeat'](FContent)
+                TContent = Map['message'][FMsgType](FContent)
 
                 returnJson = {
                     "ToUserName": FFromUserName,
@@ -76,6 +76,7 @@ def weChat():
                 returnXML = xmltodict.unparse({"xml":returnJson})
 
                 return  returnXML # 复读机模式
+
             except:
                 FContent = xmlDict['Content'] # 不清楚指令就复读呗
                 TContent = Map['message']['repeat'](FContent)
