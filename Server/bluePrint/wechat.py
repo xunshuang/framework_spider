@@ -24,7 +24,7 @@ def weChat():
     timestamp = args.get('timestamp')
 
     echoStr = args.get('echostr')
-    token = 'xun123'
+    token = 'xunshu4ng202204081618'
 
     args_list = [
         token, timestamp, nonce
