@@ -1,8 +1,8 @@
 # coding:utf-8
-from flask import Blueprint, request
+from flask import Blueprint, request,jsonify
 from hashlib import sha1
 from xml.etree import ElementTree
-
+import xmltodict
 from Server.api.pc.getNewestNews import *  # 获取新闻
 
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql对象
@@ -45,7 +45,8 @@ def weChat():
             print('XMLData',XMLData)
             ElementTree.parse(XMLData)
 
-        return """
+
+        r = xmltodict.unparse("""
         <xml>
           <ToUserName><![CDATA[oKV3l6GA5S1Bnnakk_ThJvqdbbIA]]></ToUserName>
           <FromUserName><![CDATA[gh_dcd30c3d7c29]]></FromUserName>
@@ -53,6 +54,7 @@ def weChat():
           <MsgType><![CDATA[text]]></MsgType>
           <Content><![CDATA[你好]]></Content>
         </xml>
-        """
+        """)
+        return jsonify(r)
     else:
         return ""
