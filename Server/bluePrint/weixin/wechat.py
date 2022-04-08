@@ -43,7 +43,7 @@ def weChat():
     if hashcode == signature:
         xmlDict = xmltodict.parse(request.data.decode('utf-8'))['xml']
 
-        FtoUserName = xmlDict['ToUserName']
+        FToUserName = xmlDict['ToUserName']
         FFromUserName = xmlDict['FromUserName']
         FCreateTime = xmlDict['CreateTime']
         FMsgType = xmlDict['MsgType']
@@ -53,8 +53,8 @@ def weChat():
         if 'event' in FMsgType:
             TContent = Map['message'][FMsgType]()
             returnJson = {
-                "toUserName": FFromUserName,
-                "FromUserName": FtoUserName,
+                "ToUserName": FFromUserName,
+                "FromUserName": FToUserName,
                 "CreateTime": FCreateTime,
                 "MsgType": "text",
                 "Content": TContent,
@@ -67,31 +67,23 @@ def weChat():
             TContent = Map['message']['repeat'](FContent)
 
             returnJson = {
-                "toUserName": FFromUserName,
-                "FromUserName": FtoUserName,
+                "ToUserName": FFromUserName,
+                "FromUserName": FToUserName,
                 "CreateTime": FCreateTime,
                 "MsgType": "text",
                 "Content": TContent,
                 "MsgId": FMsgId
             }
             returnXML = xmltodict.unparse({"xml":returnJson})
-            print('$$$$$$$$',returnXML)
 
-            return  f"""
-            <xml>
-                <toUserName>![CDATA[oKV3l6GA5S1Bnnakk_ThJvqdbbIA]]</toUserName>
-                <FromUserName>![CDATA[gh_dcd30c3d7c29]]</FromUserName>
-                <CreateTime>![CDATA[{FCreateTime}]]</CreateTime>
-                <MsgType>![CDATA[text]]</MsgType>
-                <Content>![CDATA[后]]</Content>
-            </xml>""" # 复读机模式
+            return  returnXML # 复读机模式
         else:
             FContent = xmlDict['Content']
             TContent = Map['message']['repeat'](FContent)
 
             returnJson = {
-               "toUserName":FFromUserName,
-               "FromUserName":FtoUserName,
+               "ToUserName":FFromUserName,
+               "FromUserName":FToUserName,
                "CreateTime":FCreateTime,
                "MsgType":"text",
                "Content":TContent,
