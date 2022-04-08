@@ -40,9 +40,9 @@ def weChat():
 
     if hashcode == signature:
 
-        if request.data:
-            XMLData = request.data.decode('utf-8')
-            ElementTree.parse(XMLData)
+        # if request.data:
+        #     XMLData = request.data.decode('utf-8')
+        #     ElementTree.parse(XMLData)
 
         return """
         <xml>
