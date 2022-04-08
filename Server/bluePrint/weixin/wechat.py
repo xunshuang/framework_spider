@@ -91,15 +91,13 @@ def weChat():
 
                 return returnXML  # 复读机模式
         else:
-            FContent = xmlDict['Content']
-            TContent = Map['message']['repeat'](FContent)
 
             returnJson = {
                "ToUserName":FFromUserName,
                "FromUserName":FToUserName,
                "CreateTime":FCreateTime,
                "MsgType":"text",
-               "Content":TContent,
+               "Content":"你说的这个我看不懂，输入 !help 获取全部指令！",
                "MsgId":FMsgId
             }
             return xmltodict.unparse({"xml":returnJson})
