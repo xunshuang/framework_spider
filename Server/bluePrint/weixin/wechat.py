@@ -4,6 +4,8 @@ from hashlib import sha1
 import xmltodict
 
 from Server.api.pc.getNewestNews import *  # 获取新闻
+from Server.api.weixin.FuncMap import Map
+
 
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql对象
 
@@ -39,6 +41,7 @@ def weChat():
     hashcode = shaObj.hexdigest()
 
     if hashcode == signature:
+        return """<xml><ToUserName>oKV3l6GA5S1Bnnakk_ThJvqdbbIA</ToUserName><FromUserName>gh_dcd30c3d7c29</FromUserName><CreateTime>1649427585</CreateTime><MsgType>text</MsgType><Content>你好</Content><MsgId>23614122573209947</MsgId></xml>"""
         xmlDict = xmltodict.parse(request.data.decode('utf-8'))['xml']
 
         FtoUserName = xmlDict['ToUserName']
@@ -48,15 +51,20 @@ def weChat():
 
         FContent = xmlDict['Content']
         FMsgId = xmlDict['MsgId']
-        print(FContent)
-        return """
-        <xml>
-          <ToUserName><![CDATA[oKV3l6GA5S1Bnnakk_ThJvqdbbIA]]></ToUserName>
-          <FromUserName><![CDATA[gh_dcd30c3d7c29]]></FromUserName>
-          <CreateTime>12345678</CreateTime>
-          <MsgType><![CDATA[text]]></MsgType>
-          <Content><![CDATA[你好]]></Content>
-        </xml>
-        """
+
+        if 'event' in FMsgType:
+            pass
+        elif "message" in FMsgType:
+            pass
+        returnJson = {
+           "toUserName":FFromUserName,
+           "FromUserName":FtoUserName,
+           "CreateTime":FCreateTime,
+           "MsgType":"",
+           "Content":"",
+           "MsgId":""
+        }
+        # return xmltodict.unparse(returnJson)
+
     else:
         return ""
