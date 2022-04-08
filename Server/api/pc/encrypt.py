@@ -1,7 +1,6 @@
 # coding:utf-8
-from Crypto.PublicKey.RSA import RsaKey
 from Crypto.PublicKey import RSA
-from Server.api.RSA_KEY import PRI_KEY,PUB_KEY
+from Server.api.pc.RSA_KEY import PRI_KEY,PUB_KEY
 from Crypto.Cipher import PKCS1_v1_5 as Cipher_pkcs1_v1_5
 import base64
 

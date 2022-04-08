@@ -1,17 +1,18 @@
 # coding:utf-8
-from flask import Flask, Blueprint, request, jsonify, render_template
+from flask import Blueprint, request
 from hashlib import sha1
-from Config.GlobalSetting import MYSQL_CONFIG
-from Server.api.getMachineListApi import *  # 获取随机推荐
-from Server.api.getMediaListApi import *  # 获取信源
-from Server.api.getMachinePage import get_page, get_relation_page
-from Server.api.getNewestNews import *  # 获取新闻
-import re
+from xml.etree import ElementTree
+
+from Server.api.pc.getNewestNews import *  # 获取新闻
+
 
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql对象
 
 weChat_bp = Blueprint('weChat', __name__)
 
+
+# wxb28f616376c291c5
+# af45f60a585ebb78ac5b7876318c9216
 
 @weChat_bp.route('/wx')
 def weChat():

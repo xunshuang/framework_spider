@@ -1,12 +1,8 @@
 # coding:utf-8
 
-from flask import Flask, Blueprint, request, jsonify, render_template, url_for, redirect, make_response
-from Db.MySQLClient.client import MYSQL
-from Config.GlobalSetting import MYSQL_CONFIG
-from Server.api.encrypt import enc, dec
-import json
-from Server.api.getMediaListApi import *  # 获取信源
-from Server.api.getNewsList import * # 获取新闻列表
+from flask import Blueprint, render_template, redirect, make_response
+from Server.api.pc.getMediaListApi import *  # 获取信源
+from Server.api.pc.getNewsList import * # 获取新闻列表
 
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql对象
 news_list_bp = Blueprint('news_list', __name__)

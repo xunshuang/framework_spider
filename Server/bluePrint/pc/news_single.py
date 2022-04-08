@@ -1,13 +1,8 @@
-from flask import Flask, Blueprint, request, jsonify, render_template,make_response
+from flask import Blueprint, render_template,make_response
 
-from Config.GlobalSetting import MYSQL_CONFIG
-from Config.GlobalSetting import MYSQL_CONFIG
-
-from Server.api.getMachineListApi import *  # 获取随机推荐
-from Server.api.getMediaListApi import *  # 获取信源
-from Server.api.getMachinePage import get_page,get_relation_page
-from Server.api.getNewestNews import * # 获取新闻
-from Server.api.getNewsPage import * # 获取详情新闻
+from Server.api.pc.getMediaListApi import *  # 获取信源
+from Server.api.pc.getNewestNews import * # 获取新闻
+from Server.api.pc.getNewsPage import * # 获取详情新闻
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG,db='machinedb')  # 该视图的专用mysql对象
 
 news_single_bp = Blueprint('news_single', __name__)

@@ -1,10 +1,7 @@
-from flask import Flask, Blueprint, request,jsonify,render_template,url_for,redirect
+from flask import Blueprint, render_template
 
-from Db.MySQLClient.client import MYSQL
-from Config.GlobalSetting import MYSQL_CONFIG
-
-from Server.api.getMachineListApi import * # 获取随机推荐
-from Server.api.getMediaListApi import * #获取信源
+from Server.api.pc.getMachineListApi import * # 获取随机推荐
+from Server.api.pc.getMediaListApi import * #获取信源
 
 
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG,db='machinedb')  # 该视图的专用mysql对象

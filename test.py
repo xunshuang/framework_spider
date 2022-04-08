@@ -1,21 +1,8 @@
 # coding:utf-8
-from Db.MySQLClient.client import MYSQL
-from Config.GlobalSetting import MYSQL_CONFIG
+import requests
 
-mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql对象
+url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxb28f616376c291c5&secret=af45f60a585ebb78ac5b7876318c9216'
 
-mysql,cursor = mysqlOBJ.get_mysql()
-count = 0
+resp = requests.get(url)
 
-while True:
-    sql = 'SELECT `machineTitle`,`machineLevelOne`,`machineLevelTwo`,`machineLevelThree` FROM `machineData` LIMIT %s,10000'
-
-    cursor.execute(sql,count)
-    mysql.commit()
-
-    result = cursor.fetchall()
-    print(result[0]['machineLevelOne'],result[0]['machineTitle'])
-    if result:
-        count += 10000
-    else:
-        break
+print(resp.text)
