@@ -20,11 +20,10 @@ def weChat():
     signature = args.get('signature')
 
     nonce = args.get('nonce')
-    echo = args.get('echostr')
 
-    timestamp = echo.split('×tamp=')[1]
+    timestamp = args.get('timestamp')
 
-    echoStr = echo.split('×tamp=')[0]
+    echoStr = args.get('echoStr')
     token = 'xun123'
 
     args_list = [
@@ -39,7 +38,7 @@ def weChat():
     shaObj.update(args_list[2].encode('utf-8'))
 
     hashcode = shaObj.hexdigest()
-    with open('/root/ok.txt', 'w') as f:
+    with open('ok.txt', 'w') as f:
         f.write(
             signature + '\n' + nonce + '\n' + timestamp + '\n' + echoStr + '\n' + token + '\n' + str(
                 args_list) + '\n' + hashcode
