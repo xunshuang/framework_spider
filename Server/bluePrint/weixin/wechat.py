@@ -60,7 +60,7 @@ def weChat():
                 "Content": TContent,
                 "MsgId": FMsgId
             }
-            return xmltodict.unparse(returnJson) # 事件监听
+            return xmltodict.unparse({"xml":returnJson}) # 事件监听
 
         elif "text" in FMsgType:
             FContent = xmlDict['Content']
@@ -74,7 +74,7 @@ def weChat():
                 "Content": TContent,
                 "MsgId": FMsgId
             }
-            return xmltodict.unparse(returnJson) # 复读机模式
+            return xmltodict.unparse({"xml":returnJson}) # 复读机模式
         else:
             FContent = xmlDict['Content']
             TContent = Map['message']['repeat'](FContent)
@@ -87,7 +87,7 @@ def weChat():
                "Content":TContent,
                "MsgId":FMsgId
             }
-            return xmltodict.unparse(returnJson)
+            return xmltodict.unparse({"xml":returnJson})
 
     else:
         return ""
