@@ -24,7 +24,8 @@ def weChat():
 
     args_list = [
         token,timestamp,nonce
-    ].sort()
+    ]
+    args_list.sort()
     shaObj = sha1()
     map(shaObj.update,args_list)
     hashcode = shaObj.hexdigest()
