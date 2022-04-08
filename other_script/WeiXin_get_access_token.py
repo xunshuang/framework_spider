@@ -14,7 +14,8 @@ respJson = requests.get(url).json()
 
 
 if respJson['access_token']:
-    mysql,cursor = MYSQL.get_mysql(MYSQL_CONFIG)
+    mysqlObj = MYSQL(MYSQL_CONFIG,db='machinedb')
+    mysql,cursor = mysqlObj.get_mysql()
 
     SQL = 'TRUNCATE TABLE `machineToken`;'
 
