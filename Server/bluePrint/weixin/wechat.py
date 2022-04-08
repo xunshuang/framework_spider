@@ -43,15 +43,16 @@ def weChat():
     if hashcode == signature:
         xmlDict = xmltodict.parse(request.data.decode('utf-8'))['xml']
 
-        FToUserName = xmlDict['ToUserName']
-        FFromUserName = xmlDict['FromUserName']
-        FCreateTime = xmlDict['CreateTime']
-        FMsgType = xmlDict['MsgType']
+        FToUserName = xmlDict['ToUserName'] # 从哪来
+        FFromUserName = xmlDict['FromUserName'] # 发给谁
+        FCreateTime = xmlDict['CreateTime'] # 创建时间
+        FMsgType = xmlDict['MsgType'] #消息类型
 
         FMsgId = xmlDict.get('MsgId')
 
         if 'event' in FMsgType:
-            TContent = Map['event'][FMsgType]()
+            EVENT = xmlDict['Event'] # 事件类型
+            TContent = Map['event'][EVENT](EVENT)
             returnJson = {
                 "ToUserName": FFromUserName,
                 "FromUserName": FToUserName,
@@ -64,7 +65,7 @@ def weChat():
         elif "text" in FMsgType:
             try:
                 FContent = xmlDict['Content']
-                TContent = Map['message'][FMsgType](FContent)
+                TContent = Map['message'][FContent](FContent)
 
                 returnJson = {
                     "ToUserName": FFromUserName,
