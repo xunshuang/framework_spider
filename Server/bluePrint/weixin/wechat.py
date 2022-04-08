@@ -44,7 +44,7 @@ def weChat():
     if hashcode == signature:
 
 
-
+        print(123)
         return echoStr
     else:
         return ""
