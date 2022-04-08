@@ -74,8 +74,10 @@ def weChat():
                 "Content": TContent,
                 "MsgId": FMsgId
             }
-            print('#######',returnJson)
-            return xmltodict.unparse({"xml":returnJson}) # 复读机模式
+            returnXML = xmltodict.unparse({"xml":returnJson})
+            print('$$$$$$$$',returnXML)
+
+            return  returnXML # 复读机模式
         else:
             FContent = xmlDict['Content']
             TContent = Map['message']['repeat'](FContent)
