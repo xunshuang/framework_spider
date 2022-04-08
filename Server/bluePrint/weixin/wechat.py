@@ -79,12 +79,12 @@ def weChat():
 
             return  f"""
             <xml>
-                <toUserName>oKV3l6GA5S1Bnnakk_ThJvqdbbIA</toUserName>
-                <FromUserName>gh_dcd30c3d7c29</FromUserName>
-                <CreateTime>{FCreateTime}</CreateTime>
-                <MsgType>text</MsgType>
-                <Content>后</Content>
-                <MsgId>{FMsgId}</MsgId>
+                <toUserName>![CDATA[oKV3l6GA5S1Bnnakk_ThJvqdbbIA]]</toUserName>
+                <FromUserName>![CDATA[gh_dcd30c3d7c29]]</FromUserName>
+                <CreateTime>![CDATA[{FCreateTime}]]</CreateTime>
+                <MsgType>![CDATA[text]]</MsgType>
+                <Content>![CDATA[后]]</Content>
+                <MsgId>![CDATA[{FMsgId}]]</MsgId>
             </xml>""" # 复读机模式
         else:
             FContent = xmlDict['Content']
