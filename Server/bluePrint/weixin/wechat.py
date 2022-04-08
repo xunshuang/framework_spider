@@ -77,7 +77,7 @@ def weChat():
             returnXML = xmltodict.unparse({"xml":returnJson})
             print('$$$$$$$$',returnXML)
 
-            return  returnXML # 复读机模式
+            return  """<xml><toUserName>oKV3l6GA5S1Bnnakk_ThJvqdbbIA</toUserName><FromUserName>gh_dcd30c3d7c29</FromUserName><CreateTime>1649428315</CreateTime><MsgType>text</MsgType><Content>后</Content><MsgId>23614134685120499</MsgId></xml>""" # 复读机模式
         else:
             FContent = xmlDict['Content']
             TContent = Map['message']['repeat'](FContent)
