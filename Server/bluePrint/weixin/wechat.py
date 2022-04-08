@@ -14,7 +14,7 @@ weChat_bp = Blueprint('weChat', __name__)
 # wxb28f616376c291c5
 # af45f60a585ebb78ac5b7876318c9216
 
-@weChat_bp.route('/wx')
+@weChat_bp.route('/wx',methods=['GET','POST'])
 def weChat():
     print('##########', request.args)
     print('##########', request.data)
