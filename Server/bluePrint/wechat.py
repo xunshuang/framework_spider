@@ -23,7 +23,7 @@ def weChat():
 
     timestamp = args.get('timestamp')
 
-    echoStr = args.get('echoStr')
+    echoStr = args.get('echostr')
     token = 'xun123'
 
     args_list = [
