@@ -16,6 +16,8 @@ weChat_bp = Blueprint('weChat', __name__)
 @weChat_bp.route('/wx')
 def weChat():
     args = request.args
+    with open('/root/ok.txt','a+') as f:
+        f.write(str(args))
     signature = args.get('signature')
     timestamp = args.get('timestamp')
     nonce = args.get('nonce')
@@ -30,7 +32,7 @@ def weChat():
     map(shaObj.update,args_list)
     hashcode = shaObj.hexdigest()
 
-    with open('/root/ok.txt','w') as f:
+    with open('/root/ok.txt','a+') as f:
         f.write(hashcode+'$$$$'+signature)
 
     if hashcode == signature:
