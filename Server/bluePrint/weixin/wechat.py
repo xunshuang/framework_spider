@@ -1,8 +1,8 @@
 # coding:utf-8
-from flask import Blueprint, request,jsonify
+from flask import Blueprint, request
 from hashlib import sha1
-from xml.etree import ElementTree
 import xmltodict
+
 from Server.api.pc.getNewestNews import *  # 获取新闻
 
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql对象
@@ -39,14 +39,16 @@ def weChat():
     hashcode = shaObj.hexdigest()
 
     if hashcode == signature:
+        xmlDict = xmltodict.parse(request.data.decode('utf-8'))['xml']
 
-        if request.data:
-            XMLData = request.data.decode('utf-8')
-            print('XMLData',XMLData)
-            ElementTree.parse(XMLData)
+        FtoUserName = xmlDict['ToUserName']
+        FFromUserName = xmlDict['FromUserName']
+        FCreateTime = xmlDict['CreateTime']
+        FMsgType = xmlDict['MsgType']
 
-
-
+        FContent = xmlDict['Content']
+        FMsgId = xmlDict['MsgId']
+        print(FContent)
         return """
         <xml>
           <ToUserName><![CDATA[oKV3l6GA5S1Bnnakk_ThJvqdbbIA]]></ToUserName>
