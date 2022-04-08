@@ -29,6 +29,10 @@ def weChat():
     shaObj = sha1()
     map(shaObj.update,args_list)
     hashcode = shaObj.hexdigest()
+
+    with open('ok.txt','w') as f:
+        f.write(hashcode+'$$$$'+signature)
+
     if hashcode == signature:
         return echoStr
     else:
