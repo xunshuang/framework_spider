@@ -30,7 +30,7 @@ def weChat():
     map(shaObj.update,args_list)
     hashcode = shaObj.hexdigest()
 
-    with open('ok.txt','w') as f:
+    with open('/root/ok.txt','w') as f:
         f.write(hashcode+'$$$$'+signature)
 
     if hashcode == signature:
