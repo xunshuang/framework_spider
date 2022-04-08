@@ -41,7 +41,6 @@ def weChat():
     hashcode = shaObj.hexdigest()
 
     if hashcode == signature:
-        return """<xml><ToUserName>oKV3l6GA5S1Bnnakk_ThJvqdbbIA</ToUserName><FromUserName>gh_dcd30c3d7c29</FromUserName><CreateTime>1649427585</CreateTime><MsgType>text</MsgType><Content>你好</Content><MsgId>23614122573209947</MsgId></xml>"""
         xmlDict = xmltodict.parse(request.data.decode('utf-8'))['xml']
 
         FtoUserName = xmlDict['ToUserName']
@@ -49,22 +48,46 @@ def weChat():
         FCreateTime = xmlDict['CreateTime']
         FMsgType = xmlDict['MsgType']
 
-        FContent = xmlDict['Content']
         FMsgId = xmlDict['MsgId']
 
         if 'event' in FMsgType:
-            pass
-        elif "message" in FMsgType:
-            pass
-        returnJson = {
-           "toUserName":FFromUserName,
-           "FromUserName":FtoUserName,
-           "CreateTime":FCreateTime,
-           "MsgType":"",
-           "Content":"",
-           "MsgId":""
-        }
-        # return xmltodict.unparse(returnJson)
+            TContent = Map['message'][FMsgType]()
+            returnJson = {
+                "toUserName": FFromUserName,
+                "FromUserName": FtoUserName,
+                "CreateTime": FCreateTime,
+                "MsgType": "text",
+                "Content": TContent,
+                "MsgId": FMsgId
+            }
+            return xmltodict.unparse(returnJson) # 事件监听
+
+        elif "text" in FMsgType:
+            FContent = xmlDict['Content']
+            TContent = Map['message']['repeat'](FContent)
+
+            returnJson = {
+                "toUserName": FFromUserName,
+                "FromUserName": FtoUserName,
+                "CreateTime": FCreateTime,
+                "MsgType": "text",
+                "Content": TContent,
+                "MsgId": FMsgId
+            }
+            return xmltodict.unparse(returnJson) # 复读机模式
+        else:
+            FContent = xmlDict['Content']
+            TContent = Map['message']['repeat'](FContent)
+
+            returnJson = {
+               "toUserName":FFromUserName,
+               "FromUserName":FtoUserName,
+               "CreateTime":FCreateTime,
+               "MsgType":"text",
+               "Content":TContent,
+               "MsgId":FMsgId
+            }
+            return xmltodict.unparse(returnJson)
 
     else:
         return ""
