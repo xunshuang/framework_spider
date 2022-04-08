@@ -46,7 +46,8 @@ def weChat():
             ElementTree.parse(XMLData)
 
 
-        r = xmltodict.unparse("""
+
+        return """
         <xml>
           <ToUserName><![CDATA[oKV3l6GA5S1Bnnakk_ThJvqdbbIA]]></ToUserName>
           <FromUserName><![CDATA[gh_dcd30c3d7c29]]></FromUserName>
@@ -54,7 +55,6 @@ def weChat():
           <MsgType><![CDATA[text]]></MsgType>
           <Content><![CDATA[你好]]></Content>
         </xml>
-        """)
-        return jsonify(r)
+        """
     else:
         return ""
