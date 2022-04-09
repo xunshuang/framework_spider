@@ -12,7 +12,7 @@ def get_random_recommend(mysqlOBJ):
     mysql, cursor = mysqlOBJ.get_mysql()
 
     SQL_RANDOM = "SELECT DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` " \
-                 "FROM `machineDay`"
+                 "FROM `machineDay` LIMIT 10"
 
     cursor.execute(SQL_RANDOM)
     mysql.commit()
