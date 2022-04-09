@@ -30,7 +30,7 @@ def subscribe(*args,**kwargs):
 
     SQL_SUB_UPDATE = 'UPDATE `machineWXUser` SET `machineSubscribe` = %s WHERE `machineOpenId` = %s'
 
-    cursor.execute(SQL_SUB_SEARCH)
+    cursor.execute(SQL_SUB_SEARCH,FFromUserName)
     mysql.commit()
     if cursor.fetchone():
         cursor.execute(SQL_SUB_UPDATE,("1",FFromUserName))
