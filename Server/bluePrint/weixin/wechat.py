@@ -52,7 +52,7 @@ def weChat():
 
         if 'event' in FMsgType:
             EVENT = xmlDict['Event'] # 事件类型
-            TContent = Map['event'][EVENT](EVENT)
+            TContent = Map['event'][EVENT](mysqlOBJ=mysqlOBJ,event=EVENT)
             returnJson = {
                 "ToUserName": FFromUserName,
                 "FromUserName": FToUserName,
@@ -65,7 +65,7 @@ def weChat():
         elif "text" in FMsgType:
             try:
                 FContent = xmlDict['Content']
-                TContent = Map['message'][FContent](FContent)
+                TContent = Map['message'][FContent](mysqlOBJ=mysqlOBJ,FContent=FContent)
 
                 returnJson = {
                     "ToUserName": FFromUserName,
@@ -76,11 +76,11 @@ def weChat():
                 }
                 returnXML = xmltodict.unparse({"xml":returnJson})
 
-                return  returnXML # 复读机模式
+                return  returnXML # 指令模式
 
             except:
                 FContent = xmlDict['Content'] # 不清楚指令就复读呗
-                TContent = Map['message']['repeat'](FContent)
+                TContent = Map['message']['repeat'](mysqlOBJ=mysqlOBJ,FContent=FContent)
 
                 returnJson = {
                     "ToUserName": FFromUserName,

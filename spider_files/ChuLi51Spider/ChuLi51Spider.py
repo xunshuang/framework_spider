@@ -83,7 +83,7 @@ class ChuLi51Spider(Spider):
                     "levelTwo": response.meta["levelTwo"]
                 })
 
-        else:
+        elif response.meta['page'] == 1:
             urlList = response.xpath('//div[@class="projects-dls"]/dl//h5//span/a/@href').getall()
 
             for url in urlList:

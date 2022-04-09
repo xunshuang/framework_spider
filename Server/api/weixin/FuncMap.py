@@ -13,6 +13,7 @@ Map = {
     "message":{
         "repeat":repeat,
         "!help":helps,
-        "！help":helps
+        "！help":helps,
+
     }
 }

@@ -1,7 +1,8 @@
 # coding:utf-8
 # 复读机模式
 
-def repeat(Msg):
-    if "收到不支持" in Msg:
+def repeat(*args,**kwargs):
+    FContent = kwargs.get('FContent')
+    if "收到不支持" in FContent:
         return "卧槽！你这表情包我没有！"
-    return Msg
+    return FContent
