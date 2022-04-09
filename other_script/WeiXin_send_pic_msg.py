@@ -4,6 +4,7 @@
 import os
 import sys
 import time
+
 sys.path.append('/workspace/framework_spider/')
 import requests
 from Db.MySQLClient.client import MYSQL
@@ -11,6 +12,8 @@ from Config.GlobalSetting import MYSQL_CONFIG
 from datetime import datetime
 
 mysqlObj = MYSQL(MYSQL_CONFIG, db='machinedb')
+
+dateNum = sys.argv[-1]
 
 # 获取 accessToken
 def get_accessToken():
@@ -26,36 +29,36 @@ def get_accessToken():
         return get_accessToken()
 
 
-def get_machine_msg():
-    mysql, cursor = mysqlObj.get_mysql()
-    SQL_SEARCH_MACHINE = 'SELECT * FROM `machineData` ORDER BY `machinePublishTime` DESC LIMIT 1'
-    cursor.execute(SQL_SEARCH_MACHINE)
-    mysql.commit()
+def get_machine_msg(dateNum):
+    if dateNum >= 8:
+        mysql, cursor = mysqlObj.get_mysql()
+        SQL_SEARCH_MACHINE = 'SELECT * FROM `machineData` ORDER BY `machinePublishTime` DESC LIMIT 14'
+        cursor.execute(SQL_SEARCH_MACHINE)
+        mysql.commit()
 
-    machine_data = cursor.fetchall()
+        machine_data = cursor.fetchall()[int(dateNum) - 8]
 
-    imgListRaw = [_ for _ in machine_data['machineImg'].split('$$$')]
-    if not imgListRaw or imgListRaw == [""]:
-        imgListRaw = ['http://www.mengshuai.top/images/imageLost.png']
+        imgListRaw = [_ for _ in machine_data['machineImg'].split('$$$')]
+        if not imgListRaw or imgListRaw == [""]:
+            imgListRaw = ['http://www.mengshuai.top/images/imageLost.png']
 
-
-
-
-
-    machineLocation = "-".join([_ for _ in [machine_data["machineLocalClassOne"], machine_data["machineLocalClassTwo"],
-                                machine_data["machineLocalClassThree"]] if _])
-    dataDict = {
-        "品牌": machine_data["machineModel"],
-        "状态": {"1": "已出售", "2": "展示中", "99": "未知状态"}[str(machine_data["machineStatus"])],
-        "所在地": machineLocation,
-        "出厂日期": machine_data["machineManufacture"],
-        "产品质量": machine_data["machineQuality"],
-        "联系人/公司": machine_data["machineContact"],
-        "联系方式": {"1": "手机", "2": "电话", "3": "微信", "4": "QQ", "5": "未知联系方式"}[str(machine_data["machineContactWay"])] + ' - ' +
-                machine_data["machineContactInfo"],
-        "数据发布时间": machine_data["machinePublishTime"]
-    }
-    machineInfo = machine_data['machineInfo'].decode()
+        machineLocation = "-".join(
+            [_ for _ in [machine_data["machineLocalClassOne"], machine_data["machineLocalClassTwo"],
+                         machine_data["machineLocalClassThree"]] if _])
+        dataDict = {
+            "品牌": machine_data["machineModel"],
+            "状态": {"1": "已出售", "2": "展示中", "99": "未知状态"}[str(machine_data["machineStatus"])],
+            "所在地": machineLocation,
+            "出厂日期": machine_data["machineManufacture"],
+            "产品质量": machine_data["machineQuality"],
+            "联系人/公司": machine_data["machineContact"],
+            "联系方式": {"1": "手机", "2": "电话", "3": "微信", "4": "QQ", "5": "未知联系方式"}[
+                        str(machine_data["machineContactWay"])] + ' - ' +
+                    machine_data["machineContactInfo"],
+            "数据发布时间": machine_data["machinePublishTime"]
+        }
+        machineInfo = machine_data['machineInfo'].decode()
+        print(machineInfo)
 
 def get_openid(openId=None):
     mysql, cursor = mysqlObj.get_mysql()
@@ -65,8 +68,10 @@ def get_openid(openId=None):
     for openId in cursor.fetchall():
         yield openId['machineOpenId']
 
+
 def get_media_id(imgListRaw):
     pass
+
 
 # 发送消息
 def send_msg():
@@ -76,6 +81,4 @@ def send_msg():
 
 
 if __name__ == '__main__':
-    __ = get_openid()
-    for _ in __:
-        print(_)
+    get_machine_msg(dateNum)
