@@ -4,7 +4,7 @@
 import os
 import sys
 import time
-
+import json
 sys.path.append('/workspace/framework_spider/')
 import requests
 from Db.MySQLClient.client import MYSQL
@@ -13,7 +13,7 @@ from datetime import datetime
 
 mysqlObj = MYSQL(MYSQL_CONFIG, db='machinedb')
 
-dateNum = int(sys.argv[-1])
+# dateNum = int(sys.argv[-1])
 
 # 获取 accessToken
 def get_accessToken():
@@ -28,14 +28,30 @@ def get_accessToken():
         time.sleep(1)
         return get_accessToken()
 
+# 获取分组情况
+def get_group_id():
+    url = "https://api.weixin.qq.com/cgi-bin/groups/get"
+    payload_id = {
+        'access_token': get_accessToken()
+    }
+    resp = requests.get(url=url, params=payload_id)
+    result = resp.json()
+    for group in result['groups']:
+        if group['count'] != 0:
+            yield group['id']
 
 def get_machine_msg(dateNum):
     if dateNum >= 8:
         mysql, cursor = mysqlObj.get_mysql()
-        SQL_SEARCH_MACHINE = 'SELECT * FROM `machineData` ORDER BY `machinePublishTime` DESC LIMIT 14'
-        cursor.execute(SQL_SEARCH_MACHINE)
+        SQL_SEARCH_MACHINE_DAY = 'SELECT * FROM `machineDay` ORDER BY `machinePublishTime` DESC LIMIT 14'
+        cursor.execute(SQL_SEARCH_MACHINE_DAY)
         mysql.commit()
 
+        md5hash = cursor.fetchall()[dateNum - 8]['md5hash']
+
+        SQL_SEARCH_MACHINE = 'SELECT * FROM `machineData` WHERE `md5hash` = %s;'
+        cursor.execute(SQL_SEARCH_MACHINE,md5hash)
+        mysql.commit()
         machine_data = cursor.fetchall()[dateNum - 8]
 
         imgListRaw = [_ for _ in machine_data['machineImg'].split('$$$')]
@@ -58,7 +74,32 @@ def get_machine_msg(dateNum):
             "数据发布时间": machine_data["machinePublishTime"]
         }
         machineInfo = machine_data['machineInfo'].decode()
-        print(machineInfo)
+
+        String = ""
+        for k,v in dataDict.items():
+            String += k + ':' + v + '\n'
+
+        String += '详情:' + machineInfo
+
+        groups = get_group_id()
+
+        for groupId in groups:
+            doc = {
+                "filter":{
+                    "is_to_all":True,
+                    "group_id":""
+                },
+                "text":{
+                    "content":String
+                },
+                "msgtype":'text'
+            }
+
+            msgUrl = 'https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token=' + get_accessToken()
+
+            r = requests.post(url=msgUrl,data = json.dumps(doc,ensure_ascii=False,indent=2))
+            result = r.json()
+            print(result)
 
 def get_openid(openId=None):
     mysql, cursor = mysqlObj.get_mysql()
@@ -81,4 +122,4 @@ def send_msg():
 
 
 if __name__ == '__main__':
-    get_machine_msg(dateNum)
+    get_machine_msg(8)
