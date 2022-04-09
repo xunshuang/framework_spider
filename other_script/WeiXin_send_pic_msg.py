@@ -1,5 +1,5 @@
 # coding:utf-8
-# 定时发送-图文消息 每
+# 定时发送-图文消息 每日机床信息
 
 import os
 import sys

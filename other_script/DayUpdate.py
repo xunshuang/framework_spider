@@ -30,25 +30,37 @@ from datetime import datetime
 # 每日更新一次
 def data_updating(mysqlOBJ):
     mysql, cursor = mysqlOBJ.get_mysql()
+
+
+    ARGS = []
     # 推荐当然要推荐精品啦！
-    SQL_NEWEST = 'SELECT DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` FROM `machineData` WHERE `machineSiteId` =  "A002" AND `machineTitle` NOT LIKE "%回收%" AND `machineImg` != "" ORDER BY `machinePublishTime` DESC LIMIT 10 '
-    cursor.execute(SQL_NEWEST)
-    mysql.commit()
-    resultList = cursor.fetchall()
-    for res in resultList:
-        res['machineImg'] = res['machineImg'].split('$$$')[0]
-        res["machinePublishTime"] = res["machinePublishTime"].strftime("%Y-%m-%d")
+    for siteId in ['A001','A002','A003']:
+        SQL_NEWEST = f'SELECT DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` FROM `machineData` WHERE `machineSiteId` = "{siteId}" AND `machineTitle` NOT LIKE "%回收%" AND `machineImg` != "" ORDER BY `machinePublishTime` DESC LIMIT 30 '
+        cursor.execute(SQL_NEWEST)
+        mysql.commit()
+        resultList = cursor.fetchall()
+        for res in resultList:
+            res['machineImg'] = res['machineImg'].split('$$$')[0]
+            res["machinePublishTime"] = res["machinePublishTime"].strftime("%Y-%m-%d")
+
+
+
+        args = [ (
+            _["md5hash"],_['machineTitle'],_['machineImg'],_['machinePublishTime'],datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ) for _ in resultList]
+        ARGS += args
+        print(siteId)
+
+    SQL_DAY = 'INSERT INTO `machineDay`(`md5hash`,`machineTitle`,`machineImg`,`machinePublishTime`,`machineInsertTime`) ' \
+              'VALUES (%s,%s,%s,%s,%s)'
+
+    ARGS.sort(key=lambda x:x[-2],reverse=True)
 
     SQL_DELETE = 'TRUNCATE TABLE `machineDay`;'
     cursor.execute(SQL_DELETE)
     mysql.commit()
 
-    args = [ (
-        _["md5hash"],_['machineTitle'],_['machineImg'],_['machinePublishTime'],datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    ) for _ in resultList]
-    SQL_DAY = 'INSERT INTO `machineDay`(`md5hash`,`machineTitle`,`machineImg`,`machinePublishTime`,`machineInsertTime`) ' \
-              'VALUES (%s,%s,%s,%s,%s)'
-    cursor.executemany(SQL_DAY,args)
+    cursor.executemany(SQL_DAY,ARGS)
     mysql.commit()
 
 

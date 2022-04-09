@@ -17,7 +17,7 @@ def get_random_recommend(mysqlOBJ):
     cursor.execute(SQL_RANDOM)
     mysql.commit()
     resultList = cursor.fetchall()
-    for res in resultList:
+    for res in resultList[0:10]:
         if not res['machineImg'] :
             res['machineImg'] = '/images/imageLost.png'
         res["machinePublishTime"] = res["machinePublishTime"].strftime("%Y-%m-%d")
