@@ -73,7 +73,7 @@ def get_machine_msg(dateNum):
                     machine_data["machineContactInfo"],
             "数据发布时间": machine_data["machinePublishTime"].strftime("%Y-%m-%d")
         }
-        machineInfo = machine_data['machineInfo'].decode()
+        machineInfo = machine_data['machineInfo'].decode('utf-8')
 
         String = ""
         for k,v in dataDict.items():
