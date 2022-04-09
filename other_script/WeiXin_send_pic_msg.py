@@ -13,7 +13,7 @@ from datetime import datetime
 
 mysqlObj = MYSQL(MYSQL_CONFIG, db='machinedb')
 
-dateNum = int(sys.argv[-1])
+# dateNum = int(sys.argv[-1])
 
 # 获取 accessToken
 def get_accessToken():
@@ -52,7 +52,7 @@ def get_machine_msg(dateNum):
         SQL_SEARCH_MACHINE = 'SELECT * FROM `machineData` WHERE `md5hash` = %s;'
         cursor.execute(SQL_SEARCH_MACHINE,md5hash)
         mysql.commit()
-        machine_data = cursor.fetchall()[dateNum - 8]
+        machine_data = cursor.fetchone()
 
         imgListRaw = [_ for _ in machine_data['machineImg'].split('$$$')]
         if not imgListRaw or imgListRaw == [""]:
@@ -122,4 +122,4 @@ def send_msg():
 
 
 if __name__ == '__main__':
-    get_machine_msg(dateNum)
+    get_machine_msg(8)
