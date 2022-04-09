@@ -13,7 +13,7 @@ from datetime import datetime
 
 mysqlObj = MYSQL(MYSQL_CONFIG, db='machinedb')
 
-dateNum = sys.argv[-1]
+dateNum = int(sys.argv[-1])
 
 # 获取 accessToken
 def get_accessToken():
@@ -36,7 +36,7 @@ def get_machine_msg(dateNum):
         cursor.execute(SQL_SEARCH_MACHINE)
         mysql.commit()
 
-        machine_data = cursor.fetchall()[int(dateNum) - 8]
+        machine_data = cursor.fetchall()[dateNum - 8]
 
         imgListRaw = [_ for _ in machine_data['machineImg'].split('$$$')]
         if not imgListRaw or imgListRaw == [""]:
