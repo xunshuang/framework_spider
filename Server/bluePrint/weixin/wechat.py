@@ -53,6 +53,7 @@ def weChat():
         if 'event' in FMsgType:
             EVENT = xmlDict['Event'] # 事件类型
             TContent = Map['event'][EVENT](mysqlOBJ=mysqlOBJ,event=EVENT)
+            print('EVENT',EVENT)
             returnJson = {
                 "ToUserName": FFromUserName,
                 "FromUserName": FToUserName,
