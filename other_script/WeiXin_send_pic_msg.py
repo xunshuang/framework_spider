@@ -13,7 +13,7 @@ from datetime import datetime
 
 mysqlObj = MYSQL(MYSQL_CONFIG, db='machinedb')
 
-# dateNum = int(sys.argv[-1])
+dateNum = int(sys.argv[-1])
 
 # 获取 accessToken
 def get_accessToken():
@@ -122,4 +122,4 @@ def send_msg():
 
 
 if __name__ == '__main__':
-    get_machine_msg(8)
+    get_machine_msg(dateNum)
