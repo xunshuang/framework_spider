@@ -90,7 +90,7 @@ def get_machine_msg(dateNum):
                     "group_id":groupId
                 },
                 "text":{
-                    "content":String
+                    "content":" test "
                 },
                 "msgtype":'text'
             }
