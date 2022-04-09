@@ -22,13 +22,13 @@ def subscribe(*args,**kwargs):
     FFromUserName=kwargs.get('FFromUserName') # openID
 
     mysql, cursor = mysqlOBJ.get_mysql()
-    SQL_SUB_SEARCH = 'SELECT * FROM `machineOpenId` WHERE `machineOpenId` = %s'
+    SQL_SUB_SEARCH = 'SELECT * FROM `machineWXUser` WHERE `machineOpenId` = %s'
 
     SQL_SUB_INSERT = 'INSERT INTO ' \
-              '`machineOpenId`(`machineOpenId`,`machineSubscribe`,`machineInsertTime`) ' \
+              '`machineWXUser`(`machineOpenId`,`machineSubscribe`,`machineInsertTime`) ' \
               'VALUES (%s,%s,%s)'
 
-    SQL_SUB_UPDATE = 'UPDATE FROM `machineOpenId` SET `machineSubscribe` = %s WHERE `machineOpenId` = %s'
+    SQL_SUB_UPDATE = 'UPDATE FROM `machineWXUser` SET `machineSubscribe` = %s WHERE `machineOpenId` = %s'
 
     cursor.execute(SQL_SUB_SEARCH)
     mysql.commit()
@@ -50,7 +50,7 @@ def unsubscribe(*args,**kwargs):
 
     mysql, cursor = mysqlOBJ.get_mysql()
 
-    SQL_DELETE = 'UPDATE FROM `machineOpenId` SET `machineSubscribe` = %s WHERE `machineOpenId` = %s'
+    SQL_DELETE = 'UPDATE FROM `machineWXUser` SET `machineSubscribe` = %s WHERE `machineOpenId` = %s'
     cursor.execute(SQL_DELETE,('2',FFromUserName))
     mysql.commit()
     return 'Good Bye!'
