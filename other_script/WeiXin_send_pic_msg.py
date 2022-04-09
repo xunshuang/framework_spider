@@ -65,13 +65,13 @@ def get_machine_msg(dateNum):
             "品牌": machine_data["machineModel"],
             "状态": {"1": "已出售", "2": "展示中", "99": "未知状态"}[str(machine_data["machineStatus"])],
             "所在地": machineLocation,
-            "出厂日期": machine_data["machineManufacture"],
+            # "出厂日期": machine_data["machineManufacture"],
             "产品质量": machine_data["machineQuality"],
             "联系人/公司": machine_data["machineContact"],
             "联系方式": {"1": "手机", "2": "电话", "3": "微信", "4": "QQ", "5": "未知联系方式"}[
                         str(machine_data["machineContactWay"])] + ' - ' +
                     machine_data["machineContactInfo"],
-            "数据发布时间": machine_data["machinePublishTime"]
+            "数据发布时间": machine_data["machinePublishTime"].strftime("%Y-%m-%d")
         }
         machineInfo = machine_data['machineInfo'].decode()
 
@@ -86,8 +86,8 @@ def get_machine_msg(dateNum):
         for groupId in groups:
             doc = {
                 "filter":{
-                    "is_to_all":True,
-                    "group_id":""
+                    "is_to_all":False,
+                    "group_id":groupId
                 },
                 "text":{
                     "content":String
