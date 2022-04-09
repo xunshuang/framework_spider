@@ -97,7 +97,7 @@ def get_machine_msg(dateNum):
 
             msgUrl = 'https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token=' + get_accessToken()
 
-            r = requests.post(url=msgUrl,data = json.dumps(doc,ensure_ascii=False))
+            r = requests.post(url=msgUrl,json = json.dumps(doc,ensure_ascii=False))
             result = r.json()
             print(result)
 
