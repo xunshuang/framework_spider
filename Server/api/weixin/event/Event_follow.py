@@ -47,7 +47,7 @@ def subscribe(*args,**kwargs):
 def unsubscribe(*args,**kwargs):
     mysqlOBJ = kwargs.get('mysqlOBJ')
     FFromUserName=kwargs.get('FFromUserName') # openID
-
+    print('FFromUserName',FFromUserName)
     mysql, cursor = mysqlOBJ.get_mysql()
 
     SQL_DELETE = 'UPDATE FROM `machineWXUser` SET `machineSubscribe` = %s WHERE `machineOpenId` = %s'
