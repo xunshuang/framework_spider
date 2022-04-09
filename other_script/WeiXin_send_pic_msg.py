@@ -13,7 +13,7 @@ from datetime import datetime
 
 mysqlObj = MYSQL(MYSQL_CONFIG, db='machinedb')
 
-# dateNum = int(sys.argv[-1])
+dateNum = int(sys.argv[-1])
 
 # 获取 accessToken
 def get_accessToken():
@@ -97,7 +97,7 @@ def get_machine_msg(dateNum):
 
             msgUrl = 'https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token=' + get_accessToken()
 
-            r = requests.post(url=msgUrl,data = json.dumps(doc,ensure_ascii=False,indent=2))
+            r = requests.post(url=msgUrl,data = json.dumps(doc,ensure_ascii=False))
             result = r.json()
             print(result)
 
@@ -122,4 +122,4 @@ def send_msg():
 
 
 if __name__ == '__main__':
-    get_machine_msg(8)
+    get_machine_msg(dateNum)
