@@ -30,8 +30,8 @@ from datetime import datetime
 # 每日更新一次
 def data_updating(mysqlOBJ):
     mysql, cursor = mysqlOBJ.get_mysql()
-    SQL_NEWEST = 'SELECT DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` ' \
-                 'FROM `machineData` WHERE `machineSiteId` =  "A001" ORDER BY `machinePublishTime` DESC LIMIT 10 '
+    # 推荐当然要推荐精品啦！
+    SQL_NEWEST = 'SELECT DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash` FROM `machineData` WHERE `machineSiteId` =  "A002" AND `machineTitle` NOT LIKE "%回收%" AND `machineImg` != "" ORDER BY `machinePublishTime` DESC LIMIT 10 '
     cursor.execute(SQL_NEWEST)
     mysql.commit()
     resultList = cursor.fetchall()

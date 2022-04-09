@@ -36,7 +36,7 @@ def subscribe(*args,**kwargs):
         cursor.execute(SQL_SUB_UPDATE,("1",FFromUserName))
 
 
-        return "嘿！老朋友！" + random.choice(msgList)
+        return "嘿！老朋友！" + random.choice(msgList) + '\n更多精彩请移步【http://www.mengshuai.top】获取更多新闻'
 
     else:
         cursor.execute(SQL_SUB_INSERT,(FFromUserName,"1",datetime.now().strftime('%Y-%m-%d %H:%M:%S')))

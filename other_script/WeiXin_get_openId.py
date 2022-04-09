@@ -1,5 +1,6 @@
 # coding:utf-8
 # 定时拉取粉丝的 openId
+# 废弃
 
 import os
 import sys
