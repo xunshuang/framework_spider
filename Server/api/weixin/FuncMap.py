@@ -3,20 +3,26 @@
 from Server.api.weixin.event.Event_follow import *
 from Server.api.weixin.message.Message_repeat import *
 from Server.api.weixin.message.Message_help import *
-
+from Server.api.weixin.event.Event_click import *
 
 Map = {
     "event": {
         "subscribe": subscribe,
         "unsubscribe": unsubscribe,
-        "CLICK":{
+        "CLICK": {
+            "MENU_HISTORY": MENU_HISTORY,
+            "MENU_SEARCH_MACHINE": MENU_SEARCH_MACHINE,
+            "MENU_NEWS": MENU_NEWS
 
-        } # 菜单点击事件
+        },  # 菜单点击事件
+        "VIEW":{
+
+        } # 菜单视图事件
     },
-    "message":{
-        "repeat":repeat,
-        "!help":helps,
-        "！help":helps,
+    "message": {
+        "repeat": repeat,
+        "!help": helps,
+        "！help": helps,
 
     }
 }

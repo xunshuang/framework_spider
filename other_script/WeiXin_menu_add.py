@@ -35,22 +35,22 @@ def create_new_menu():
         "button": [
             {
                 "type": "click",
-                "name": "今日新闻",
-                "key": "V1001_TODAY_MUSIC"
+                "name": "机床新闻",
+                "key": "MENU_NEWS"
             },
             {
-                "name": "菜单",
+                "name": "财富之门",
                 "sub_button": [
                     {
                         "type": "view",
-                        "name": "搜索",
-                        "url": "http://www.soso.com/"
+                        "name": "打开主页",
+                        "url": "http://www.mengshuai.top/"
                     },
 
                     {
                         "type": "click",
-                        "name": "赞一下我们",
-                        "key": "V1001_GOOD"
+                        "name": "往期推送",
+                        "key": "MENU_HISTORY"
                     }]
             }]
     }

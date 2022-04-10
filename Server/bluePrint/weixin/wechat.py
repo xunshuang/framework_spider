@@ -52,16 +52,40 @@ def weChat():
 
         if 'event' in FMsgType:
             EVENT = xmlDict['Event'] # 事件类型
-            TContent = Map['event'][EVENT](mysqlOBJ=mysqlOBJ,event=EVENT,FFromUserName=FFromUserName)
-            print('EVENT',EVENT)
-            returnJson = {
-                "ToUserName": FFromUserName,
-                "FromUserName": FToUserName,
-                "CreateTime": FCreateTime,
-                "MsgType": "text",
-                "Content": TContent,
-            }
-            return xmltodict.unparse({"xml":returnJson}) # 事件监听
+            EventKey = xmlDict.get('EventKey') # 事件key
+            if EVENT == 'CLICK':
+                TContent = Map['event'][EVENT][EventKey](mysqlOBJ=mysqlOBJ,event=EVENT,FFromUserName=FFromUserName)
+                returnJson = {
+                    "ToUserName": FFromUserName,
+                    "FromUserName": FToUserName,
+                    "CreateTime": FCreateTime,
+                    "MsgType": "text",
+                    "Content": TContent,
+                }
+                return xmltodict.unparse({"xml":returnJson}) # 菜单事件监听
+
+            elif EVENT == 'VIEW':
+                returnJson = {
+                    "ToUserName": FFromUserName,
+                    "FromUserName": FToUserName,
+                    "CreateTime": FCreateTime,
+                    "MsgType": "text",
+                    "Content": "开始访问主页",
+                }
+                return xmltodict.unparse({"xml": returnJson})  # 菜单事件监听
+
+
+            else:
+                TContent = Map['event'][EVENT](mysqlOBJ=mysqlOBJ,event=EVENT,FFromUserName=FFromUserName)
+                print('EVENT',EVENT)
+                returnJson = {
+                    "ToUserName": FFromUserName,
+                    "FromUserName": FToUserName,
+                    "CreateTime": FCreateTime,
+                    "MsgType": "text",
+                    "Content": TContent,
+                }
+                return xmltodict.unparse({"xml":returnJson}) # 事件监听
 
         elif "text" in FMsgType:
             try:
