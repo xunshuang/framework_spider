@@ -38,7 +38,7 @@ def get_accessToken():
 def make_machine_msg_to_draft(dateNum):
     print(f"正在制作 {dateNum} 点的草稿  今日第{dateNum - 8}份")
     mysql, cursor = mysqlObj.get_mysql()
-    SQL_SEARCH_MACHINE_DAY = 'SELECT * FROM `machineDay` ORDER BY `machinePublishTime` DESC LIMIT 14'
+    SQL_SEARCH_MACHINE_DAY = 'SELECT * FROM `machineDay` ORDER BY `machinePublishTime` DESC LIMIT 30'
     cursor.execute(SQL_SEARCH_MACHINE_DAY)
     mysql.commit()
 
