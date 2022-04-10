@@ -43,8 +43,8 @@ def weChat():
     if hashcode == signature:
         xmlDict = xmltodict.parse(request.data.decode('utf-8'))['xml']
 
-        FToUserName = xmlDict['ToUserName'] # 从哪来
-        FFromUserName = xmlDict['FromUserName'] # 发给谁
+        FToUserName = xmlDict['ToUserName'] # 发给谁
+        FFromUserName = xmlDict['FromUserName'] # 从哪来
         FCreateTime = xmlDict['CreateTime'] # 创建时间
         FMsgType = xmlDict['MsgType'] #消息类型
 

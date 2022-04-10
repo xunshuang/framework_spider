@@ -35,12 +35,12 @@ def subscribe(*args,**kwargs):
     if cursor.fetchone():
         cursor.execute(SQL_SUB_UPDATE,("1",FFromUserName))
 
-
+        mysql.commit()
         return "嘿！老朋友！" + random.choice(msgList) + '\n更多精彩请移步【http://www.mengshuai.top】获取更多新闻'
 
     else:
         cursor.execute(SQL_SUB_INSERT,(FFromUserName,"1",datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-
+        mysql.commit()
         return '嘿！新朋友！'+ random.choice(msgList)
 
 # 取消关注 从粉丝表内删掉  逻辑删除

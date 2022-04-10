@@ -8,7 +8,10 @@ from Server.api.weixin.message.Message_help import *
 Map = {
     "event": {
         "subscribe": subscribe,
-        "unsubscribe": unsubscribe
+        "unsubscribe": unsubscribe,
+        "CLICK":{
+
+        } # 菜单点击事件
     },
     "message":{
         "repeat":repeat,
