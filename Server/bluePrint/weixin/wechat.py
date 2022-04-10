@@ -50,10 +50,10 @@ def weChat():
 
         FMsgId = xmlDict.get('MsgId')
         EventKey = xmlDict.get('EventKey') or "SUB" # 事件key
-        print(EventKey)
+
         if 'event' in FMsgType:
-            EVENT = xmlDict['Event'] # 事件类型
-            if EVENT == 'CLICK':
+            if EventKey != 'SUB':
+                EVENT = xmlDict['Event'] # 事件类型
                 TContent = Map['event'][EVENT][EventKey](mysqlOBJ=mysqlOBJ,event=EVENT,FFromUserName=FFromUserName)
                 returnJson = {
                     "ToUserName": FFromUserName,
@@ -63,6 +63,17 @@ def weChat():
                     "Content": TContent,
                 }
                 return xmltodict.unparse({"xml":returnJson}) # 菜单事件监听
+            else:
+                EVENT = xmlDict['Event']  # 事件类型
+                TContent = Map['event'][EventKey][EVENT](mysqlOBJ=mysqlOBJ, event=EVENT, FFromUserName=FFromUserName)
+                returnJson = {
+                    "ToUserName": FFromUserName,
+                    "FromUserName": FToUserName,
+                    "CreateTime": FCreateTime,
+                    "MsgType": "text",
+                    "Content": TContent,
+                }
+                return xmltodict.unparse({"xml": returnJson})  # 关注事件监听
 
 
         elif "text" in FMsgType:
