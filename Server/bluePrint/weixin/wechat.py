@@ -50,7 +50,7 @@ def weChat():
 
         FMsgId = xmlDict.get('MsgId')
         EventKey = xmlDict.get('EventKey') or "SUB" # 事件key
-
+        print(EventKey)
         if 'event' in FMsgType:
             EVENT = xmlDict['Event'] # 事件类型
             if EVENT == 'CLICK':
