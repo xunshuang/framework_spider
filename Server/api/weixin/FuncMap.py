@@ -7,17 +7,20 @@ from Server.api.weixin.event.Event_click import *
 
 Map = {
     "event": {
-        "subscribe": subscribe,
-        "unsubscribe": unsubscribe,
+        "SUB": {
+            "subscribe": subscribe,
+            "unsubscribe": unsubscribe,
+        },
+
         "CLICK": {
             "MENU_HISTORY": MENU_HISTORY,
             "MENU_SEARCH_MACHINE": MENU_SEARCH_MACHINE,
             "MENU_NEWS": MENU_NEWS
 
         },  # 菜单点击事件
-        "VIEW":{
+        "VIEW": {
 
-        } # 菜单视图事件
+        }  # 菜单视图事件
     },
     "message": {
         "repeat": repeat,
