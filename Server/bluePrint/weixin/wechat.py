@@ -11,9 +11,13 @@ mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql
 
 weChat_bp = Blueprint('weChat', __name__)
 
-
+# 正式号码
 # wxb28f616376c291c5
 # af45f60a585ebb78ac5b7876318c9216
+
+# 测试号码
+# wxc90805c8f9e1aaae
+# 127c9bf502b937e3d3a5a2db503cfb21
 
 @weChat_bp.route('/wx', methods=['GET', 'POST'])
 def weChat():
