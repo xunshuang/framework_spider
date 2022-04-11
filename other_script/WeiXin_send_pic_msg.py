@@ -230,27 +230,12 @@ def get_media_id(imgListRaw):
     return imgList,imgDeleteList
 
 
-# 轮询发布状态！
-def loop_pub_status(publish_id):
-    while True:
-        print('查询发布状态中')
-        loop_doc = {
-            "publish_id":publish_id
-        }
-        loop_url = 'https://api.weixin.qq.com/cgi-bin/freepublish/get?access_token=' +get_accessToken()
-        resp = requests.post(url=loop_url,json=loop_doc).json()
-        if resp.get('article_id'):
-            return resp['article_id']
-        else:
-            time.sleep(6)
-
-
 
 # 发送消息
 def send_msg(dateNum):
     dateNum = int(dateNum)
     # 在此时间段内发送图文消息！！
-    if dateNum>=8 and dateNum <= 18:
+    if dateNum>=8 and dateNum <= 22:
         media_id,title = make_machine_msg_to_draft(dateNum)
         send_url = 'https://api.weixin.qq.com/cgi-bin/freepublish/submit?access_token=' +get_accessToken()
         send_json = {
@@ -258,10 +243,8 @@ def send_msg(dateNum):
         }
         send_resp = requests.post(url=send_url,json=send_json).json()
         if send_resp['errmsg'] == 'ok':
-            print(123)
-            article_id = loop_pub_status(publish_id=send_resp['publish_id'])
-            print('文章发送成功！获取 article_id:' + article_id)
-            save_pub_log(article_id,title)
+            print("文章发送成功！")
+
 
 #
 
