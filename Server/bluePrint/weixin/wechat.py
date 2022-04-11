@@ -66,8 +66,8 @@ def weChat():
 
 
         elif "text" in FMsgType:
-            FContent = xmlDict['Content']
-            TContent = Map['message'][FContent](mysqlOBJ=mysqlOBJ, xmlDict=xmlDict)
+
+            TContent = Map['message'](mysqlOBJ=mysqlOBJ, xmlDict=xmlDict)
 
             returnJson = {
                 "ToUserName": FFromUserName,
