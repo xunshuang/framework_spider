@@ -29,9 +29,9 @@ def sub_machine(*args,**kwargs):
     mysql,cursor = mysqlOBJ.get_mysql()
 
     FContent = xmlDict.get('Content')
-    SQL_SUB_MACHINE = 'UPDATE `machineWXUser` SET `machineSubMachine` = %s'
+    SQL_SUB_MACHINE = 'UPDATE `machineWXUser` SET `machineSubMachine` = %s WHERE `machineOpenId` = %s'
     try:
-        cursor.execute(SQL_SUB_MACHINE,"1")
+        cursor.execute(SQL_SUB_MACHINE,("1",xmlDict["FromUserName"]))
         mysql.commit()
     except:
         print(traceback.format_exc())
@@ -48,7 +48,7 @@ def sub_machine(*args,**kwargs):
             print(traceback.format_exc())
 
             mysql.rollback()
-
+    return "订阅成功！有效期到明天8点，记得续订哦！错过的消息仍然可在菜单中的今日推送中查看"
 def helps(*args,**kwargs):
     help_list = """1.发送【订阅】即可接收 今日订阅推送 """
     return help_list
