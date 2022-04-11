@@ -30,16 +30,16 @@ def get_accessToken(mysqlOBJ):
 
 
 def publish_event(*args, **kwargs):
-    print('#############',kwargs)
+
     mysqlOBJ = kwargs.get('mysqlOBJ')
     xmlDict = kwargs.get('xmlDict')
 
-    article_id = xmlDict['article_id']
+    article_id = xmlDict['PublishEventInfo']['article_id']
     doc = {
         "article_id": article_id
     }
     respContent = requests.post(
-        url='https://api.weixin.qq.com/cgi-bin/freepublish/getarticle?access_token=' + get_accessToken(mysqlObj),
+        url='https://api.weixin.qq.com/cgi-bin/freepublish/getarticle?access_token=' + get_accessToken(mysqlOBJ),
         json=doc).content
     respJson = json.loads(respContent.decode('utf-8'))
     title = respJson['news_item'][0]["title"]
