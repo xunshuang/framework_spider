@@ -51,6 +51,12 @@ def create_new_menu():
                         "type": "click",
                         "name": "🔥往期推送",
                         "key": "MENU_YESTERDAY"
+                    },
+
+                    {
+                        "type": "click",
+                        "name": "🎈今日推送",
+                        "key": "MENU_TODAY"
                     }]
             }]
     }

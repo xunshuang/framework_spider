@@ -11,6 +11,7 @@ def event_key_switch(*args, **kwargs):
     EventKey = xmlDict.get('EventKey')
     EventFuncMap = {
         "MENU_YESTERDAY":MENU_YESTERDAY,
+        "MENU_TODAY":MENU_TODAY,
         "MENU_SEARCH_MACHINE":MENU_SEARCH_MACHINE,
         "MENU_NEWS":MENU_NEWS
     }
@@ -25,7 +26,7 @@ def MENU_YESTERDAY(*args, **kwargs):
           'FROM `machineWXPubArticle` WHERE ' \
           '`machinePublishTime` LIKE %s'
 
-    cursor.execute(SQL,(datetime.now() - timedelta(days=0)).strftime("%Y-%m-%d") + "%")
+    cursor.execute(SQL,(datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d") + "%")
     mysql.commit()
 
     txt = ""
@@ -39,7 +40,22 @@ def MENU_YESTERDAY(*args, **kwargs):
 # 今日更新
 def MENU_TODAY(*args,**kwargs):
     """查看今日新增"""
-    return ""
+    mysqlOBJ = kwargs.get('mysqlOBJ')
+    mysql, cursor = mysqlOBJ.get_mysql()
+    SQL = 'SELECT `machineArticleId`,`machineTitle`,`machineUrl` ' \
+          'FROM `machineWXPubArticle` WHERE ' \
+          '`machinePublishTime` LIKE %s'
+
+    cursor.execute(SQL, (datetime.now() - timedelta(days=0)).strftime("%Y-%m-%d") + "%")
+    mysql.commit()
+
+    txt = ""
+    result = cursor.fetchall()
+    for res in result:
+        txt += '【' + res['machineTitle'] + '】: ' + res['machineUrl'] + '\n'
+    return """
+    今日机床推送合集👀
+    """ + '\n' + txt
 
 def MENU_SEARCH_MACHINE(*args, **kwargs):
     """查看搜索符合条件的机床信息"""
