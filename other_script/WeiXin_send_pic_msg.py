@@ -234,7 +234,7 @@ def get_media_id(imgListRaw):
 def send_msg(dateNum):
     dateNum = int(dateNum)
     # 在此时间段内发送图文消息！！
-    if dateNum>=8 and dateNum <= 22:
+    if dateNum>=8 and dateNum <= 18:
         media_id = make_machine_msg_to_draft(dateNum)
         send_url = 'https://api.weixin.qq.com/cgi-bin/freepublish/submit?access_token=' +get_accessToken()
         send_json = {
