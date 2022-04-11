@@ -30,6 +30,15 @@ def get_accessToken():
         time.sleep(1)
         return get_accessToken()
 
-respJson = requests.get(url='https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token='+ get_accessToken()).json()
 
-print(respJson)
+def get_media_list():
+    doc = {
+        "offset":0,
+        "count":20
+    }
+    respJson = requests.post(url='https://api.weixin.qq.com/cgi-bin/freepublish/batchget?access_token='+ get_accessToken(),json=doc).json()
+
+    print(respJson)
+
+
+get_media_list()

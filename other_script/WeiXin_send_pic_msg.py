@@ -164,7 +164,7 @@ def make_machine_msg_to_draft(dateNum):
 
     if resp.get('media_id'):
         print('草稿报存成功，media_id:',resp.get('media_id'))
-        return resp.get('media_id')
+        return resp.get('media_id'),machine_data["machineTitle"]
     else:
         print(resp)
 
@@ -230,19 +230,46 @@ def get_media_id(imgListRaw):
     return imgList,imgDeleteList
 
 
+# 轮询发布状态！
+def loop_pub_status(publish_id):
+    while True:
+        print('查询发布状态中')
+        loop_doc = {
+            "publish_id":publish_id
+        }
+        loop_url = 'https://api.weixin.qq.com/cgi-bin/freepublish/get?access_token=' +get_accessToken()
+        resp = requests.post(url=loop_url,json=loop_doc).json()
+        if resp.get('article_id'):
+            return resp['article_id']
+        else:
+            time.sleep(6)
+
+# 保存发布日志
+def save_pub_log(article_id,title):
+    mysql,cursor = mysqlObj.get_mysql()
+    SQL = 'INSERT INTO `machineWXPubArticle`(`machineArticleId`,`machineTitle`,`machinePublishTime`) VALUES (%s,%s,%s)'
+    cursor.execute(SQL,(article_id,title,datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    mysql.commit()
+    print('保存日志成功！')
+
 # 发送消息
 def send_msg(dateNum):
     dateNum = int(dateNum)
     # 在此时间段内发送图文消息！！
     if dateNum>=8 and dateNum <= 18:
-        media_id = make_machine_msg_to_draft(dateNum)
+        media_id,title = make_machine_msg_to_draft(dateNum)
         send_url = 'https://api.weixin.qq.com/cgi-bin/freepublish/submit?access_token=' +get_accessToken()
         send_json = {
             "media_id":media_id
         }
         send_resp = requests.post(url=send_url,json=send_json).json()
         if send_resp['errmsg'] == 'ok':
-            print('文章发送成功！')
+            article_id = loop_pub_status(publish_id=send_resp['publish_id'])
+            print('文章发送成功！获取 article_id:' + article_id)
+            save_pub_log(article_id,title)
+
+#
+
 
 if __name__ == '__main__':
     hours = int(datetime.now().strftime('%H'))
