@@ -21,7 +21,7 @@ def subscribe(*args,**kwargs):
     mysqlOBJ = kwargs.get('mysqlOBJ')
     xmlDict = kwargs.get('xmlDict')
 
-    FFromUserName=xmlDict.get('FFromUserName') # openID
+    FFromUserName=xmlDict.get('FromUserName') # openID
 
     mysql, cursor = mysqlOBJ.get_mysql()
     SQL_SUB_SEARCH = 'SELECT * FROM `machineWXUser` WHERE `machineOpenId` = %s'
