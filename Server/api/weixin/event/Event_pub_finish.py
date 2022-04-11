@@ -8,10 +8,10 @@ from datetime import datetime
 import time
 
 
-def save_pub_log(mysqlOBJ, article_id, title):
+def save_pub_log(mysqlOBJ, article_id, title,article_url):
     mysql, cursor = mysqlOBJ.get_mysql()
-    SQL = 'INSERT INTO `machineWXPubArticle`(`machineArticleId`,`machineTitle`,`machinePublishTime`) VALUES (%s,%s,%s)'
-    cursor.execute(SQL, (article_id, title, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+    SQL = 'INSERT INTO `machineWXPubArticle`(`machineArticleId`,`machineTitle`,`machineUrl`,`machinePublishTime`) VALUES (%s,%s,%s,%s)'
+    cursor.execute(SQL, (article_id, title,article_url ,datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     mysql.commit()
     print('保存日志成功！')
 
@@ -35,6 +35,7 @@ def publish_event(*args, **kwargs):
     xmlDict = kwargs.get('xmlDict')
 
     article_id = xmlDict['PublishEventInfo']['article_id']
+    article_url = xmlDict['PublishEventInfo']['article_detail']['item']['article_url']
     doc = {
         "article_id": article_id
     }
@@ -43,4 +44,4 @@ def publish_event(*args, **kwargs):
         json=doc).content
     respJson = json.loads(respContent.decode('utf-8'))
     title = respJson['news_item'][0]["title"]
-    save_pub_log(mysqlOBJ, article_id, title)
+    save_pub_log(mysqlOBJ, article_id, title,article_url)
