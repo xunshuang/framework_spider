@@ -8,16 +8,16 @@ from datetime import datetime
 import time
 
 
-def save_pub_log(mysqlObj, article_id, title):
-    mysql, cursor = mysqlObj.get_mysql()
+def save_pub_log(mysqlOBJ, article_id, title):
+    mysql, cursor = mysqlOBJ.get_mysql()
     SQL = 'INSERT INTO `machineWXPubArticle`(`machineArticleId`,`machineTitle`,`machinePublishTime`) VALUES (%s,%s,%s)'
     cursor.execute(SQL, (article_id, title, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     mysql.commit()
     print('保存日志成功！')
 
 
-def get_accessToken(mysqlObj):
-    mysql, cursor = mysqlObj.get_mysql()
+def get_accessToken(mysqlOBJ):
+    mysql, cursor = mysqlOBJ.get_mysql()
     sql = 'SELECT `machineAccessToken` FROM `machineToken`;'
     cursor.execute(sql)
     mysql.commit()
@@ -26,13 +26,14 @@ def get_accessToken(mysqlObj):
         return _['machineAccessToken']
     else:
         time.sleep(1)
-        return get_accessToken(mysqlObj)
+        return get_accessToken(mysqlOBJ)
 
 
 def publish_event(*args, **kwargs):
-    mysqlObj = kwargs.get('mysqlObj')
+    print('#############',kwargs)
+    mysqlOBJ = kwargs.get('mysqlOBJ')
     xmlDict = kwargs.get('xmlDict')
-    print(xmlDict)
+
     article_id = xmlDict['article_id']
     doc = {
         "article_id": article_id
@@ -42,4 +43,4 @@ def publish_event(*args, **kwargs):
         json=doc).content
     respJson = json.loads(respContent.decode('utf-8'))
     title = respJson['news_item'][0]["title"]
-    save_pub_log(mysqlObj, article_id, title)
+    save_pub_log(mysqlOBJ, article_id, title)
