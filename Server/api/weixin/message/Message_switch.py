@@ -1,4 +1,5 @@
 # coding:utf-8
+import traceback
 
 def message_switch(*args,**kwargs):
     mysqlOBJ = kwargs.get('mysqlOBJ')
@@ -7,6 +8,7 @@ def message_switch(*args,**kwargs):
     MessageFuncMap = {
         "!helps":helps,
         "！helps": helps,
+        "repeat":repeat
     }
 
     try:
