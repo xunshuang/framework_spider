@@ -27,8 +27,14 @@ def MENU_YESTERDAY(*args, **kwargs):
 
     cursor.execute(SQL,(datetime.now() - timedelta(days=0)).strftime("%Y-%m-%d") + "%")
     mysql.commit()
+
+    txt = ""
     result = cursor.fetchall()
-    return result
+    for res in result:
+        txt += '【' + res['machineTitle'] + '】: ' + res['machineUrl'] + '\n'
+    return """
+    昨日机床推送合集👀
+    """ + '\n' + txt
 
 # 今日更新
 def MENU_TODAY(*args,**kwargs):

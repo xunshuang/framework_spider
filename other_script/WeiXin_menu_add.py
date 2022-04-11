@@ -35,22 +35,22 @@ def create_new_menu():
         "button": [
             {
                 "type": "click",
-                "name": "机床新闻",
+                "name": "📰机床新闻",
                 "key": "MENU_NEWS"
             },
             {
-                "name": "财富之门",
+                "name": "🚪财富之门",
                 "sub_button": [
                     {
                         "type": "view",
-                        "name": "打开主页",
+                        "name": "🔍打开主页",
                         "url": "http://www.mengshuai.top/"
                     },
 
                     {
                         "type": "click",
-                        "name": "往期推送",
-                        "key": "MENU_HISTORY"
+                        "name": "🔥往期推送",
+                        "key": "MENU_YESTERDAY"
                     }]
             }]
     }
