@@ -45,7 +45,6 @@ def weChat():
     hashcode = shaObj.hexdigest()
 
     if hashcode == signature:
-        return echoStr
         xmlDict = xmltodict.parse(request.data.decode('utf-8'))['xml']
 
         FToUserName = xmlDict['ToUserName'] # 发给谁
