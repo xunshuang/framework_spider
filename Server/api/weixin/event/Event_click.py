@@ -17,6 +17,7 @@ def event_key_switch(*args, **kwargs):
     }
     return EventFuncMap[EventKey](mysqlOBJ=mysqlOBJ,xmlDict=xmlDict)
 
+
 # 昨日发的
 def MENU_YESTERDAY(*args, **kwargs):
     """查看往期消息"""
@@ -32,9 +33,9 @@ def MENU_YESTERDAY(*args, **kwargs):
     txt = ""
     result = cursor.fetchall()
     for res in result:
-        txt += '【' + res['machineTitle'] + '】: ' + res['machineUrl'] + '\n'
+        txt += '【' + res['machineTitle'] + '】: ' +res['machineUrl'] + '\n\n'
     return """
-    昨日机床推送合集👀
+👀昨日机床推送合集👀
     """ + '\n' + txt
 
 # 今日更新
@@ -52,9 +53,9 @@ def MENU_TODAY(*args,**kwargs):
     txt = ""
     result = cursor.fetchall()
     for res in result:
-        txt += '【' + res['machineTitle'] + '】: ' + res['machineUrl'] + '\n'
+        txt += '【' + res['machineTitle'] + '】: '  +res['machineUrl'] + '\n\n'
     return """
-    今日机床推送合集👀
+👀今日机床推送合集👀
     """ + '\n' + txt
 
 def MENU_SEARCH_MACHINE(*args, **kwargs):

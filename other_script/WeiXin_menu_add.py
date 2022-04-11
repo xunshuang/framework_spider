@@ -31,12 +31,18 @@ def get_accessToken():
 
 
 def create_new_menu():
+    mysql, cursor = mysqlObj.get_mysql()
+    SQL = 'SELECT `machineArticleId` FROM `machineWXPubArticle` ORDER BY `id` DESC LIMIT 1'
+    cursor.execute(SQL)
+    mysql.commit()
+
+    _ = cursor.fetchone()
     menu_doc = {
         "button": [
             {
-                "type": "click",
-                "name": "📰机床新闻",
-                "key": "MENU_NEWS"
+                "type": "article_id",
+                "name": "📰最新一期",
+                "article_id": f"{_['machineArticleId']}"
             },
             {
                 "name": "🚪财富之门",

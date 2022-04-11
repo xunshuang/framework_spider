@@ -7,25 +7,6 @@ from Db.MySQLClient.client import MYSQL
 from Config.GlobalSetting import MYSQL_CONFIG
 from datetime import datetime
 
-# SQL_RANDOM = """SELECT
-#  DISTINCT `machineTitle`,`machineImg`,`machinePublishTime`,`md5hash`
-# FROM
-# `machineData` AS MD
-# JOIN (
-# SELECT
-# 		ROUND(
-# 				RAND() * (
-# 						(SELECT MAX(id) FROM `machineData`) - (SELECT MIN(id) FROM `machineData`)
-# 				) + (SELECT MIN(id) FROM `machineData`)
-# 		) AS id
-# ) AS XX
-# WHERE
-# MD.id >= XX.id AND `machineImg` != "" AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) < date(machinePublishTime)
-#
-# ORDER BY `machinePublishTime` DESC
-#
-# LIMIT 10;"""
-
 
 # 每日更新一次
 def data_updating(mysqlOBJ):

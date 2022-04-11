@@ -54,12 +54,5 @@ def get_media_list():
 
 
 
-#
-get_media_list()
+# get_media_list()
 
-#
-# xml = """<xml><ToUserName><![CDATA[gh_dcd30c3d7c29]]></ToUserName>\n<FromUserName><![CDATA[oKV3l6L6-0xMGcNtJ1zHt8WiaBLY]]></FromUserName>\n<CreateTime>1649681285</CreateTime>\n<MsgType><![CDATA[event]]></MsgType>\n<Event><![CDATA[PUBLISHJOBFINISH]]></Event>\n<PublishEventInfo>\n<publish_id>2247483715</publish_id>\n<publish_status>0</publish_status>\n<article_id><![CDATA[6beSyaQWnY50zaxEn-OkgdWtQd4c4cOFmNktR_jcT8KxQvDbkN9qsYGuSDNYaobi]]></article_id>\n<article_detail>\n<count>1</count>\n<item>\n<idx>1</idx>\n<article_url><![CDATA[http://mp.weixin.qq.com/s?__biz=MzkwNzM0NTcwNQ==&mid=2247483715&idx=1&sn=c6c77951b7fa1a8cb91c8cee2d2224fc&chksm=c0dbeb05f7ac6213b2cb8e335d8614d37a1695f06d547ccffe6277f631c27efc9a98186a57fb#rd]]></article_url>\n</item>\n</article_detail>\n</PublishEventInfo></xml>"""
-#
-# xmlDict = xmltodict.parse(xml)['xml']
-#
-# print(xmlDict)
