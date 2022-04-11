@@ -32,6 +32,7 @@ def get_accessToken(mysqlObj):
 def publish_event(*args, **kwargs):
     mysqlObj = kwargs.get('mysqlObj')
     xmlDict = kwargs.get('xmlDict')
+    print(xmlDict)
     article_id = xmlDict['article_id']
     doc = {
         "article_id": article_id
