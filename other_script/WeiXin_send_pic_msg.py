@@ -17,9 +17,6 @@ from datetime import datetime
 mysqlObj = MYSQL(MYSQL_CONFIG, db='machinedb')
 
 
-dateNum = int(sys.argv[-1])
-
-
 # 获取 accessToken
 def get_accessToken():
     mysql, cursor = mysqlObj.get_mysql()
@@ -248,4 +245,5 @@ def send_msg(dateNum):
             print('文章发送成功！')
 
 if __name__ == '__main__':
-    send_msg(dateNum)
+    hours = int(datetime.now().strftime('%H'))
+    send_msg(hours)
