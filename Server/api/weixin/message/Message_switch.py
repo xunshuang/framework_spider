@@ -6,19 +6,17 @@ def message_switch(*args,**kwargs):
     xmlDict = kwargs.get('xmlDict')
     Content = xmlDict.get('Content')
     MessageFuncMap = {
-        "!helps":helps,
-        "！helps": helps,
+        "!help":helps,
+        "！help": helps,
         "repeat":repeat
     }
 
     try:
         return MessageFuncMap[Content](mysqlOBJ=mysqlOBJ,xmlDict=xmlDict)
     except:
-        print(traceback.format_exc())
         try:
             return MessageFuncMap['repeat'](mysqlOBJ=mysqlOBJ,xmlDict=xmlDict) # 报错就复读机模式
         except:
-            print(traceback.format_exc())
 
             return "指令读取失败，输入!help(不限中英文标点符号) 查看帮助菜单!" # 复读失败就发送指令集
 
