@@ -31,7 +31,7 @@ def helps(*args,**kwargs):
 
 def repeat(*args,**kwargs):
     xmlDict = kwargs.get('xmlDict')
-    FContent = xmlDict.get('FContent')
+    FContent = xmlDict.get('Content')
     if "收到不支持" in FContent:
         return "卧槽！你这表情包我没有！"
     return FContent
