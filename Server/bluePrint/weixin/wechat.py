@@ -6,10 +6,10 @@ import xmltodict
 from Server.api.pc.getNewestNews import *  # 获取新闻
 from Server.api.weixin.FuncMap import Map
 
-
 mysqlOBJ = MYSQL(CONFIG=MYSQL_CONFIG, db='machinedb')  # 该视图的专用mysql对象
 
 weChat_bp = Blueprint('weChat', __name__)
+
 
 # 正式号码
 # wxb28f616376c291c5
@@ -47,80 +47,40 @@ def weChat():
     if hashcode == signature:
         xmlDict = xmltodict.parse(request.data.decode('utf-8'))['xml']
 
-        FToUserName = xmlDict['ToUserName'] # 发给谁
-        FFromUserName = xmlDict['FromUserName'] # 从哪来
-        FCreateTime = xmlDict['CreateTime'] # 创建时间
-        FMsgType = xmlDict['MsgType'] #消息类型
-
-        FMsgId = xmlDict.get('MsgId')
-        EventKey = xmlDict.get('EventKey') or "SUB" # 事件key
+        FToUserName = xmlDict['ToUserName']  # 发给谁
+        FFromUserName = xmlDict['FromUserName']  # 从哪来
+        FCreateTime = xmlDict['CreateTime']  # 创建时间
+        FMsgType = xmlDict['MsgType']  # 消息类型
 
         if 'event' in FMsgType:
-            if EventKey != 'SUB':
-                EVENT = xmlDict['Event'] # 事件类型
-                TContent = Map['event'][EVENT][EventKey](mysqlOBJ=mysqlOBJ,event=EVENT,FFromUserName=FFromUserName)
-                returnJson = {
-                    "ToUserName": FFromUserName,
-                    "FromUserName": FToUserName,
-                    "CreateTime": FCreateTime,
-                    "MsgType": "text",
-                    "Content": TContent,
-                }
-                return xmltodict.unparse({"xml":returnJson}) # 菜单事件监听
-            else:
-                EVENT = xmlDict['Event']  # 事件类型
-                TContent = Map['event'][EventKey][EVENT](mysqlOBJ=mysqlOBJ, event=EVENT, FFromUserName=FFromUserName)
-                returnJson = {
-                    "ToUserName": FFromUserName,
-                    "FromUserName": FToUserName,
-                    "CreateTime": FCreateTime,
-                    "MsgType": "text",
-                    "Content": TContent,
-                }
-                return xmltodict.unparse({"xml": returnJson})  # 关注事件监听
+            EVENT = xmlDict['Event']  # 事件类型
+            TContent = Map['event'][EVENT](mysqlOBJ=mysqlOBJ, xmlDict=xmlDict)
+            returnJson = {
+                "ToUserName": FFromUserName,
+                "FromUserName": FToUserName,
+                "CreateTime": FCreateTime,
+                "MsgType": "text",
+                "Content": TContent,
+            }
+            return xmltodict.unparse({"xml": returnJson})  # 菜单事件监听
 
 
         elif "text" in FMsgType:
-            try:
-                FContent = xmlDict['Content']
-                TContent = Map['message'][FContent](mysqlOBJ=mysqlOBJ,FContent=FContent,FFromUserName=FFromUserName)
-
-                returnJson = {
-                    "ToUserName": FFromUserName,
-                    "FromUserName": FToUserName,
-                    "CreateTime": FCreateTime,
-                    "MsgType": "text",
-                    "Content": TContent,
-                }
-                returnXML = xmltodict.unparse({"xml":returnJson})
-
-                return  returnXML # 指令模式
-
-            except:
-                FContent = xmlDict['Content'] # 不清楚指令就复读呗
-                TContent = Map['message']['repeat'](mysqlOBJ=mysqlOBJ,FContent=FContent)
-
-                returnJson = {
-                    "ToUserName": FFromUserName,
-                    "FromUserName": FToUserName,
-                    "CreateTime": FCreateTime,
-                    "MsgType": "text",
-                    "Content": TContent,
-                }
-                returnXML = xmltodict.unparse({"xml": returnJson})
-
-                return returnXML  # 复读机模式
-        else:
+            FContent = xmlDict['Content']
+            TContent = Map['message'][FContent](mysqlOBJ=mysqlOBJ, xmlDict=xmlDict)
 
             returnJson = {
-               "ToUserName":FFromUserName,
-               "FromUserName":FToUserName,
-               "CreateTime":FCreateTime,
-               "MsgType":"text",
-               "Content":"你说的这个我看不懂，输入 !help 获取全部指令！",
-               "MsgId":FMsgId
+                "ToUserName": FFromUserName,
+                "FromUserName": FToUserName,
+                "CreateTime": FCreateTime,
+                "MsgType": "text",
+                "Content": TContent,
             }
-            return xmltodict.unparse({"xml":returnJson})
+            returnXML = xmltodict.unparse({"xml": returnJson})
+
+            return returnXML  # 指令模式
+
+
 
     else:
         return ""

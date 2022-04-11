@@ -19,7 +19,9 @@ def subscribe(*args,**kwargs):
         '感谢关注！老板一胎三个娃！'
     ]
     mysqlOBJ = kwargs.get('mysqlOBJ')
-    FFromUserName=kwargs.get('FFromUserName') # openID
+    xmlDict = kwargs.get('xmlDict')
+
+    FFromUserName=xmlDict.get('FFromUserName') # openID
 
     mysql, cursor = mysqlOBJ.get_mysql()
     SQL_SUB_SEARCH = 'SELECT * FROM `machineWXUser` WHERE `machineOpenId` = %s'
@@ -46,7 +48,9 @@ def subscribe(*args,**kwargs):
 # 取消关注 从粉丝表内删掉  逻辑删除
 def unsubscribe(*args,**kwargs):
     mysqlOBJ = kwargs.get('mysqlOBJ')
-    FFromUserName=kwargs.get('FFromUserName') # openID
+    xmlDict = kwargs.get('xmlDict')
+
+    FFromUserName=xmlDict.get('FFromUserName') # openID
     mysql, cursor = mysqlOBJ.get_mysql()
 
     SQL_DELETE = 'UPDATE `machineWXUser` SET `machineSubscribe` = %s WHERE `machineOpenId` = %s'

@@ -244,13 +244,7 @@ def loop_pub_status(publish_id):
         else:
             time.sleep(6)
 
-# 保存发布日志
-def save_pub_log(article_id,title):
-    mysql,cursor = mysqlObj.get_mysql()
-    SQL = 'INSERT INTO `machineWXPubArticle`(`machineArticleId`,`machineTitle`,`machinePublishTime`) VALUES (%s,%s,%s)'
-    cursor.execute(SQL,(article_id,title,datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
-    mysql.commit()
-    print('保存日志成功！')
+
 
 # 发送消息
 def send_msg(dateNum):
@@ -264,6 +258,7 @@ def send_msg(dateNum):
         }
         send_resp = requests.post(url=send_url,json=send_json).json()
         if send_resp['errmsg'] == 'ok':
+            print(123)
             article_id = loop_pub_status(publish_id=send_resp['publish_id'])
             print('文章发送成功！获取 article_id:' + article_id)
             save_pub_log(article_id,title)
