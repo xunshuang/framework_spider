@@ -16,6 +16,7 @@ from datetime import datetime
 
 mysqlObj = MYSQL(MYSQL_CONFIG, db='machinedb')
 
+
 # 获取 accessToken
 def get_accessToken():
     mysql, cursor = mysqlObj.get_mysql()
@@ -47,11 +48,7 @@ def create_new_menu():
             {
                 "name": "🚪财富之门",
                 "sub_button": [
-                    {
-                        "type": "article_id",
-                        "name": "📞联系我们",
-                        "article_id": "6beSyaQWnY50zaxEn-OkgVNIW-6jvNqmwWIQC9jvopsGHJx06g6Z0CpNfX2mC_tN"
-                    },
+
                     {
                         "type": "view",
                         "name": "🔍打开主页",
@@ -69,10 +66,15 @@ def create_new_menu():
                         "name": "🎈今日推送",
                         "key": "MENU_TODAY"
                     }]
+            },
+            {
+                "type": "article_id",
+                "name": "📞联系我们",
+                "article_id": "6beSyaQWnY50zaxEn-OkgVNIW-6jvNqmwWIQC9jvopsGHJx06g6Z0CpNfX2mC_tN"
             }]
     }
     url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' + get_accessToken()
-    resp = requests.post(url=url,data=json.dumps(menu_doc,ensure_ascii=False).encode('utf-8')).json()
+    resp = requests.post(url=url, data=json.dumps(menu_doc, ensure_ascii=False).encode('utf-8')).json()
     print(resp)
 
 
