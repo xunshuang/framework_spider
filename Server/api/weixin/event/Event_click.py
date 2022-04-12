@@ -27,7 +27,7 @@ def MENU_YESTERDAY(*args, **kwargs):
           'FROM `machineWXPubArticle` WHERE ' \
           '`machinePublishTime` LIKE %s'
 
-    cursor.execute(SQL,(datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d") + "%")
+    cursor.execute(SQL,(datetime.now() - timedelta(days=0)).strftime("%Y-%m-%d") + "%")
     mysql.commit()
 
     txt = ""
