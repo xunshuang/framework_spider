@@ -10,7 +10,8 @@ def message_switch(*args,**kwargs):
         "!help":helps,
         "！help": helps,
         "repeat":repeat,
-        "订阅":sub_machine
+        "订阅":sub_machine,
+        "订阅状态":sub_check
     }
 
     try:
@@ -22,7 +23,27 @@ def message_switch(*args,**kwargs):
 
             return "指令读取失败，输入!help(不限中英文标点符号) 查看帮助菜单!" # 复读失败就发送指令集
 
+# 查看订阅
+def sub_check(*args,**kwargs):
+    xmlDict = kwargs.get('xmlDict')
+    mysqlOBJ = kwargs.get('mysqlOBJ')
+    mysql,cursor = mysqlOBJ.get_mysql()
+    SQL = 'SELECT `machineSubMachine` FROM `machineWXUser` WHERE `machineOpenId` = %s'
+    try:
+        cursor.execute(SQL,(xmlDict["FromUserName"]))
+        mysql.commit()
+    except:
+        print(traceback.format_exc())
+        mysql.rollback()
 
+    check_result = cursor.fetchone()
+    if check_result['machineSubMachine'] == '1':
+        return "订阅生效中，有效期至次日凌晨0:30。"
+
+    elif check_result['machineSubMachine'] == '2':
+        return "订阅已失效，请重新发送【订阅】进行今日份订阅"
+
+# 订阅
 def sub_machine(*args,**kwargs):
     xmlDict = kwargs.get('xmlDict')
     mysqlOBJ = kwargs.get('mysqlOBJ')
@@ -48,9 +69,13 @@ def sub_machine(*args,**kwargs):
             print(traceback.format_exc())
 
             mysql.rollback()
-    return "订阅成功！有效期到明天8点，记得续订哦！错过的消息仍然可在菜单中的今日推送中查看"
+
+    return "订阅成功！有效期到次日0:30，记得续订哦！错过的消息仍然可在菜单中的今日推送中查看"
+
+
 def helps(*args,**kwargs):
-    help_list = """1.发送【订阅】即可接收 今日订阅推送 """
+    help_list = """1.发送【订阅】即可接收 今日订阅推送 
+2.发送【订阅状态】 查看订阅生效状态"""
     return help_list
 
 
