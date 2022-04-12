@@ -48,6 +48,11 @@ def create_new_menu():
                 "name": "🚪财富之门",
                 "sub_button": [
                     {
+                        "type": "article_id",
+                        "name": "📞联系我们",
+                        "article_id": "6beSyaQWnY50zaxEn-OkgVNIW-6jvNqmwWIQC9jvopsGHJx06g6Z0CpNfX2mC_tN"
+                    },
+                    {
                         "type": "view",
                         "name": "🔍打开主页",
                         "url": "http://www.mengshuai.top/"
