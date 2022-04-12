@@ -49,7 +49,7 @@ def MENU_TODAY(*args,**kwargs):
 
     cursor.execute(SQL, (datetime.now() - timedelta(days=0)).strftime("%Y-%m-%d") + "%")
     mysql.commit()
-
+    print('new!')
     txt = ""
     result = cursor.fetchall()
     for res in result:
