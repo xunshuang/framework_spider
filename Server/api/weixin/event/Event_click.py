@@ -53,7 +53,7 @@ def MENU_TODAY(*args,**kwargs):
     txt = ""
     result = cursor.fetchall()
     for res in result:
-        txt += '【' + res['machineTitle'] + '】: '  +res['machineUrl'] + '\n\n'
+        txt += '【' + res['machineTitle'] + '】: '  +f'<a href="{res["machineUrl"]}">' + '\n\n'
     print(txt)
     return """
 👀今日机床推送合集👀
