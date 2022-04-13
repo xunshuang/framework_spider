@@ -32,10 +32,11 @@ def MENU_YESTERDAY(*args, **kwargs):
 
     txt = ""
     result = cursor.fetchall()
-    for res in result:
-        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"][0:15]}...</a>' + '\n'
+    for res in result[0:10]:
+        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"]}</a>' + '\n'
     return """
 👀昨日机床推送合集👀
+因字符限制只显示10条
     """ + '\n' + txt
 
 # 今日更新
@@ -52,11 +53,12 @@ def MENU_TODAY(*args,**kwargs):
     print('new!')
     txt = ""
     result = cursor.fetchall()
-    for res in result:
-        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"][0:15]}...</a>' + '\n\n'
+    for res in result[0:10]:
+        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"]}</a>' + '\n\n'
     print(txt)
     return """
 👀今日机床推送合集👀
+因字符限制只显示10条
     """ + '\n' + txt
 
 def MENU_SEARCH_MACHINE(*args, **kwargs):
