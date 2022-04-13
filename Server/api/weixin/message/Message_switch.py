@@ -37,10 +37,10 @@ def sub_check(*args,**kwargs):
         mysql.rollback()
 
     check_result = cursor.fetchone()
-    if check_result['machineSubMachine'] == '1':
+    if str(check_result['machineSubMachine']) == '1':
         return "订阅生效中，有效期至次日凌晨0:30。"
 
-    elif check_result['machineSubMachine'] == '2':
+    elif str(check_result['machineSubMachine']) == '2':
         return "订阅已失效，请重新发送【订阅】进行今日份订阅"
 
 # 订阅
