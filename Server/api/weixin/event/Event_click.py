@@ -33,7 +33,7 @@ def MENU_YESTERDAY(*args, **kwargs):
     txt = ""
     result = cursor.fetchall()
     for res in result:
-        txt += '【' + res['machineTitle'] + '】: ' +res['machineUrl'] + '\n\n'
+        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"]}</a>' + '\n\n'
     return """
 👀昨日机床推送合集👀
     """ + '\n' + txt
