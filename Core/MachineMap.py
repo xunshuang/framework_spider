@@ -82,5 +82,5 @@ class MachineMap():
 
 if __name__ == '__main__':
     a = MachineMap()
-    a.init_spider_name('A003')
+    a.init_spider_name('A001')
     a.make_machine_map()

@@ -53,18 +53,6 @@ def create_new_menu():
                         "type": "view",
                         "name": "🔍打开主页",
                         "url": "http://www.surefly.top/"
-                    },
-
-                    {
-                        "type": "click",
-                        "name": "🔥往期推送",
-                        "key": "MENU_YESTERDAY"
-                    },
-
-                    {
-                        "type": "click",
-                        "name": "🎈今日推送",
-                        "key": "MENU_TODAY"
                     }]
             },
             {

@@ -10,7 +10,7 @@ def event_key_switch(*args, **kwargs):
     xmlDict = kwargs.get('xmlDict')
     EventKey = xmlDict.get('EventKey')
     EventFuncMap = {
-        "MENU_YESTERDAY":MENU_YESTERDAY,
+        "MENU_SEARCH":MENU_SEARCH,
         "MENU_TODAY":MENU_TODAY,
         "MENU_SEARCH_MACHINE":MENU_SEARCH_MACHINE,
         "MENU_NEWS":MENU_NEWS
@@ -18,8 +18,8 @@ def event_key_switch(*args, **kwargs):
     return EventFuncMap[EventKey](mysqlOBJ=mysqlOBJ,xmlDict=xmlDict)
 
 
-# 昨日发的
-def MENU_YESTERDAY(*args, **kwargs):
+# 地库查询！
+def MENU_SEARCH(*args, **kwargs):
     """查看往期消息"""
     mysqlOBJ = kwargs.get('mysqlOBJ')
     mysql,cursor = mysqlOBJ.get_mysql()
