@@ -4,7 +4,7 @@ from datetime import datetime
 from datetime import timedelta
 from Db.MySQLClient.client import MYSQL
 from Config.GlobalSetting import MYSQL_CONFIG
-
+import re
 def event_key_switch(*args, **kwargs):
     mysqlOBJ = kwargs.get('mysqlOBJ')
     xmlDict = kwargs.get('xmlDict')
@@ -33,7 +33,8 @@ def MENU_YESTERDAY(*args, **kwargs):
     txt = ""
     result = cursor.fetchall()
     for res in result[0:10]:
-        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"]}</a>' + '\n'
+        title = re.sub('20\d{2}-\d{2}-\d{2}\s*第\d+份','',res["machineTitle"])
+        txt += f'<a href="{res["machineUrl"]}">{title}</a>' + '\n\n'
     return """
 👀昨日机床推送合集👀
 因字符限制只显示10条
@@ -54,7 +55,8 @@ def MENU_TODAY(*args,**kwargs):
     txt = ""
     result = cursor.fetchall()
     for res in result[0:10]:
-        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"]}</a>' + '\n\n'
+        title = re.sub('20\d{2}-\d{2}-\d{2}\s*第\d+份','',res["machineTitle"])
+        txt += f'<a href="{res["machineUrl"]}">{title}</a>' + '\n\n'
     print(txt)
     return """
 👀今日机床推送合集👀
