@@ -33,7 +33,7 @@ def MENU_YESTERDAY(*args, **kwargs):
     txt = ""
     result = cursor.fetchall()
     for res in result:
-        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"]}</a>' + '\n\n'
+        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"][0:15]}...</a>' + '\n'
     return """
 👀昨日机床推送合集👀
     """ + '\n' + txt
@@ -53,7 +53,7 @@ def MENU_TODAY(*args,**kwargs):
     txt = ""
     result = cursor.fetchall()
     for res in result:
-        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"]}</a>' + '\n\n'
+        txt += f'<a href="{res["machineUrl"]}">{res["machineTitle"][0:15]}...</a>' + '\n\n'
     print(txt)
     return """
 👀今日机床推送合集👀
