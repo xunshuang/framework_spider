@@ -52,7 +52,7 @@ def create_new_menu():
                     {
                         "type": "view",
                         "name": "🔍打开主页",
-                        "url": "http://www.mengshuai.top/"
+                        "url": "http://www.surefly.top/"
                     },
 
                     {

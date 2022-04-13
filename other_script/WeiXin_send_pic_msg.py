@@ -143,7 +143,7 @@ def make_machine_msg_to_draft(dateNum):
         "author": "寻霜",
         "digest": machineInfo.replace('\n','').strip()[:50],
         "content": content,
-        "content_source_url": f'http://www.mengshuai.top/single/{machine_data["md5hash"]}.html',
+        "content_source_url": f'http://www.surefly.top/single/{machine_data["md5hash"]}.html',
         "thumb_media_id": 'dwZxgP0_byDB5IVBizZ-N8iGY-K6ZIStR_MDMPbMe_1bLNfyyLlQB2jy7I0_MBkQ',
         "need_open_comment": 0,
         "only_fans_can_comment": 0
