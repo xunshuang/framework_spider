@@ -9,10 +9,10 @@ sys.path.append('/workspace/framework_spider/')
 # 任务读取Mysql
 #     "host" : '120.53.104.160',
 MYSQL_CONFIG = {
-    "host" : '127.0.0.1',
+    "host" : '120.53.104.160',
     "port" : 3306,
     "user" :'machineDb',
-    "password" : 'wSFNnx8THjyirHdG',
+    "password" : 'x',
 
 }
 
@@ -32,7 +32,7 @@ MYSQL_UPDATE_SQL = ""
 REDIS_CONFIG = {
     "host": '120.53.104.160',
     "port": 6379,
-    "password": 'XunShu4ng'
+    "password": 'x'
 }
 
 
@@ -40,7 +40,7 @@ REDIS_CONFIG = {
 REDIS_FILTER_CONFIG = {
     "host": '120.53.104.160',
     "port": 6379,
-    "password": 'XunShu4ng'
+    "password": 'x'
 }
 
 
@@ -60,5 +60,5 @@ MAX_TASK = 1
 ALLOW_DELAY_TIME = 1
 
 # 日志记录位置
-# LOG_FILE_PATH = 'F:/爬虫专用/framework_spider/Log'
-LOG_FILE_PATH = '/workspace/framework_spider/Log'
+LOG_FILE_PATH = 'F:/爬虫专用/framework_spider/Log'
+# LOG_FILE_PATH = '/workspace/framework_spider/Log'
