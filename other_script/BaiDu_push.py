@@ -31,7 +31,7 @@ def read_article():
 
 async def push():
     for lis in read_article():
-        url = 'http://data.zz.baidu.com/urls?site=www.surefly.top&token=1iUY9B7ZKVOkhJXw'
+        url = 'http://data.zz.baidu.com/urls?site=www.surefly.top&token=11'
         async with aiohttp.request('post',url=url,data='\n'.join(lis)) as resp:
             respJson = await resp.json()
             print(respJson)
